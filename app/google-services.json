@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "53940956256",
+    "project_id": "student-attendance-app-6a8d7",
+    "storage_bucket": "student-attendance-app-6a8d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53940956256:android:778df230813e5a27232705",
+        "android_client_info": {
+          "package_name": "com.renbin.student_attendance_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY2wBouTEPwjYDSV1Mf6hhWUzYJc5S3JU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
