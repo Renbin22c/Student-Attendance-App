@@ -1,4 +1,4 @@
-package com.renbin.student_attendance_app.data.repo
+package com.renbin.student_attendance_app.data.repo.classes
 
 import com.renbin.student_attendance_app.data.model.Classes
 import kotlinx.coroutines.flow.Flow

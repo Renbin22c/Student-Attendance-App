@@ -1,17 +1,17 @@
-package com.renbin.student_attendance_app.data.repo
+package com.renbin.student_attendance_app.data.repo.student
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.renbin.student_attendance_app.core.service.AuthService
-import com.renbin.student_attendance_app.data.model.User
+import com.renbin.student_attendance_app.data.model.Student
 import kotlinx.coroutines.tasks.await
 
-class UserRepoImpl(
+class StudentRepoImpl(
     private val authService: AuthService,
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-): UserRepo {
+): StudentRepo {
     private fun getDbRef(): CollectionReference {
-        return db.collection("users")
+        return db.collection("students")
     }
 
     private fun getUid(): String{
@@ -19,23 +19,19 @@ class UserRepoImpl(
         return firebaseUser?.uid ?: throw Exception("No authentication user found")
     }
 
-    override suspend fun addUser(user: User) {
-        getDbRef().document(getUid()).set(user.toHashMap()).await()
+    override suspend fun addStudent(student: Student) {
+        getDbRef().document(getUid()).set(student.toHashMap()).await()
     }
 
-    override suspend fun getUser(): User? {
+    override suspend fun getStudent(): Student? {
         val doc =  getDbRef().document(getUid()).get().await()
         return doc.data?.let {
             it["id"] = getUid()
-            User.fromHashMap(it)
+            Student.fromHashMap(it)
         }
     }
 
-    override suspend fun removeUser() {
-        getDbRef().document(getUid()).delete().await()
-    }
-
-    override suspend fun updateUser(user: User) {
-        getDbRef().document(getUid()).set(user.toHashMap()).await()
+    override suspend fun updateStudent(student: Student) {
+        getDbRef().document(getUid()).set(student.toHashMap()).await()
     }
 }
