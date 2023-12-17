@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.renbin.student_attendance_app.core.service.AuthService
 import com.renbin.student_attendance_app.data.model.Classes
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
@@ -37,6 +38,30 @@ class ClassesRepoImpl(
         }
 
         awaitClose{
+            listener.remove()
+        }
+    }
+
+    override suspend fun getAllClassesName() = callbackFlow {
+        val listener = db.collection("classes").addSnapshotListener { value, error ->
+            if (error != null) {
+                throw error
+            }
+
+            val classNames = mutableListOf<String>()
+            value?.documents?.let { docs ->
+                for (doc in docs) {
+                    doc.data?.let {
+                        it["name"]?.let { className ->
+                            classNames.add(className.toString())
+                        }
+                    }
+                }
+                trySend(classNames)
+            }
+        }
+
+        awaitClose {
             listener.remove()
         }
     }

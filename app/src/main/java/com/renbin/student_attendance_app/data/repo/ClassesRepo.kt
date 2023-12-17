@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ClassesRepo {
     suspend fun getAllClasses(): Flow<List<Classes>>
+    suspend fun getAllClassesName(): Flow<List<String>>
     suspend fun addClasses(classes: Classes)
     suspend fun deleteClasses(id: String)
 }
