@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+        <RelativeLayout
+            android:id="@+id/rlDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvLessonName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lesson_name"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="2dp"
+                style="@style/TextAppearance.Material3.TitleLarge"/>
+
+            <TextView
+                android:id="@+id/tvClasses"
+                android:layout_below="@id/tvLessonName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/classes"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="2dp"
+                style="@style/TextAppearance.Material3.BodySmall" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="2dp"
+                style="@style/TextAppearance.Material3.BodyLarge" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_below="@id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="2dp"
+                style="@style/TextAppearance.Material3.BodySmall"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvLessonDetails"
+            android:layout_below="@id/rlDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lesson_details"
+            android:layout_marginVertical="5dp"
+            style="@style/TextAppearance.Material3.BodyMedium"/>
+
+        <TableLayout
+            android:id="@+id/tlAttendance"
+            android:layout_below="@id/tvLessonDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow android:background="@color/gray" android:padding="5dp">
+                <TextView
+                    android:id="@+id/tvStudentName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:text="@string/name"/>
+
+                <TextView
+                    android:id="@+id/tvStudentEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email"
+                    android:textAlignment="center"
+                    android:layout_weight="2"/>
+
+                <TextView
+                    android:id="@+id/tvStudentClass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:text="@string/classes"/>
+
+                <TextView
+                    android:id="@+id/tvAttendanceStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:text="@string/attendance"/>
+            </TableRow>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAttendances"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableLayout>
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

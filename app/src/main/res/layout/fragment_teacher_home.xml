@@ -6,16 +6,15 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".ui.screens.home.TeacherHomeFragment">
-    <Button
-        android:id="@+id/btnClasses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/classes"/>
-
 
     <Button
         android:id="@+id/btnTeacherLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/logout"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAttendances"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

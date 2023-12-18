@@ -10,6 +10,7 @@ import com.renbin.student_attendance_app.databinding.FragmentStudentTabContainer
 import com.renbin.student_attendance_app.ui.adapter.FragmentAdapter
 import com.renbin.student_attendance_app.ui.screens.classes.StudentClassesFragment
 import com.renbin.student_attendance_app.ui.screens.home.StudentHomeFragment
+import com.renbin.student_attendance_app.ui.screens.lesson.StudentLessonFragment
 import com.renbin.student_attendance_app.ui.screens.note.NoteFragment
 import com.renbin.student_attendance_app.ui.screens.profile.StudentProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +32,13 @@ class StudentTabContainerFragment : Fragment() {
 
         binding.vpStudentContainer.adapter = FragmentAdapter(
             this,
-            listOf(StudentHomeFragment(), StudentClassesFragment(), NoteFragment(), StudentProfileFragment())
+            listOf(
+                StudentHomeFragment(),
+                StudentClassesFragment(),
+                StudentLessonFragment(),
+                NoteFragment(),
+                StudentProfileFragment()
+            )
         )
 
         TabLayoutMediator(binding.tlStudentTabs, binding.vpStudentContainer){ tab, position ->
@@ -43,6 +50,9 @@ class StudentTabContainerFragment : Fragment() {
                     tab.text = "Class"
                 }
                 2 ->{
+                    tab.text = "Lesson"
+                }
+                3 ->{
                     tab.text = "Note"
                 }
                 else ->{

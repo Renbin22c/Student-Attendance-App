@@ -27,17 +27,21 @@ class SplashViewModelImpl @Inject constructor(
 
     val auth = authService.getCurrentUser()
     override fun getTeacher() {
-        viewModelScope.launch(Dispatchers.IO) {
-            errorHandler { teacherRepo.getTeacher() }?.let {
-                _teacher.value = it
+        auth?.let {
+            viewModelScope.launch(Dispatchers.IO) {
+                errorHandler { teacherRepo.getTeacher() }?.let {
+                    _teacher.value = it
+                }
             }
         }
     }
 
     override fun getStudent() {
-        viewModelScope.launch(Dispatchers.IO) {
-            errorHandler { studentRepo.getStudent() }?.let {
-                _student.value = it
+        auth?.let {
+            viewModelScope.launch(Dispatchers.IO) {
+                errorHandler { studentRepo.getStudent() }?.let {
+                    _student.value = it
+                }
             }
         }
     }

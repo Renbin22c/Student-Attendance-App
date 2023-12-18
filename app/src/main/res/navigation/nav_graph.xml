@@ -82,7 +82,20 @@
         android:label="fragment_teacher_tab_container"
         tools:layout="@layout/fragment_teacher_tab_container" >
         <action
-            android:id="@+id/action_teacherTabContainer_to_classes"
-            app:destination="@id/classesFragment" />
+            android:id="@+id/action_teacherTabContainer_to_addLesson"
+            app:destination="@id/addLessonFragment" />
+        <action
+            android:id="@+id/action_teacherTabContainer_to_editLesson"
+            app:destination="@id/editLessonFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addLessonFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.lesson.AddLessonFragment"
+        android:label="AddLessonFragment"
+        tools:layout="@layout/fragment_base_add_edit_lesson"/>
+    <fragment
+        android:id="@+id/editLessonFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.lesson.EditLessonFragment"
+        android:label="EditLessonFragment"
+        tools:layout="@layout/fragment_base_add_edit_lesson"/>
 </navigation>
