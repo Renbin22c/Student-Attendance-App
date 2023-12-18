@@ -17,4 +17,13 @@
     <string name="add">Add</string>
     <string name="logout">Logout</string>
     <string name="teacher">Teacher</string>
+    <string name="student_name">Student Name</string>
+    <string name="student_class">Student Class</string>
+    <string name="student_email">Student Email</string>
+    <string name="status">Status</string>
+    <string name="attendance">Attendance</string>
+    <string name="date">Date</string>
+    <string name="lesson_name">Lesson Name</string>
+    <string name="lesson_details">Lesson Details</string>
+    <string name="time">Time</string>
 </resources>
