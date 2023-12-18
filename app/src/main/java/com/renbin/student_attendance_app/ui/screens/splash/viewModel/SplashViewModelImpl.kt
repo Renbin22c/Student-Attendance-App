@@ -1,4 +1,4 @@
-package com.renbin.student_attendance_app.ui.screens.login.viewModel
+package com.renbin.student_attendance_app.ui.screens.splash.viewModel
 
 import androidx.lifecycle.viewModelScope
 import com.renbin.student_attendance_app.core.service.AuthService
@@ -13,31 +13,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 @HiltViewModel
-class LoginViewModelImpl @Inject constructor(
-    private val authService: AuthService,
+class SplashViewModelImpl @Inject constructor(
     private val teacherRepo: TeacherRepo,
-    private val studentRepo: StudentRepo
-): BaseViewModel(), LoginViewModel {
+    private val studentRepo: StudentRepo,
+    authService: AuthService
+): BaseViewModel(), SplashViewModel {
     private val _teacher = MutableStateFlow(Teacher(name = "", email = ""))
     override val teacher: StateFlow<Teacher> = _teacher
 
     private val _student = MutableStateFlow(Student(name = "", email = ""))
     override val student: StateFlow<Student> = _student
 
-    override fun login(email: String, pass: String) {
-        viewModelScope.launch(Dispatchers.IO){
-            val result = errorHandler {
-                authService.login(email, pass)
-            }
-
-            if(result!=null){
-                _success.emit("Login successfully")
-            }
-        }
-    }
-
+    val auth = authService.getCurrentUser()
     override fun getTeacher() {
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler { teacherRepo.getTeacher() }?.let {

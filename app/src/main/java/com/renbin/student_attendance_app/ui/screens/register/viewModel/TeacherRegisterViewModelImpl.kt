@@ -15,16 +15,16 @@ class TeacherRegisterViewModelImpl @Inject constructor(
     private val authService: AuthService,
     private val teacherRepo: TeacherRepo
 ): BaseViewModel(), TeacherRegisterViewModel {
-    override fun register(name: String, email: String, pass: String, confirmPass: String) {
+    override fun teacherRegister(name: String, email: String, pass: String, confirmPass: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val user = errorHandler { authService.register(email, pass) }
             if(user != null){
-                _success.emit("Register successfully")
                 errorHandler {
                     teacherRepo.addTeacher(
                         Teacher(name = name, email = email)
                     )
                 }
+                _success.emit("Register successfully")
             }
         }
     }

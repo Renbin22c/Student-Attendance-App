@@ -12,28 +12,18 @@
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_splash_to_main"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_splash_to_studentTabContainer"
+            app:destination="@id/studentTabContainerFragment" />
         <action
-            android:id="@+id/action_splash_to_home"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_splash_to_teacherTabContainer"
+            app:destination="@id/teacherTabContainerFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/classesFragment"
-        android:name="com.renbin.student_attendance_app.ui.screens.classes.ClassesFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.classes.TeacherClassesFragment"
         android:label="fragment_classes"
-        tools:layout="@layout/fragment_classes" />
-
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.renbin.student_attendance_app.ui.screens.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_home_to_classes"
-            app:destination="@id/classesFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_teacher_classes" />
 
     <fragment
         android:id="@+id/loginFragment"
@@ -41,8 +31,11 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_login_to_home"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_loginFragment_to_studentTabContainerFragment"
+            app:destination="@id/studentTabContainerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_teacherTabContainerFragment"
+            app:destination="@id/teacherTabContainerFragment" />
     </fragment>
 
     <fragment
@@ -68,10 +61,28 @@
         app:destination="@id/loginFragment"/>
 
     <action
+        android:id="@+id/action_global_main"
+        app:destination="@id/mainFragment"/>
+
+    <action
         android:id="@+id/action_global_student_register"
         app:destination="@id/studentRegisterFragment"/>
 
     <action
         android:id="@+id/action_global_teacher_register"
         app:destination="@id/teacherRegisterFragment"/>
+    <fragment
+        android:id="@+id/studentTabContainerFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.tabContainer.StudentTabContainerFragment"
+        android:label="fragment_student_tab_container"
+        tools:layout="@layout/fragment_student_tab_container" />
+    <fragment
+        android:id="@+id/teacherTabContainerFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.tabContainer.TeacherTabContainerFragment"
+        android:label="fragment_teacher_tab_container"
+        tools:layout="@layout/fragment_teacher_tab_container" >
+        <action
+            android:id="@+id/action_teacherTabContainer_to_classes"
+            app:destination="@id/classesFragment" />
+    </fragment>
 </navigation>

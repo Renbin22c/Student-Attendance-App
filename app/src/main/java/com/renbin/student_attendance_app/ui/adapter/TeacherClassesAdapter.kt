@@ -6,13 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.renbin.student_attendance_app.data.model.Classes
 import com.renbin.student_attendance_app.databinding.ItemLayoutClassesBinding
 
-class ClassesAdapter(
+class TeacherClassesAdapter(
     private var classes: List<Classes>
-): RecyclerView.Adapter<ClassesAdapter.ClassesItemViewHolder>() {
+): RecyclerView.Adapter<TeacherClassesAdapter.ClassesItemViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ClassesAdapter.ClassesItemViewHolder {
+    ): TeacherClassesAdapter.ClassesItemViewHolder {
         val binding = ItemLayoutClassesBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -21,7 +21,7 @@ class ClassesAdapter(
         return ClassesItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ClassesAdapter.ClassesItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TeacherClassesAdapter.ClassesItemViewHolder, position: Int) {
         val itemClasses = classes[position]
         holder.bind(itemClasses)
     }

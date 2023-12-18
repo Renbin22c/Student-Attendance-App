@@ -3,25 +3,28 @@ package com.renbin.student_attendance_app.ui.screens.splash
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.core.service.AuthService
 import com.renbin.student_attendance_app.databinding.FragmentSplashBinding
+import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
+import com.renbin.student_attendance_app.ui.screens.base.viewModel.BaseViewModel
+import com.renbin.student_attendance_app.ui.screens.splash.viewModel.SplashViewModelImpl
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SplashFragment : Fragment() {
-    private lateinit var binding: FragmentSplashBinding
-    private lateinit var navController: NavController
-
-    @Inject
-    lateinit var authService: AuthService
+class SplashFragment : BaseFragment<FragmentSplashBinding>() {
+    override val viewModel: SplashViewModelImpl by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,17 +35,37 @@ class SplashFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        navController = NavHostFragment.findNavController(this)
+    override fun setupUIComponents(view: View) {
+        super.setupUIComponents(view)
+        viewModel.getStudent()
+        viewModel.getTeacher()
+    }
+
+    override fun setupViewModelObserver() {
+        super.setupViewModelObserver()
 
         Handler(Looper.getMainLooper()).postDelayed({
-            val currentUser = authService.getCurrentUser()
-            if(currentUser != null){
-                val action = SplashFragmentDirections.actionSplashToHome()
-                navController.navigate(action)
+            if(viewModel.auth != null){
+                lifecycleScope.launch{
+                    viewModel.student.collect{
+                        if(it.id!=null){
+                            val action = SplashFragmentDirections.actionSplashToStudentTabContainer()
+                            navController.navigate(action)
+                        }
+                    }
+                }
+
+                lifecycleScope.launch{
+                    viewModel.teacher.collect{
+                        if (it.id != null){
+                            val action = SplashFragmentDirections.actionSplashToTeacherTabContainer()
+                            navController.navigate(action)
+                        }
+                    }
+                }
+
             } else {
-                val action = SplashFragmentDirections.actionSplashToMain()
+                val action = SplashFragmentDirections.actionGlobalMain()
                 navController.navigate(action)
             }
         }, 2000)

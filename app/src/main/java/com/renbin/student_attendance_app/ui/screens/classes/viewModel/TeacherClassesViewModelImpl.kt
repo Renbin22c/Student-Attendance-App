@@ -12,9 +12,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ClassesViewModelImpl @Inject constructor(
+class TeacherClassesViewModelImpl @Inject constructor(
     private val classesRepo: ClassesRepo
-): BaseViewModel(), ClassesViewModel {
+): BaseViewModel(), TeacherClassesViewModel {
     private val _classes: MutableStateFlow<List<Classes>> = MutableStateFlow(emptyList())
     override val classes: StateFlow<List<Classes>> = _classes
 

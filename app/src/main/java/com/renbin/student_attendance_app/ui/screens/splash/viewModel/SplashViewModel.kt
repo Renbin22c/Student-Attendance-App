@@ -1,14 +1,12 @@
-package com.renbin.student_attendance_app.ui.screens.login.viewModel
+package com.renbin.student_attendance_app.ui.screens.splash.viewModel
 
 import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.model.Teacher
 import kotlinx.coroutines.flow.StateFlow
 
-
-interface LoginViewModel {
+interface SplashViewModel {
     val student: StateFlow<Student>
     val teacher: StateFlow<Teacher>
     fun getStudent()
     fun getTeacher()
-    fun login(email: String, pass: String)
 }

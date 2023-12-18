@@ -5,18 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".ui.screens.home.HomeFragment">
-
+    tools:context=".ui.screens.home.TeacherHomeFragment">
     <Button
         android:id="@+id/btnClasses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/classes"/>
 
+
     <Button
-        android:id="@+id/btnLogout"
+        android:id="@+id/btnTeacherLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/logout"/>
-
 </LinearLayout>

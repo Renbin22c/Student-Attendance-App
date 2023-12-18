@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.StateFlow
 interface StudentRegisterViewModel {
     val classesName: StateFlow<List<String>>
     fun getAllClassesName()
+    fun studentRegister(name:String, email:String, pass: String, confirmPass: String, classes: String)
 }
