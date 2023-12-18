@@ -43,8 +43,26 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
         lifecycleScope.launch {
             viewModel.success.collect{
-                val action = LoginFragmentDirections.actionLoginToHome()
-                navController.navigate(action)
+                viewModel.getStudent()
+                viewModel.getTeacher()
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.teacher.collect{
+                if(it.id != null){
+                    val action = LoginFragmentDirections.actionLoginFragmentToTeacherTabContainerFragment()
+                    navController.navigate(action)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.student.collect{
+                if(it.id !=null){
+                    val action = LoginFragmentDirections.actionLoginFragmentToStudentTabContainerFragment()
+                    navController.navigate(action)
+                }
             }
         }
     }

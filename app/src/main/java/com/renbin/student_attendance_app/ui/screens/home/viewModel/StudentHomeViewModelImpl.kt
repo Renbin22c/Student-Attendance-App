@@ -9,15 +9,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModelImpl @Inject constructor(
+class StudentHomeViewModelImpl @Inject constructor(
     private val authService: AuthService
-): BaseViewModel(), HomeViewModel {
-
+): BaseViewModel(), StudentHomeViewModel {
     override fun logout() {
-        viewModelScope.launch(Dispatchers.IO){
-            errorHandler {
-                authService.logout()
-            }
+        viewModelScope.launch(Dispatchers.IO) {
+            errorHandler { authService.logout() }
+            _success.emit("Logout Successfully")
         }
     }
 }

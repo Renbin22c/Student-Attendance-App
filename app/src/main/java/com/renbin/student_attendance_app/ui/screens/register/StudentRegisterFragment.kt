@@ -1,8 +1,6 @@
 package com.renbin.student_attendance_app.ui.screens.register
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +8,6 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.databinding.FragmentStudentRegisterBinding
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
 import com.renbin.student_attendance_app.ui.screens.register.viewModel.StudentRegisterViewModelImpl
@@ -43,8 +40,11 @@ class StudentRegisterFragment : BaseFragment<FragmentStudentRegisterBinding>() {
 
         binding.run {
             btnStudentRegister.setOnClickListener {
-                val action = StudentRegisterFragmentDirections.actionGlobalLogin()
-                navController.navigate(action)
+                val name = etName.text.toString()
+                val email = etEmail.text.toString()
+                val pass = etPassword.text.toString()
+                val confirmPass = etConfirmPassword.text.toString()
+                viewModel.studentRegister(name, email, pass, confirmPass, classSelect)
             }
 
             autoCompleteCategory.addTextChangedListener {
@@ -73,6 +73,13 @@ class StudentRegisterFragment : BaseFragment<FragmentStudentRegisterBinding>() {
                     )
                 }
                 binding.autoCompleteCategory.setAdapter(classesAdapter)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.success.collect{
+                val action = StudentRegisterFragmentDirections.actionGlobalLogin()
+                navController.navigate(action)
             }
         }
     }
