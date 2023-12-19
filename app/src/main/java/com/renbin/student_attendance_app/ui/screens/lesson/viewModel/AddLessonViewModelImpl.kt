@@ -1,6 +1,7 @@
 package com.renbin.student_attendance_app.ui.screens.lesson.viewModel
 
 import androidx.lifecycle.viewModelScope
+import com.renbin.student_attendance_app.core.service.AuthService
 import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.repo.classes.ClassesRepo
@@ -19,13 +20,16 @@ import javax.inject.Inject
 class AddLessonViewModelImpl @Inject constructor(
     private val classesRepo: ClassesRepo,
     private val studentRepo: StudentRepo,
-    private val lessonRepo: LessonRepo
+    private val lessonRepo: LessonRepo,
+    private val authService: AuthService
 ): BaseViewModel(), AddLessonViewModel{
     private val _classesName = MutableStateFlow<List<String>>(emptyList())
     override val classesName: StateFlow<List<String>> =_classesName
 
     private val _studentsId = MutableStateFlow<List<Student>>(emptyList())
     override val studentsId: StateFlow<List<Student>> = _studentsId
+
+    private val user = authService.getCurrentUser()
 
     override fun onCreate() {
         super.onCreate()
@@ -66,7 +70,9 @@ class AddLessonViewModelImpl @Inject constructor(
                         name = name, details = details, time = time,
                         date = date, classes = classes, student = studentId,
                         attendanceTime = List(studentId.size){"---"},
-                        attendance = List(studentId.size){false})
+                        attendance = List(studentId.size){false},
+                        createdBy = user?.uid.toString()
+                        )
                 )
             }
             _success.emit("Add Lesson Successfully")

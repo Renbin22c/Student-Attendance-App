@@ -50,10 +50,16 @@ class TeacherClassesFragment : BaseFragment<FragmentTeacherClassesBinding>() {
             }
         }
 
+        lifecycleScope.launch {
+            viewModel.teachers.collect{
+                adapter.setTeachers(it)
+            }
+        }
+
     }
 
     private fun setupTeacherClassesAdapter(){
-        adapter = TeacherClassesAdapter(emptyList())
+        adapter = TeacherClassesAdapter(emptyList(), emptyList())
 
         binding.rvClasses.adapter = adapter
         binding.rvClasses.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)

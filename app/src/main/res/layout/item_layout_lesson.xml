@@ -19,16 +19,26 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="2dp"
                 style="@style/TextAppearance.Material3.TitleLarge"/>
-
-            <TextView
-                android:id="@+id/tvClasses"
-                android:layout_below="@id/tvLessonName"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/classes"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="2dp"
-                style="@style/TextAppearance.Material3.BodySmall" />
+                android:layout_below="@id/tvLessonName"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvLessonTeacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/teacher"
+                    style="@style/TextAppearance.Material3.BodySmall"/>
+
+                <TextView
+                    android:id="@+id/tvClasses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/classes"
+                    android:layout_marginStart="5dp"
+                    style="@style/TextAppearance.Material3.BodySmall" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvDate"
@@ -51,10 +61,12 @@
         </RelativeLayout>
 
         <ImageView
+            android:id="@+id/ivDeleteLesson"
             android:layout_below="@id/rlDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_delete"
+            android:visibility="visible"
             android:layout_alignParentEnd="true"/>
 
         <TextView

@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface TeacherClassesViewModel {
     val classes: StateFlow<List<Classes>>
+    val teachers: StateFlow<List<Teacher>>
 
+    fun getAllTeachers()
     fun getAllClasses()
 }

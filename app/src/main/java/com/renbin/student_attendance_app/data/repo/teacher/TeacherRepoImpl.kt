@@ -35,4 +35,25 @@ class TeacherRepoImpl(
             Teacher.fromHashMap(it)
         }
     }
+
+    override suspend fun getAllTeachers() = callbackFlow {
+        val listener = getDbRef().addSnapshotListener{ value, error ->
+            if(error != null){
+                throw error
+            }
+            val teachers = mutableListOf<Teacher>()
+            value?.documents?.let {docs ->
+                for(doc in docs){
+                    doc.data?.let {
+                        it["id"] = doc.id
+                        teachers.add(Teacher.fromHashMap(it))
+                    }
+                }
+                trySend(teachers)
+            }
+        }
+        awaitClose{
+            listener.remove()
+        }
+    }
 }

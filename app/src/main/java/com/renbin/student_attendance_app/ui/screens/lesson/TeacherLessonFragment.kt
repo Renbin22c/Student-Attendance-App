@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.renbin.student_attendance_app.R
+import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.databinding.FragmentTeacherLessonBinding
 import com.renbin.student_attendance_app.ui.adapter.LessonAdapter
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
@@ -60,10 +61,22 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
                 lessonAdapter.setStudents(it)
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.teachers.collect{
+                lessonAdapter.setTeachers(it)
+            }
+        }
     }
 
     private fun setupLessonAdapter(){
-        lessonAdapter = LessonAdapter(emptyList(), emptyList())
+        lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList())
+        lessonAdapter.listener = object : LessonAdapter.Listener{
+            override fun onDelete(lesson: Lesson) {
+                viewModel.deleteLesson(lesson.id.toString())
+            }
+
+        }
         binding.rvLesson.adapter = lessonAdapter
         binding.rvLesson.layoutManager = LinearLayoutManager(requireContext())
     }
