@@ -1,8 +1,8 @@
 package com.renbin.student_attendance_app.core.di
 
 import com.renbin.student_attendance_app.core.service.AuthService
-import com.renbin.student_attendance_app.data.repo.lesson.LesssonRepo
-import com.renbin.student_attendance_app.data.repo.lesson.LesssonRepoImpl
+import com.renbin.student_attendance_app.data.repo.lesson.LessonRepo
+import com.renbin.student_attendance_app.data.repo.lesson.LessonRepoImpl
 import com.renbin.student_attendance_app.data.repo.classes.ClassesRepo
 import com.renbin.student_attendance_app.data.repo.classes.ClassesRepoImpl
 import com.renbin.student_attendance_app.data.repo.student.StudentRepo
@@ -38,7 +38,7 @@ class RepoModule {
 
     @Provides
     @Singleton
-    fun provideLessonsRepo(authService: AuthService): LesssonRepo{
-        return LesssonRepoImpl(authService = authService)
+    fun provideLessonsRepo(authService: AuthService): LessonRepo{
+        return LessonRepoImpl(authService = authService)
     }
 }

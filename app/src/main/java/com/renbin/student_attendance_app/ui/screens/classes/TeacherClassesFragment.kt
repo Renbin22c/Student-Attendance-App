@@ -49,6 +49,7 @@ class TeacherClassesFragment : BaseFragment<FragmentTeacherClassesBinding>() {
                 adapter.setClasses(it)
             }
         }
+
     }
 
     private fun setupTeacherClassesAdapter(){

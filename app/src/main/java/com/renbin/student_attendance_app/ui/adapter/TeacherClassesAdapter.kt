@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.renbin.student_attendance_app.data.model.Classes
+import com.renbin.student_attendance_app.data.model.Teacher
 import com.renbin.student_attendance_app.databinding.ItemLayoutClassesBinding
 
 class TeacherClassesAdapter(
@@ -32,6 +33,7 @@ class TeacherClassesAdapter(
         this.classes = classes
         notifyDataSetChanged()
     }
+
 
     inner class ClassesItemViewHolder(
         private val binding: ItemLayoutClassesBinding

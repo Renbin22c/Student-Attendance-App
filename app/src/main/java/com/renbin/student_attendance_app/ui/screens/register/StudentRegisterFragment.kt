@@ -49,7 +49,6 @@ class StudentRegisterFragment : BaseFragment<FragmentStudentRegisterBinding>() {
 
             autoCompleteCategory.addTextChangedListener {
                 classSelect = it.toString()
-                logMsg(classSelect)
             }
         }
     }
