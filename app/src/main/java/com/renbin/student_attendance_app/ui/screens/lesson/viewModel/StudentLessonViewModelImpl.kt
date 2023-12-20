@@ -1,6 +1,5 @@
 package com.renbin.student_attendance_app.ui.screens.lesson.viewModel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.renbin.student_attendance_app.core.service.AuthService
 import com.renbin.student_attendance_app.core.util.Utility.formatTimestamp
@@ -23,7 +22,7 @@ class StudentLessonViewModelImpl @Inject constructor(
     private val lessonRepo: LessonRepo,
     private val studentRepo: StudentRepo,
     private val teacherRepo: TeacherRepo,
-    private val authService: AuthService
+    authService: AuthService
 ):BaseViewModel(), StudentLessonViewModel {
     private val _lessons: MutableStateFlow<List<Lesson>> = MutableStateFlow(emptyList())
     override val lessons: StateFlow<List<Lesson>> = _lessons

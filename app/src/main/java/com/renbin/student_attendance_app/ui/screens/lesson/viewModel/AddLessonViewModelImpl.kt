@@ -6,7 +6,6 @@ import com.renbin.student_attendance_app.core.service.AuthService
 import com.renbin.student_attendance_app.core.util.Utility.formatDatestamp
 import com.renbin.student_attendance_app.core.util.Utility.formatTimestamp
 import com.renbin.student_attendance_app.data.model.Lesson
-import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.repo.classes.ClassesRepo
 import com.renbin.student_attendance_app.data.repo.lesson.LessonRepo
 import com.renbin.student_attendance_app.data.repo.student.StudentRepo
@@ -25,7 +24,7 @@ class AddLessonViewModelImpl @Inject constructor(
     private val classesRepo: ClassesRepo,
     private val studentRepo: StudentRepo,
     private val lessonRepo: LessonRepo,
-    private val authService: AuthService
+    authService: AuthService
 ): BaseViewModel(), AddLessonViewModel{
     private val _classesName = MutableStateFlow<List<String>>(emptyList())
     override val classesName: StateFlow<List<String>> =_classesName

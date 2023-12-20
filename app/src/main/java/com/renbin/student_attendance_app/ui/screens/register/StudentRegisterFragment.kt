@@ -58,14 +58,14 @@ class StudentRegisterFragment : BaseFragment<FragmentStudentRegisterBinding>() {
 
         lifecycleScope.launch {
             viewModel.classesName.collect {
-                if(it.isEmpty()){
-                    classesAdapter = ArrayAdapter(
+                classesAdapter = if(it.isEmpty()){
+                    ArrayAdapter(
                         requireContext(),
                         androidx.transition.R.layout.support_simple_spinner_dropdown_item,
                         emptyList()
                     )
                 } else{
-                    classesAdapter = ArrayAdapter(
+                    ArrayAdapter(
                         requireContext(),
                         androidx.transition.R.layout.support_simple_spinner_dropdown_item,
                         it

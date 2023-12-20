@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 
 class AuthServiceImpl(
-    val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 ): AuthService {
     override suspend fun register(email: String, pass: String): FirebaseUser? {
         val result = auth.createUserWithEmailAndPassword(email, pass).await()

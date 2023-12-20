@@ -13,7 +13,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +21,7 @@ class TeacherLessonViewModelImpl @Inject constructor(
     private val lessonRepo: LessonRepo,
     private val studentRepo: StudentRepo,
     private val teacherRepo: TeacherRepo,
-    private val authService: AuthService
+    authService: AuthService
 ): BaseViewModel(), TeacherLessonViewModel {
     private val _lessons: MutableStateFlow<List<Lesson>> = MutableStateFlow(emptyList())
     override val lessons: StateFlow<List<Lesson>> = _lessons
