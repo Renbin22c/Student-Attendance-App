@@ -8,5 +8,5 @@ interface StudentRepo {
     suspend fun getStudent(): Student?
     suspend fun getAllStudents(): Flow<List<Student>>
     suspend fun updateStudent(student: Student)
-    suspend fun getAllStudentByClass(classes: String): Flow<List<Student>>
+    suspend fun getAllStudentByClass(classes: String): List<Student>
 }

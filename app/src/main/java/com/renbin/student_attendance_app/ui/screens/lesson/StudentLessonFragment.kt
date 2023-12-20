@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.databinding.FragmentStudentLessonBinding
 import com.renbin.student_attendance_app.ui.adapter.LessonAdapter
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
@@ -56,7 +57,17 @@ class StudentLessonFragment : BaseFragment<FragmentStudentLessonBinding>() {
     }
 
     private fun setupLessonAdapter(){
-        lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList())
+        lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList(), viewModel.user)
+        lessonAdapter.listener = object : LessonAdapter.Listener{
+            override fun onClick(id: String, lesson: Lesson) {
+                viewModel.updateAttendanceStatus(id, lesson)
+            }
+
+            override fun onDelete(lesson: Lesson) {
+                TODO("Not yet implemented")
+            }
+
+        }
         binding.rvLesson.adapter = lessonAdapter
         binding.rvLesson.layoutManager = LinearLayoutManager(requireContext())
     }

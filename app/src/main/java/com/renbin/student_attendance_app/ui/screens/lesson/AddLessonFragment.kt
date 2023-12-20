@@ -11,13 +11,12 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.renbin.student_attendance_app.core.util.Utility.formatDatestamp
 import com.renbin.student_attendance_app.databinding.FragmentAddLessonBinding
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
 import com.renbin.student_attendance_app.ui.screens.lesson.viewModel.AddLessonViewModelImpl
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Date
 
 @AndroidEntryPoint
 class AddLessonFragment: BaseFragment<FragmentAddLessonBinding>() {
@@ -26,7 +25,6 @@ class AddLessonFragment: BaseFragment<FragmentAddLessonBinding>() {
     private var classSelect = ""
     private var date = ""
     private var time = ""
-    private var studentsId = emptyList<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,7 +58,10 @@ class AddLessonFragment: BaseFragment<FragmentAddLessonBinding>() {
             }
 
             btnSubmit.setOnClickListener {
-                viewModel.getAllStudentIdByClasses(classSelect)
+                val name = binding.etLessonName.text.toString()
+                val details = binding.etLessonDetails.text.toString()
+
+                viewModel.addLesson(name, details, classSelect, date, time)
             }
         }
     }
@@ -87,19 +88,6 @@ class AddLessonFragment: BaseFragment<FragmentAddLessonBinding>() {
             }
         }
 
-        lifecycleScope.launch {
-            viewModel.studentsId.collect{
-                studentsId = it.mapNotNull { student -> student.id }
-
-                if (studentsId.isNotEmpty()){
-                    val name = binding.etLessonName.text.toString()
-                    val details = binding.etLessonDetails.text.toString()
-
-                    viewModel.addLesson(name, details, classSelect, date, time, studentsId)
-                }
-            }
-        }
-
         lifecycleScope.launch{
             viewModel.success.collect{
                 navController.popBackStack()
@@ -113,8 +101,7 @@ class AddLessonFragment: BaseFragment<FragmentAddLessonBinding>() {
         datePicker.show(this.parentFragmentManager, "DATE_PICKER")
 
         datePicker.addOnPositiveButtonClickListener {
-            val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
-            date = dateFormatter.format(Date(it))
+            date = formatDatestamp(it)
             binding.btnDate.text = date
         }
     }

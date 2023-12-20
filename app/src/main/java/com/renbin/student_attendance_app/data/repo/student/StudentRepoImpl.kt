@@ -60,27 +60,25 @@ class StudentRepoImpl(
         getDbRef().document(getUid()).set(student.toHashMap()).await()
     }
 
-    override suspend fun getAllStudentByClass(classes: String)= callbackFlow {
-        val listener = getDbRef().addSnapshotListener{value, error ->
-            if(error != null){
-                throw error
-            }
-            val students = mutableListOf<Student>()
-            value?.documents?.let {docs ->
-                for (doc in docs){
-                    doc.data?.let {
-                        if (it["classes"] == classes){
-                            it["id"] = doc.id
-                            students.add(Student.fromHashMap(it))
-                        }
-                    }
-                }
-                trySend(students)
-            }
-        }
+    override suspend fun getAllStudentByClass(classes: String): List<Student> {
+        return try {
+            val querySnapshot = getDbRef()
+                .whereEqualTo("classes", classes)
+                .get()
+                .await()
 
-        awaitClose{
-            listener.remove()
+            val students = mutableListOf<Student>()
+
+            for (document in querySnapshot.documents) {
+                document.data?.let {
+                    it["id"] = document.id
+                    students.add(Student.fromHashMap(it))
+                }
+            }
+
+            students
+        } catch (e: Exception) {
+            emptyList()
         }
     }
 }

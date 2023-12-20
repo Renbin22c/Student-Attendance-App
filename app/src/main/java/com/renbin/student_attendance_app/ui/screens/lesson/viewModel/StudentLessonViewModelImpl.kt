@@ -1,7 +1,9 @@
 package com.renbin.student_attendance_app.ui.screens.lesson.viewModel
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.renbin.student_attendance_app.core.service.AuthService
+import com.renbin.student_attendance_app.core.util.Utility.formatTimestamp
 import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.model.Teacher
@@ -32,7 +34,7 @@ class StudentLessonViewModelImpl @Inject constructor(
     private val _teachers: MutableStateFlow<List<Teacher>> = MutableStateFlow(emptyList())
     override val teachers: StateFlow<List<Teacher>> = _teachers
 
-    private val user = authService.getCurrentUser()
+    val user = authService.getCurrentUser()
 
     override fun onCreate() {
         super.onCreate()
@@ -64,6 +66,26 @@ class StudentLessonViewModelImpl @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler { teacherRepo.getAllTeachers() }?.collect {
                 _teachers.value = it
+            }
+        }
+    }
+
+    override fun updateAttendanceStatus(id: String, lesson: Lesson) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if(user != null){
+                val index = lesson.student.indexOf(user.uid)
+                if(index != -1) {
+                    val attend = lesson.attendance.toMutableList()
+                    val attendTime = lesson.attendanceTime.toMutableList()
+
+                    attend[index] = true
+                    attendTime[index] = formatTimestamp(System.currentTimeMillis())
+
+                    val newLesson = lesson.copy(attendance = attend, attendanceTime = attendTime)
+
+                    errorHandler { lessonRepo.updateLesson(id,newLesson) }
+                    _success.emit("Check In Successfully")
+                }
             }
         }
     }

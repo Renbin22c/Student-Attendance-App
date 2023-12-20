@@ -4,19 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseUser
 import com.renbin.student_attendance_app.R
-import com.renbin.student_attendance_app.data.model.Classes
 import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.model.Teacher
-import com.renbin.student_attendance_app.data.repo.student.StudentRepo
 import com.renbin.student_attendance_app.databinding.ItemLayoutLessonBinding
 import com.renbin.student_attendance_app.databinding.ItemLayoutStudentAttendanceBinding
 
 class LessonAdapter(
     private var lessons: List<Lesson>,
     private var students: List<Student>,
-    private var teachers: List<Teacher>
+    private var teachers: List<Teacher>,
+    private var user: FirebaseUser?
 ): RecyclerView.Adapter<LessonAdapter.AttendanceItemViewHolder>() {
     var listener: Listener? = null
 
@@ -64,6 +64,14 @@ class LessonAdapter(
                 val matchTeacher = teachers.find { it.id == lesson.createdBy }
                 tvLessonTeacher.text = matchTeacher?.name
 
+                if(user?.uid == lesson.createdBy) ivDeleteLesson.visibility = View.VISIBLE
+
+                val filterStudent = lesson.student.filter {
+                    it == user?.uid
+                }
+
+                if (filterStudent.isNotEmpty()) ivCheckIn.visibility = View.VISIBLE
+
                 tvClasses.text = lesson.classes
                 llItems.removeAllViews()
 
@@ -76,10 +84,10 @@ class LessonAdapter(
                     val matchStudent = students.find { it.id == lesson.student[i] }
                     attBinding.tvStudentName.text = matchStudent?.name ?: "Unknown"
 
-                    // Check if the index is within the bounds of the other lists
                     if (i < lesson.attendance.size) {
                         if (lesson.attendance[i]) {
                             attBinding.ivAttendanceStatus.setImageResource(R.drawable.ic_check)
+                            ivCheckIn.visibility = View.GONE
                         } else {
                             attBinding.ivAttendanceStatus.setImageResource(R.drawable.ic_close)
                         }
@@ -92,14 +100,21 @@ class LessonAdapter(
                     llItems.addView(attBinding.root)
                 }
 
+                ivCheckIn.setOnClickListener {
+                    listener?.onClick(lesson.id.toString(), lesson)
+                    ivCheckIn.visibility = View.GONE
+                }
+
                 ivDeleteLesson.setOnClickListener {
                     listener?.onDelete(lesson)
+                    ivDeleteLesson.visibility = View.GONE
                 }
             }
         }
     }
 
     interface Listener {
+        fun onClick(id: String, lesson: Lesson)
         fun onDelete(lesson: Lesson)
     }
 

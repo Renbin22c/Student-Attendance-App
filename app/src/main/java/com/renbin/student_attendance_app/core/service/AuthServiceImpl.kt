@@ -21,7 +21,7 @@ class AuthServiceImpl(
         return auth.currentUser
     }
 
-    override fun logout() {
+    override suspend fun logout() {
         auth.signOut()
     }
 }

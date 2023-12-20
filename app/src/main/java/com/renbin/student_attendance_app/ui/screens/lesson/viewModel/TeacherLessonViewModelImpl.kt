@@ -1,6 +1,7 @@
 package com.renbin.student_attendance_app.ui.screens.lesson.viewModel
 
 import androidx.lifecycle.viewModelScope
+import com.renbin.student_attendance_app.core.service.AuthService
 import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.model.Teacher
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class TeacherLessonViewModelImpl @Inject constructor(
     private val lessonRepo: LessonRepo,
     private val studentRepo: StudentRepo,
-    private val teacherRepo: TeacherRepo
+    private val teacherRepo: TeacherRepo,
+    private val authService: AuthService
 ): BaseViewModel(), TeacherLessonViewModel {
     private val _lessons: MutableStateFlow<List<Lesson>> = MutableStateFlow(emptyList())
     override val lessons: StateFlow<List<Lesson>> = _lessons
@@ -30,6 +32,8 @@ class TeacherLessonViewModelImpl @Inject constructor(
 
     private val _teachers: MutableStateFlow<List<Teacher>> = MutableStateFlow(emptyList())
     override val teachers: StateFlow<List<Teacher>> = _teachers
+
+    val user = authService.getCurrentUser()
 
     override fun onCreate() {
         super.onCreate()
