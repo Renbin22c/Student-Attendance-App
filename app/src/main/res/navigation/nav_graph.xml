@@ -84,18 +84,10 @@
         <action
             android:id="@+id/action_teacherTabContainer_to_addLesson"
             app:destination="@id/addLessonFragment" />
-        <action
-            android:id="@+id/action_teacherTabContainer_to_editLesson"
-            app:destination="@id/editLessonFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLessonFragment"
         android:name="com.renbin.student_attendance_app.ui.screens.lesson.AddLessonFragment"
         android:label="AddLessonFragment"
-        tools:layout="@layout/fragment_base_add_edit_lesson"/>
-    <fragment
-        android:id="@+id/editLessonFragment"
-        android:name="com.renbin.student_attendance_app.ui.screens.lesson.EditLessonFragment"
-        android:label="EditLessonFragment"
-        tools:layout="@layout/fragment_base_add_edit_lesson"/>
+        tools:layout="@layout/fragment_add_lesson"/>
 </navigation>

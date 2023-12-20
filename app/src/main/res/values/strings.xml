@@ -26,4 +26,7 @@
     <string name="lesson_name">Lesson Name</string>
     <string name="lesson_details">Lesson Details</string>
     <string name="time">Time</string>
+    <string name="submit">Submit</string>
+    <string name="choose_date">Choose Date</string>
+    <string name="choose_time">Choose Time</string>
 </resources>

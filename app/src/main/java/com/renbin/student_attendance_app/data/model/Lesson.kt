@@ -8,7 +8,9 @@ data class Lesson(
     val date: String,
     val classes: String,
     val student: List<String>,
-    val attendance: List<Boolean>
+    val attendanceTime: List<String>,
+    val attendance: List<Boolean>,
+    val createdBy: String
 ) {
     fun toHashMap(): HashMap<String, Any> {
         return hashMapOf(
@@ -18,7 +20,9 @@ data class Lesson(
             "classes" to classes,
             "time" to time,
             "student" to student,
-            "attendance" to attendance
+            "attendanceTime" to attendanceTime,
+            "attendance" to attendance,
+            "createdBy" to createdBy
         )
     }
 
@@ -32,7 +36,9 @@ data class Lesson(
                 date = hash["date"].toString(),
                 classes = hash["classes"].toString(),
                 student = hash["student"] as List<String>,
-                attendance = (hash["attendance"] as List<*>).map { it as Boolean }
+                attendanceTime = hash["attendanceTime"] as List<String>,
+                attendance = (hash["attendance"] as List<*>).map { it as Boolean },
+                createdBy = hash["createdBy"].toString()
             )
         }
     }

@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.renbin.student_attendance_app.data.model.Classes
+import com.renbin.student_attendance_app.data.model.Teacher
 import com.renbin.student_attendance_app.databinding.ItemLayoutClassesBinding
 
 class TeacherClassesAdapter(
-    private var classes: List<Classes>
+    private var classes: List<Classes>,
+    private var teachers: List<Teacher>
 ): RecyclerView.Adapter<TeacherClassesAdapter.ClassesItemViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -33,13 +35,20 @@ class TeacherClassesAdapter(
         notifyDataSetChanged()
     }
 
+    fun setTeachers(teachers: List<Teacher>){
+        this.teachers = teachers
+        notifyDataSetChanged()
+    }
+
     inner class ClassesItemViewHolder(
         private val binding: ItemLayoutClassesBinding
     ): RecyclerView.ViewHolder(binding.root){
         fun bind(classes: Classes){
             binding.run {
                 tvClasses.text = classes.name
-                tvClassesTeacher.text = classes.teacher
+
+                val matchTeacher = teachers.find { it.id == classes.teacher }
+                tvClassesTeacher.text = matchTeacher?.name
             }
         }
     }

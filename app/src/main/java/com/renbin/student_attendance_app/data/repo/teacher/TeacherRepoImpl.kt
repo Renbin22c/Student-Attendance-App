@@ -1,9 +1,14 @@
 package com.renbin.student_attendance_app.data.repo.teacher
 
+import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.renbin.student_attendance_app.core.service.AuthService
+import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.model.Teacher
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 class TeacherRepoImpl(
@@ -28,6 +33,27 @@ class TeacherRepoImpl(
         return doc.data?.let {
             it["id"] = getUid()
             Teacher.fromHashMap(it)
+        }
+    }
+
+    override suspend fun getAllTeachers() = callbackFlow {
+        val listener = getDbRef().addSnapshotListener{ value, error ->
+            if(error != null){
+                throw error
+            }
+            val teachers = mutableListOf<Teacher>()
+            value?.documents?.let {docs ->
+                for(doc in docs){
+                    doc.data?.let {
+                        it["id"] = doc.id
+                        teachers.add(Teacher.fromHashMap(it))
+                    }
+                }
+                trySend(teachers)
+            }
+        }
+        awaitClose{
+            listener.remove()
         }
     }
 }
