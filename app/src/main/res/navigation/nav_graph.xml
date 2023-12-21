@@ -84,10 +84,22 @@
         <action
             android:id="@+id/action_teacherTabContainer_to_addLesson"
             app:destination="@id/addLessonFragment" />
+        <action
+            android:id="@+id/action_teacherTabContainer_to_classesDetails"
+            app:destination="@id/classesDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLessonFragment"
         android:name="com.renbin.student_attendance_app.ui.screens.lesson.AddLessonFragment"
         android:label="AddLessonFragment"
         tools:layout="@layout/fragment_add_lesson"/>
+    <fragment
+        android:id="@+id/classesDetailsFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.classes.ClassesDetailsFragment"
+        android:label="fragment_classes_details"
+        tools:layout="@layout/fragment_classes_details" >
+        <argument
+            android:name="className"
+            app:argType="string"/>
+    </fragment>
 </navigation>

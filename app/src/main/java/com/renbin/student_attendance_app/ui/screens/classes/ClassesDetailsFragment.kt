@@ -6,45 +6,41 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.renbin.student_attendance_app.R
-import com.renbin.student_attendance_app.databinding.FragmentStudentClassesBinding
+import com.renbin.student_attendance_app.databinding.FragmentClassesDetailsBinding
 import com.renbin.student_attendance_app.ui.adapter.StudentAdapter
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
-import com.renbin.student_attendance_app.ui.screens.classes.viewModel.StudentClassesViewModelImpl
+import com.renbin.student_attendance_app.ui.screens.classes.viewModel.ClassesDetailsViewModelImpl
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class StudentClassesFragment : BaseFragment<FragmentStudentClassesBinding>() {
-    override val viewModel: StudentClassesViewModelImpl by viewModels()
+class ClassesDetailsFragment : BaseFragment<FragmentClassesDetailsBinding>() {
+    override val viewModel: ClassesDetailsViewModelImpl by viewModels()
+    private val args: ClassesDetailsFragmentArgs by navArgs()
     private lateinit var adapter: StudentAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentStudentClassesBinding.inflate(inflater, container, false)
+        binding = FragmentClassesDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun setupUIComponents(view: View) {
         super.setupUIComponents(view)
-
         setupStudentAdapter()
-    }
 
+        viewModel.getAllStudentsByClass(args.className)
+
+        binding.className.text = args.className
+    }
 
     override fun setupViewModelObserver() {
         super.setupViewModelObserver()
-
-        lifecycleScope.launch {
-            viewModel.student.collect{
-                viewModel.getAllStudentsByClass(it.classes)
-                binding.className.text = it.classes
-            }
-        }
 
         lifecycleScope.launch {
             viewModel.students.collect{

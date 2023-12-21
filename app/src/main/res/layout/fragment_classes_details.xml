@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="12dp"
-    tools:context=".ui.screens.classes.StudentClassesFragment">
+    tools:context=".ui.screens.classes.ClassesDetailsFragment">
 
     <LinearLayout
         android:id="@+id/llClass"

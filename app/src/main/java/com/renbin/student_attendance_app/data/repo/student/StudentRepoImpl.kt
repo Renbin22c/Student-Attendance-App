@@ -79,4 +79,28 @@ class StudentRepoImpl(
             emptyList()
         }
     }
+
+    override suspend fun getAllStudentByClassUseFlow(classes: String)= callbackFlow {
+        val listener = getDbRef().addSnapshotListener{value, error ->
+            if(error != null){
+                throw error
+            }
+            val students = mutableListOf<Student>()
+            value?.documents?.let {docs ->
+                for (doc in docs){
+                    doc.data?.let {
+                        if (it["classes"] == classes){
+                            it["id"] = doc.id
+                            students.add(Student.fromHashMap(it))
+                        }
+                    }
+                }
+                trySend(students)
+            }
+        }
+
+        awaitClose{
+            listener.remove()
+        }
+    }
 }
