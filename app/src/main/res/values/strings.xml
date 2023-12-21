@@ -32,4 +32,7 @@
     <string name="created_at">Created At</string>
     <string name="count">Count</string>
     <string name="person">Person</string>
+    <string name="back">back</string>
+    <string name="class_details">Class Details</string>
+    <string name="add_lesson">Add Lesson</string>
 </resources>

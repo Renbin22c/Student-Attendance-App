@@ -5,9 +5,35 @@
     android:layout_height="match_parent"
     android:padding="12dp"
     tools:context=".ui.screens.classes.ClassesDetailsFragment">
+    <RelativeLayout
+        android:id="@+id/rlTop"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+
+        <ImageButton
+            android:id="@+id/ibBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_back"
+            android:contentDescription="@string/back" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/class_details"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/llClass"
+        android:layout_below="@id/rlTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

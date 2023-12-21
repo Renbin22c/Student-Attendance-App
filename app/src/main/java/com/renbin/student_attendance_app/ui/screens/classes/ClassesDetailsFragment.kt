@@ -37,6 +37,10 @@ class ClassesDetailsFragment : BaseFragment<FragmentClassesDetailsBinding>() {
         viewModel.getAllStudentsByClass(args.className)
 
         binding.className.text = args.className
+
+        binding.ibBack.setOnClickListener {
+            navController.popBackStack()
+        }
     }
 
     override fun setupViewModelObserver() {
