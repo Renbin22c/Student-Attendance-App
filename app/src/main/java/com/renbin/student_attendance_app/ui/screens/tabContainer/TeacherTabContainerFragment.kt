@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
+import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.databinding.FragmentTeacherTabContainerBinding
 import com.renbin.student_attendance_app.ui.adapter.FragmentAdapter
 import com.renbin.student_attendance_app.ui.screens.classes.TeacherClassesFragment
@@ -34,9 +35,9 @@ class TeacherTabContainerFragment : Fragment() {
         binding.vpTeacherContainer.adapter = FragmentAdapter(
             this,
             listOf(
-                TeacherHomeFragment(),
                 TeacherClassesFragment(),
                 TeacherLessonFragment(),
+                TeacherHomeFragment(),
                 NoteFragment(),
                 TeacherProfileFragment()
             )
@@ -45,22 +46,25 @@ class TeacherTabContainerFragment : Fragment() {
         TabLayoutMediator(binding.tlTeacherTabs, binding.vpTeacherContainer){ tab, position ->
             when(position){
                 0 ->{
-                    tab.text = "Home"
+                    tab.setIcon(R.drawable.ic_class)
                 }
                 1 -> {
-                    tab.text = "Class"
+                    tab.setIcon(R.drawable.ic_notifications)
                 }
                 2->{
-                    tab.text = "Lesson"
+                    tab.setIcon(R.drawable.ic_home)
                 }
                 3 ->{
-                    tab.text = "Note"
+                    tab.setIcon(R.drawable.ic_book)
                 }
                 else ->{
-                    tab.text = "Profile"
+                    tab.setIcon(R.drawable.ic_person)
                 }
             }
         }.attach()
+
+        binding.vpTeacherContainer.setCurrentItem(2, false)
+        binding.vpTeacherContainer.isUserInputEnabled = false
     }
 
 }
