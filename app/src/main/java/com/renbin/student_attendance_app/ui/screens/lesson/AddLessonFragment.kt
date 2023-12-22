@@ -45,6 +45,10 @@ class AddLessonFragment: BaseFragment<FragmentAddLessonBinding>() {
         )
 
         binding.run {
+            ibBack.setOnClickListener {
+                navController.popBackStack()
+            }
+
             btnDate.setOnClickListener {
                 datePicker()
             }

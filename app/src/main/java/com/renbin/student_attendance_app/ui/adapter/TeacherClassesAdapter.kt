@@ -11,6 +11,8 @@ class TeacherClassesAdapter(
     private var classes: List<Classes>,
     private var teachers: List<Teacher>
 ): RecyclerView.Adapter<TeacherClassesAdapter.ClassesItemViewHolder>() {
+    var listener: Listener? = null
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -49,7 +51,15 @@ class TeacherClassesAdapter(
 
                 val matchTeacher = teachers.find { it.id == classes.teacher }
                 tvClassesTeacher.text = matchTeacher?.name
+
+                cvClasses.setOnClickListener {
+                    listener?.onClick(classes)
+                }
             }
         }
+    }
+
+    interface Listener {
+        fun onClick(classes: Classes)
     }
 }

@@ -8,10 +8,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.renbin.student_attendance_app.data.model.Classes
 import com.renbin.student_attendance_app.databinding.FragmentTeacherClassesBinding
 import com.renbin.student_attendance_app.ui.adapter.TeacherClassesAdapter
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
 import com.renbin.student_attendance_app.ui.screens.classes.viewModel.TeacherClassesViewModelImpl
+import com.renbin.student_attendance_app.ui.screens.tabContainer.TeacherTabContainerFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -60,6 +62,13 @@ class TeacherClassesFragment : BaseFragment<FragmentTeacherClassesBinding>() {
 
     private fun setupTeacherClassesAdapter(){
         adapter = TeacherClassesAdapter(emptyList(), emptyList())
+        adapter.listener = object :TeacherClassesAdapter.Listener{
+            override fun onClick(classes: Classes) {
+                val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerToClassesDetails(classes.name)
+                navController.navigate(action)
+            }
+
+        }
 
         binding.rvClasses.adapter = adapter
         binding.rvClasses.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)

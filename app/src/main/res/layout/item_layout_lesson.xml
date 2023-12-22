@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvLesson"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -91,28 +95,32 @@
             android:id="@+id/tlAttendance"
             android:layout_below="@id/tvLessonDetails"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TableRow android:background="@color/gray" android:padding="5dp">
+            android:layout_height="wrap_content"
+            android:background="@drawable/cell_shape">
+            <TableRow android:background="@color/black" android:padding="5dp">
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textAlignment="center"
-                    android:text="@string/name"/>
+                    android:text="@string/name"
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/time"
                     android:textAlignment="center"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textAlignment="center"
-                    android:text="@string/attendance"/>
+                    android:text="@string/attendance"
+                    android:textColor="@color/white"/>
             </TableRow>
 
             <LinearLayout

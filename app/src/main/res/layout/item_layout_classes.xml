@@ -19,7 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/classes"
-            android:paddingTop="20dp"/>
+            android:paddingTop="20dp"
+            android:textStyle="bold"
+            style="@style/TextAppearance.Material3.TitleLarge" />
 
         <TextView
             android:id="@+id/tvClassesTeacher"
