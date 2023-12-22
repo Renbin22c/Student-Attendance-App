@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="12dp"
     tools:context=".ui.screens.classes.ClassesDetailsFragment">
     <RelativeLayout
         android:id="@+id/rlTop"
@@ -36,6 +35,7 @@
         android:layout_below="@id/rlTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="12dp"
         android:orientation="horizontal">
 
         <TextView
@@ -61,7 +61,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_below="@id/llClass"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="12dp">
 
         <TableLayout
             android:layout_width="match_parent"

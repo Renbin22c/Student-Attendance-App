@@ -86,7 +86,9 @@ class AddLessonViewModelImpl @Inject constructor(
 
         val errorDate = isValidDate(date, currentDate)
         if(errorDate != null) return errorDate
+
         val errorTime = isValidTime(time, currentTime)
+        if(errorTime != null) return errorTime
 
         return null
     }
@@ -113,8 +115,12 @@ class AddLessonViewModelImpl @Inject constructor(
         val startTime = inputTimeFormat.parse("8:00 am")
         val endTime = inputTimeFormat.parse("8:00 pm")
 
-        Log.d("debugging", "Input Time: $inputTimeFormatted, Current Time: $currentTimeFormat")
-        Log.d("debugging", "Start Time: $startTime, End Time: $endTime")
+
+        if (inputTimeFormatted != null && currentTimeFormat != null && startTime != null && endTime != null) {
+            if (inputTimeFormatted.before(startTime) || inputTimeFormatted.after(endTime)) {
+                return "Invalid Time, please choose a time between 8:00 am and 8:00 pm"
+            }
+        }
 
         return null
     }
