@@ -1,20 +1,16 @@
 package com.renbin.student_attendance_app.ui.screens.lesson
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.databinding.FragmentTeacherLessonBinding
 import com.renbin.student_attendance_app.ui.adapter.LessonAdapter
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
-import com.renbin.student_attendance_app.ui.screens.base.viewModel.BaseViewModel
 import com.renbin.student_attendance_app.ui.screens.lesson.viewModel.TeacherLessonViewModelImpl
 import com.renbin.student_attendance_app.ui.screens.tabContainer.TeacherTabContainerFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +24,7 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentTeacherLessonBinding.inflate(inflater, container, false)
         return binding.root
@@ -70,8 +66,12 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
     }
 
     private fun setupLessonAdapter(){
-        lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList())
+        lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList(), viewModel.user)
         lessonAdapter.listener = object : LessonAdapter.Listener{
+            override fun onClick(id: String, lesson: Lesson) {
+                TODO("Not yet implemented")
+            }
+
             override fun onDelete(lesson: Lesson) {
                 viewModel.deleteLesson(lesson.id.toString())
             }

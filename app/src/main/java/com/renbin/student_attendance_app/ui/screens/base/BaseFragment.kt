@@ -46,28 +46,28 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
     protected open fun setupViewModelObserver() {
         lifecycleScope.launch {
             viewModel.error.collect {
-                showSnackbar(it, true)
+                showSnackBar(it, true)
             }
         }
 
         lifecycleScope.launch {
             viewModel.success.collect {
-                showSnackbar(it)
+                showSnackBar(it)
             }
         }
     }
 
-    private fun showSnackbar(msg: String, isError: Boolean = false) {
-        val snackbar = Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG)
+    private fun showSnackBar(msg: String, isError: Boolean = false) {
+        val snackBar = Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG)
         if (isError) {
-            snackbar.setBackgroundTint(
+            snackBar.setBackgroundTint(
                 ContextCompat.getColor(
                     requireContext(),
                     R.color.error
                 )
             )
         }
-        snackbar.show()
+        snackBar.show()
     }
 
     fun logMsg(msg: String, tag: String = "debugging"){

@@ -10,7 +10,6 @@ import com.renbin.student_attendance_app.databinding.FragmentTeacherTabContainer
 import com.renbin.student_attendance_app.ui.adapter.FragmentAdapter
 import com.renbin.student_attendance_app.ui.screens.classes.TeacherClassesFragment
 import com.renbin.student_attendance_app.ui.screens.home.TeacherHomeFragment
-import com.renbin.student_attendance_app.ui.screens.lesson.StudentLessonFragment
 import com.renbin.student_attendance_app.ui.screens.lesson.TeacherLessonFragment
 import com.renbin.student_attendance_app.ui.screens.note.NoteFragment
 import com.renbin.student_attendance_app.ui.screens.profile.TeacherProfileFragment

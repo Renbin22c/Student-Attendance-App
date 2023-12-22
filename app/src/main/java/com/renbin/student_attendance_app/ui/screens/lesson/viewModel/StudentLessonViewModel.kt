@@ -13,4 +13,5 @@ interface StudentLessonViewModel {
     fun getAllLesson()
     fun getAllStudents()
     fun getAllTeachers()
+    fun updateAttendanceStatus(id: String, lesson: Lesson)
 }

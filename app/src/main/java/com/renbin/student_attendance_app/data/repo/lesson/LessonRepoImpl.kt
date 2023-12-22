@@ -45,6 +45,10 @@ class LessonRepoImpl(
         getDbRef().add(lesson.toHashMap()).await()
     }
 
+    override suspend fun updateLesson(id: String, lesson: Lesson) {
+        getDbRef().document(id).set(lesson.toHashMap()).await()
+    }
+
     override suspend fun deleteLesson(id: String) {
         getDbRef().document(id).delete().await()
     }

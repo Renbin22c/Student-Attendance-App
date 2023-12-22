@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface LessonRepo {
     suspend fun getAllLessons(): Flow<List<Lesson>>
     suspend fun addLesson(lesson: Lesson)
+    suspend fun updateLesson(id: String, lesson: Lesson)
     suspend fun deleteLesson(id:String)
 }

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.databinding.FragmentMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
