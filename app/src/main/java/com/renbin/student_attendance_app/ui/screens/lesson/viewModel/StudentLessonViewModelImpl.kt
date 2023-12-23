@@ -23,7 +23,7 @@ class StudentLessonViewModelImpl @Inject constructor(
     private val studentRepo: StudentRepo,
     private val teacherRepo: TeacherRepo,
     authService: AuthService
-):BaseViewModel(), StudentLessonViewModel {
+):BaseViewModel(), StudentLessonViewModel, LessonViewModel {
     private val _lessons: MutableStateFlow<List<Lesson>> = MutableStateFlow(emptyList())
     override val lessons: StateFlow<List<Lesson>> = _lessons
 

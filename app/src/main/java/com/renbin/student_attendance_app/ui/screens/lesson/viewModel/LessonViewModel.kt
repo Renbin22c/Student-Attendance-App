@@ -5,6 +5,12 @@ import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.model.Teacher
 import kotlinx.coroutines.flow.StateFlow
 
-interface StudentLessonViewModel {
-    fun updateAttendanceStatus(id: String, lesson: Lesson)
+interface LessonViewModel {
+    val lessons: StateFlow<List<Lesson>>
+    val students: StateFlow<List<Student>>
+    val teachers: StateFlow<List<Teacher>>
+
+    fun getAllLesson()
+    fun getAllStudents()
+    fun getAllTeachers()
 }

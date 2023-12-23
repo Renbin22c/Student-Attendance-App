@@ -56,6 +56,8 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
 
         binding.run {
             btnAddLesson.setOnClickListener {
+                clearOption()
+
                 val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerToAddLesson()
                 navController.navigate(action)
             }
@@ -73,14 +75,7 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
             }
 
             btnClear.setOnClickListener {
-                classSelect = null
-                dateSelect = null
-
-                autoCompleteClass.text.clear()
-                autoCompleteDate.text.clear()
-
-                autoCompleteClass.clearFocus()
-                autoCompleteDate.clearFocus()
+                classSelect
             }
         }
     }
@@ -113,7 +108,7 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
                 classAdapter = ArrayAdapter(
                     requireContext(),
                     androidx.transition.R.layout.support_simple_spinner_dropdown_item,
-                    it
+                    it.sorted()
                 )
                 binding.autoCompleteClass.setAdapter(classAdapter)
             }
@@ -124,11 +119,12 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
                 dateAdapter = ArrayAdapter(
                     requireContext(),
                     androidx.transition.R.layout.support_simple_spinner_dropdown_item,
-                    it
+                    it.sorted()
                 )
                 binding.autoCompleteDate.setAdapter(dateAdapter)
             }
         }
+
         lifecycleScope.launch {
             viewModel.filteredLessons.collect {
                 if (classSelect !=null || dateSelect != null){
@@ -159,4 +155,16 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
         binding.rvLesson.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    private fun clearOption(){
+        binding.run {
+            classSelect = null
+            dateSelect = null
+
+            autoCompleteClass.text.clear()
+            autoCompleteDate.text.clear()
+
+            autoCompleteClass.clearFocus()
+            autoCompleteDate.clearFocus()
+        }
+    }
 }

@@ -65,7 +65,7 @@ class AddLessonFragment: BaseFragment<FragmentAddLessonBinding>() {
                 val name = binding.etLessonName.text.toString()
                 val details = binding.etLessonDetails.text.toString()
 
-                viewModel.addLesson(name, details, classSelect, date, time)
+                viewModel.addLesson(name, details, classSelect, date, time, requireContext())
             }
         }
     }

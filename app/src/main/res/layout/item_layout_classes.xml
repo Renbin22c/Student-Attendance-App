@@ -12,24 +12,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/tvClasses"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/classes"
-            android:paddingTop="20dp"
             android:textStyle="bold"
-            style="@style/TextAppearance.Material3.TitleLarge" />
+            android:textAlignment="center"
+            style="@style/TextAppearance.Material3.TitleSmall"/>
 
         <TextView
             android:id="@+id/tvClassesTeacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/teacher"
-            android:paddingBottom="20dp"
-            android:paddingHorizontal="10dp"/>
+            android:text="@string/teacher"/>
 
     </LinearLayout>
 

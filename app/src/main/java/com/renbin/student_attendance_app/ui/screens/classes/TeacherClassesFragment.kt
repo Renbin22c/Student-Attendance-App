@@ -49,6 +49,11 @@ class TeacherClassesFragment : BaseFragment<FragmentTeacherClassesBinding>() {
         lifecycleScope.launch {
             viewModel.classes.collect{
                 adapter.setClasses(it)
+                if (it.isEmpty()){
+                    binding.tvEmpty.visibility = View.VISIBLE
+                } else{
+                    binding.tvEmpty.visibility = View.GONE
+                }
             }
         }
 

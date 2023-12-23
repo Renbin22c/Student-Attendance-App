@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.renbin.student_attendance_app.R
 
@@ -25,6 +26,7 @@ object NotificationUtil {
     }
 
     fun createNotificationBuilder(context: Context, title: String, desc: String): NotificationCompat.Builder{
+        Log.d("debugging", "$title, $desc")
         return NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notifications)
             .setContentTitle(title)
