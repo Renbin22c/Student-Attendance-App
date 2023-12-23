@@ -35,4 +35,9 @@
     <string name="back">back</string>
     <string name="class_details">Class Details</string>
     <string name="add_lesson">Add Lesson</string>
+    <string name="clear">Clear</string>
+    <string name="refresh">refresh</string>
+    <string name="lesson_page">Lesson Page</string>
+    <string name="empty">empty</string>
+    <string name="it_was_no_lesson_for_now">It was no lesson for now</string>
 </resources>

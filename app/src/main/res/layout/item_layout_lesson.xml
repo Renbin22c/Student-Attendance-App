@@ -11,58 +11,66 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="20dp">
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/rlDetails"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tvLessonName"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/lesson_name"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="2dp"
-                style="@style/TextAppearance.Material3.TitleLarge"/>
+                android:layout_weight="3"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvLessonName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lesson_name"
+                    android:layout_marginStart="2dp"
+                    style="@style/TextAppearance.Material3.TitleLarge"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tvLessonTeacher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/teacher"
+                        style="@style/TextAppearance.Material3.BodySmall"/>
+
+                    <TextView
+                        android:id="@+id/tvClasses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/classes"
+                        android:layout_marginStart="5dp"
+                        style="@style/TextAppearance.Material3.BodySmall" />
+                </LinearLayout>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvLessonName"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="end">
                 <TextView
-                    android:id="@+id/tvLessonTeacher"
+                    android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/teacher"
+                    android:text="@string/date"
+                    android:layout_marginEnd="2dp"
+                    style="@style/TextAppearance.Material3.BodyLarge" />
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time"
+                    android:layout_marginEnd="2dp"
                     style="@style/TextAppearance.Material3.BodySmall"/>
-
-                <TextView
-                    android:id="@+id/tvClasses"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/classes"
-                    android:layout_marginStart="5dp"
-                    style="@style/TextAppearance.Material3.BodySmall" />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/date"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="2dp"
-                style="@style/TextAppearance.Material3.BodyLarge" />
-
-            <TextView
-                android:id="@+id/tvTime"
-                android:layout_below="@id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/time"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="2dp"
-                style="@style/TextAppearance.Material3.BodySmall"/>
-        </RelativeLayout>
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/ivDeleteLesson"

@@ -32,6 +32,15 @@ class TeacherLessonViewModelImpl @Inject constructor(
     private val _teachers: MutableStateFlow<List<Teacher>> = MutableStateFlow(emptyList())
     override val teachers: StateFlow<List<Teacher>> = _teachers
 
+    private val _classes: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    override val classes: StateFlow<List<String>> = _classes
+
+    private val _dates: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    override val dates: StateFlow<List<String>> = _dates
+
+    private val _filteredLessons: MutableStateFlow<List<Lesson>> = MutableStateFlow(emptyList())
+    override val filteredLessons: StateFlow<List<Lesson>> = _filteredLessons
+
     val user = authService.getCurrentUser()
 
     override fun onCreate() {
@@ -45,7 +54,18 @@ class TeacherLessonViewModelImpl @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler { lessonRepo.getAllLessons() }?.collect{
                 _lessons.value = it
+                getClassesAndDates()
             }
+        }
+    }
+
+    override fun getClassesAndDates() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val distinctClasses = _lessons.value.map { it.classes }.distinct()
+            val distinctDates = _lessons.value.map { it.date }.distinct()
+
+            _classes.value = distinctClasses
+            _dates.value = distinctDates
         }
     }
 
@@ -70,5 +90,13 @@ class TeacherLessonViewModelImpl @Inject constructor(
             errorHandler { lessonRepo.deleteLesson(id) }
             _success.emit("Delete Lesson Successfully")
         }
+    }
+
+    override fun filterLessons(classSelect: String?, dateSelect: String?) {
+        val filteredLessons = _lessons.value.filter { lesson ->
+            (classSelect == null || lesson.classes == classSelect) &&
+                    (dateSelect == null || lesson.date == dateSelect)
+        }
+        _filteredLessons.value = filteredLessons
     }
 }
