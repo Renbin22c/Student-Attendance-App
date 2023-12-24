@@ -44,4 +44,7 @@
     <string name="class_page">Class Page</string>
     <string name="home_page">Home Page</string>
     <string name="today_don_t_have_any_lesson">Today don\'t have any lesson</string>
+    <string name="student_details">Student Details</string>
+    <string name="student_list">Student List</string>
+    <string name="delete">Delete</string>
 </resources>

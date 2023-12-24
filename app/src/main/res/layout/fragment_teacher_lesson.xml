@@ -44,9 +44,9 @@
         android:layout_below="@id/rlTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="14dp"
+        android:paddingHorizontal="10dp"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp">
+        android:layout_marginVertical="5dp">
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"

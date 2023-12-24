@@ -87,6 +87,9 @@
         <action
             android:id="@+id/action_teacherTabContainer_to_classesDetails"
             app:destination="@id/classesDetailsFragment" />
+        <action
+            android:id="@+id/action_teacherTabContainer_to_studentDetails"
+            app:destination="@id/studentDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLessonFragment"
@@ -102,4 +105,9 @@
             android:name="className"
             app:argType="string"/>
     </fragment>
+    <fragment
+        android:id="@+id/studentDetailsFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.student.StudentDetailsFragment"
+        android:label="fragment_student_details"
+        tools:layout="@layout/fragment_student_details" />
 </navigation>

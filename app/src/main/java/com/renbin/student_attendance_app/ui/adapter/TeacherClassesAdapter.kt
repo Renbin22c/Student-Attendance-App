@@ -1,6 +1,7 @@
 package com.renbin.student_attendance_app.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.renbin.student_attendance_app.data.model.Classes
@@ -55,11 +56,24 @@ class TeacherClassesAdapter(
                 cvClasses.setOnClickListener {
                     listener?.onClick(classes)
                 }
+
+                cvClasses.setOnLongClickListener {
+                    ibDeleteClass.visibility =
+                        if (ibDeleteClass.visibility == View.VISIBLE) View.GONE
+                        else View.VISIBLE
+                    true
+                }
+
+                ibDeleteClass.setOnClickListener {
+                    listener?.onDelete(classes)
+                    ibDeleteClass.visibility = View.GONE
+                }
             }
         }
     }
 
     interface Listener {
         fun onClick(classes: Classes)
+        fun onDelete(classes: Classes)
     }
 }

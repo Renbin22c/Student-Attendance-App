@@ -1,7 +1,6 @@
 package com.renbin.student_attendance_app.ui.screens.lesson
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.renbin.student_attendance_app.ui.screens.lesson.viewModel.TeacherLess
 import com.renbin.student_attendance_app.ui.screens.tabContainer.TeacherTabContainerFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 @AndroidEntryPoint
 class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
@@ -75,7 +73,11 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
             }
 
             btnClear.setOnClickListener {
-                classSelect
+                classSelect = null
+                dateSelect = null
+                clearOption()
+
+                viewModel.filterLessons(null, null)
             }
         }
     }

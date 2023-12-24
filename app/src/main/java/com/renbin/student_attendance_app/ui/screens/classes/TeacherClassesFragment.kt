@@ -40,6 +40,11 @@ class TeacherClassesFragment : BaseFragment<FragmentTeacherClassesBinding>() {
                 val dialogFragment = AddClassesFragment()
                 dialogFragment.show(childFragmentManager, "AddClassesFragment")
             }
+
+            cvStudent.setOnClickListener {
+                val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerToStudentDetails()
+                navController.navigate(action)
+            }
         }
     }
 
@@ -48,7 +53,7 @@ class TeacherClassesFragment : BaseFragment<FragmentTeacherClassesBinding>() {
 
         lifecycleScope.launch {
             viewModel.classes.collect{
-                adapter.setClasses(it)
+                adapter.setClasses(it.sortedBy { classes -> classes.name })
                 if (it.isEmpty()){
                     binding.tvEmpty.visibility = View.VISIBLE
                 } else{
@@ -71,6 +76,10 @@ class TeacherClassesFragment : BaseFragment<FragmentTeacherClassesBinding>() {
             override fun onClick(classes: Classes) {
                 val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerToClassesDetails(classes.name)
                 navController.navigate(action)
+            }
+
+            override fun onDelete(classes: Classes) {
+                viewModel.deleteClasses(classes.id.toString(), classes.name)
             }
 
         }
