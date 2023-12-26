@@ -15,27 +15,32 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+// Define a Dagger module for providing repository implementations
 @Module
 @InstallIn(SingletonComponent::class)
 class RepoModule {
+    // Provide a singleton instance of TeacherRepo implementation with AuthService dependency
     @Provides
     @Singleton
     fun providesTeacherRepo(authService: AuthService): TeacherRepo {
         return TeacherRepoImpl(authService = authService)
     }
 
+    // Provide a singleton instance of StudentRepo implementation with AuthService dependency
     @Provides
     @Singleton
     fun providesStudentRepo(authService: AuthService): StudentRepo {
         return StudentRepoImpl(authService = authService)
     }
 
+    // Provide a singleton instance of ClassesRepo implementation with AuthService dependency
     @Provides
     @Singleton
     fun providesClassesRepo(authService: AuthService): ClassesRepo {
         return ClassesRepoImpl(authService = authService)
     }
 
+    // Provide a singleton instance of LessonRepo implementation with AuthService dependency
     @Provides
     @Singleton
     fun provideLessonsRepo(authService: AuthService): LessonRepo{

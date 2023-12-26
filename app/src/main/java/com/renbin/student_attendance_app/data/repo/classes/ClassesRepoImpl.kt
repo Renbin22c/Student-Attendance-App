@@ -12,21 +12,25 @@ class ClassesRepoImpl(
     private val authService: AuthService,
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ): ClassesRepo {
+
+    // Function to get the reference to the FireStore collection based on the authenticated user
     private fun getDbRef(): CollectionReference {
         val firebaseUser = authService.getCurrentUser()
-        return firebaseUser?.uid?.let{
+        return firebaseUser?.uid?.let {
             db.collection("classes")
-        } ?: throw Exception("No authentic user found")
+        } ?: throw Exception("No authenticated user found")
     }
 
-    override suspend fun getAllClasses()= callbackFlow {
-        val listener = getDbRef().addSnapshotListener{value, error ->
-            if(error != null){
+    // Function to get all classes as a Flow using callbackFlow
+    override suspend fun getAllClasses() = callbackFlow {
+        val listener = getDbRef().addSnapshotListener { value, error ->
+            if (error != null) {
                 throw error
             }
+
             val classes = mutableListOf<Classes>()
-            value?.documents?.let {docs ->
-                for (doc in docs){
+            value?.documents?.let { docs ->
+                for (doc in docs) {
                     doc.data?.let {
                         it["id"] = doc.id
                         classes.add(Classes.fromHashMap(it))
@@ -36,11 +40,12 @@ class ClassesRepoImpl(
             }
         }
 
-        awaitClose{
+        awaitClose {
             listener.remove()
         }
     }
 
+    // Function to get all class names as a Flow using callbackFlow
     override suspend fun getAllClassesName() = callbackFlow {
         val listener = db.collection("classes").addSnapshotListener { value, error ->
             if (error != null) {
@@ -65,13 +70,13 @@ class ClassesRepoImpl(
         }
     }
 
+    // Function to add a new class to FireStore
     override suspend fun addClasses(classes: Classes) {
         getDbRef().add(classes.toHashMap()).await()
     }
 
+    // Function to delete a class by ID from FireStore
     override suspend fun deleteClasses(id: String) {
         getDbRef().document(id).delete().await()
     }
-
-
 }

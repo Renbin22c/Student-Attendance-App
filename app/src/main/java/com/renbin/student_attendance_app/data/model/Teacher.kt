@@ -1,5 +1,6 @@
 package com.renbin.student_attendance_app.data.model
 
+// Define a data class representing a Teacher model
 data class Teacher(
     val id: String? = null,
     val name: String,
@@ -7,6 +8,7 @@ data class Teacher(
     val profilePicUrl: String = "",
     val createdAt: Long = System.currentTimeMillis()
 ){
+    // Function to convert the teacher instance to a HashMap for FireStore
     fun toHashMap(): HashMap<String, Any> {
         return hashMapOf(
             "name" to name,
@@ -16,6 +18,7 @@ data class Teacher(
         )
     }
 
+    // Companion object containing a function to create a Teacher instance from a HashMap
     companion object {
         fun fromHashMap(hash: Map<String, Any>): Teacher{
             return Teacher(

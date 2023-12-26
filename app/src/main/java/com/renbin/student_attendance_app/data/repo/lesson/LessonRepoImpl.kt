@@ -12,21 +12,24 @@ class LessonRepoImpl(
     private val authService: AuthService,
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ): LessonRepo {
+    // Function to get the reference to the FireStore collection based on the authenticated user
     private fun getDbRef(): CollectionReference {
         val firebaseUser = authService.getCurrentUser()
-        return firebaseUser?.uid?.let{
+        return firebaseUser?.uid?.let {
             db.collection("lessons")
-        } ?: throw Exception("No authentic user found")
+        } ?: throw Exception("No authenticated user found")
     }
 
-    override suspend fun getAllLessons()= callbackFlow {
-        val listener = getDbRef().addSnapshotListener{value, error ->
-            if(error != null){
+    // Function to get all lessons as a Flow using callbackFlow
+    override suspend fun getAllLessons() = callbackFlow {
+        val listener = getDbRef().addSnapshotListener { value, error ->
+            if (error != null) {
                 throw error
             }
+
             val lessons = mutableListOf<Lesson>()
-            value?.documents?.let {docs ->
-                for (doc in docs){
+            value?.documents?.let { docs ->
+                for (doc in docs) {
                     doc.data?.let {
                         it["id"] = doc.id
                         lessons.add(Lesson.fromHashMap(it))
@@ -36,21 +39,23 @@ class LessonRepoImpl(
             }
         }
 
-        awaitClose{
+        awaitClose {
             listener.remove()
         }
     }
 
+    // Function to add a new lesson to FireStore
     override suspend fun addLesson(lesson: Lesson) {
         getDbRef().add(lesson.toHashMap()).await()
     }
 
+    // Function to update an existing lesson by ID in FireStore
     override suspend fun updateLesson(id: String, lesson: Lesson) {
         getDbRef().document(id).set(lesson.toHashMap()).await()
     }
 
+    // Function to delete a lesson by ID from FireStore
     override suspend fun deleteLesson(id: String) {
         getDbRef().document(id).delete().await()
     }
-
 }
