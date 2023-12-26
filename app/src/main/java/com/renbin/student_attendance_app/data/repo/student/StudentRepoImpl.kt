@@ -55,7 +55,9 @@ class StudentRepoImpl(
     }
 
     override suspend fun updateStudent(student: Student) {
-        getDbRef().document(getUid()).set(student.toHashMap()).await()
+        if (student.id != null){
+            getDbRef().document(student.id).set(student.toHashMap()).await()
+        }
     }
 
     override suspend fun getAllStudentByClass(classes: String): List<Student> {

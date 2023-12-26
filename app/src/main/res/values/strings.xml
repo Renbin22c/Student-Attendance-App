@@ -47,4 +47,10 @@
     <string name="student_details">Student Details</string>
     <string name="student_list">Student List</string>
     <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="n_a">N/A</string>
+    <string name="update">Update</string>
+    <string name="check">Check</string>
+    <string name="student_details_edit">Student Details Edit</string>
+    <string name="search_by_email">Search by email</string>
 </resources>

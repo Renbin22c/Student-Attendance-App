@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.renbin.student_attendance_app.core.service.AuthService
 import com.renbin.student_attendance_app.core.util.NotificationUtil.createNotificationBuilder
+import com.renbin.student_attendance_app.core.util.NotificationUtil.notify
 import com.renbin.student_attendance_app.core.util.Utility.formatDatestamp
 import com.renbin.student_attendance_app.core.util.Utility.formatTimestamp
 import com.renbin.student_attendance_app.data.model.Lesson
@@ -69,12 +70,13 @@ class AddLessonViewModelImpl @Inject constructor(
                             )
                         )
                     }
+                    val notification = createNotificationBuilder(
+                        context,
+                        "$name been created for $classes",
+                        "$name start at $date $time"
+                    ).build()
+                    notify(context, notification)
                     _success.emit("Add Lesson Successfully")
-//                    createNotificationBuilder(
-//                        context,
-//                        "$name been created",
-//                        "$name start at $date $time"
-//                    )
                 } else{
                     _error.emit("This class don't have any student")
                 }

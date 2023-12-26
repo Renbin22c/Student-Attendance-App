@@ -60,19 +60,17 @@ class LessonAdapter(
                 tvLessonDetails.text = lesson.details
                 tvDate.text = lesson.date
                 tvTime.text = lesson.time
+                tvClasses.text = lesson.classes
 
                 val matchTeacher = teachers.find { it.id == lesson.createdBy }
                 tvLessonTeacher.text = matchTeacher?.name
 
                 if(user?.uid == lesson.createdBy) ivDeleteLesson.visibility = View.VISIBLE
 
-                val filterStudent = lesson.student.filter {
-                    it == user?.uid
-                }
+                val filterStudent = lesson.student.contains(user?.uid)
+                if (filterStudent) ivCheckIn.visibility = View.VISIBLE
 
-                if (filterStudent.isNotEmpty()) ivCheckIn.visibility = View.VISIBLE
 
-                tvClasses.text = lesson.classes
                 llItems.removeAllViews()
 
                 for(i in lesson.student.indices){

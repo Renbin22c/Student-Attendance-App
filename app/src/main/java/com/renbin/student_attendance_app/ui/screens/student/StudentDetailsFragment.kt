@@ -37,6 +37,11 @@ class StudentDetailsFragment : BaseFragment<FragmentStudentDetailsBinding>() {
             ibBack.setOnClickListener {
                 navController.popBackStack()
             }
+
+            ibEdit.setOnClickListener {
+                val action = StudentDetailsFragmentDirections.actionStudentDetailsToStudentDetailsEdit()
+                navController.navigate(action)
+            }
         }
     }
 

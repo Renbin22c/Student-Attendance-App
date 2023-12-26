@@ -53,7 +53,7 @@ class TeacherLessonViewModelImpl @Inject constructor(
     override fun getAllLesson() {
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler { lessonRepo.getAllLessons() }?.collect{
-                _lessons.value = it
+                _lessons.value = it.sortedByDescending{ lesson -> lesson.date  }
                 getClassesAndDates()
             }
         }

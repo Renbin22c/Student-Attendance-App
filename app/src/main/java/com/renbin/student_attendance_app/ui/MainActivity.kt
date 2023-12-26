@@ -6,6 +6,7 @@ import android.util.Log
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.renbin.student_attendance_app.R
+import com.renbin.student_attendance_app.core.util.NotificationUtil.createNotificationChannel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,6 +14,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        createNotificationChannel(this)
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -22,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
             // Get new FCM registration token
             val token = task.result
-            Log.d("debugging", "Main Activity: $token")
+//            Log.d("debugging", "Main Activity: $token")
         })
     }
 }
