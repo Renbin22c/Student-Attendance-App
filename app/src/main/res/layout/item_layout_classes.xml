@@ -8,29 +8,43 @@
     app:cardCornerRadius="10dp"
     app:cardUseCompatPadding="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/ibDeleteClass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_delete"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/delete"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tvClasses"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="16dp"
             android:text="@string/classes"
-            android:paddingTop="20dp"
             android:textStyle="bold"
-            style="@style/TextAppearance.Material3.TitleLarge" />
+            android:textAlignment="center"
+            style="@style/TextAppearance.Material3.TitleSmall"/>
 
         <TextView
             android:id="@+id/tvClassesTeacher"
+            android:layout_below="@id/tvClasses"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/teacher"
-            android:paddingBottom="20dp"
-            android:paddingHorizontal="10dp"/>
+            android:paddingBottom="16dp"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

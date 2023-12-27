@@ -7,17 +7,22 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+// Define a Utility object with functions for common utility operations
 object Utility {
+
+    // Function to display a toast message
     fun showToast(context: Context, msg: String){
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
 
+    // Function to format a datestamp into a string in the "dd-MM-yyyy" format
     fun formatDatestamp(datestamp: Long): String {
         val cal = Calendar.getInstance(Locale.ENGLISH)
         cal.timeInMillis = datestamp
         return DateFormat.format("dd-MM-yyyy", cal).toString()
     }
 
+    // Function to format a timestamp into a string with AM/PM notation
     fun formatTimestamp(timestamp: Long): String{
         val cal = Calendar.getInstance(Locale.ENGLISH)
         cal.timeInMillis = timestamp

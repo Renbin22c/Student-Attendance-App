@@ -10,4 +10,5 @@ interface TeacherClassesViewModel {
 
     fun getAllTeachers()
     fun getAllClasses()
+    fun deleteClasses(id :String, name: String)
 }

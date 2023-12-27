@@ -1,7 +1,6 @@
 package com.renbin.student_attendance_app.ui.screens.lesson
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.renbin.student_attendance_app.ui.screens.lesson.viewModel.TeacherLess
 import com.renbin.student_attendance_app.ui.screens.tabContainer.TeacherTabContainerFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 @AndroidEntryPoint
 class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
@@ -56,6 +54,8 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
 
         binding.run {
             btnAddLesson.setOnClickListener {
+                clearOption()
+
                 val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerToAddLesson()
                 navController.navigate(action)
             }
@@ -75,12 +75,9 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
             btnClear.setOnClickListener {
                 classSelect = null
                 dateSelect = null
+                clearOption()
 
-                autoCompleteClass.text.clear()
-                autoCompleteDate.text.clear()
-
-                autoCompleteClass.clearFocus()
-                autoCompleteDate.clearFocus()
+                viewModel.filterLessons(null, null)
             }
         }
     }
@@ -113,7 +110,7 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
                 classAdapter = ArrayAdapter(
                     requireContext(),
                     androidx.transition.R.layout.support_simple_spinner_dropdown_item,
-                    it
+                    it.sorted()
                 )
                 binding.autoCompleteClass.setAdapter(classAdapter)
             }
@@ -124,11 +121,12 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
                 dateAdapter = ArrayAdapter(
                     requireContext(),
                     androidx.transition.R.layout.support_simple_spinner_dropdown_item,
-                    it
+                    it.sorted()
                 )
                 binding.autoCompleteDate.setAdapter(dateAdapter)
             }
         }
+
         lifecycleScope.launch {
             viewModel.filteredLessons.collect {
                 if (classSelect !=null || dateSelect != null){
@@ -159,4 +157,16 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
         binding.rvLesson.layoutManager = LinearLayoutManager(requireContext())
     }
 
+    private fun clearOption(){
+        binding.run {
+            classSelect = null
+            dateSelect = null
+
+            autoCompleteClass.text.clear()
+            autoCompleteDate.text.clear()
+
+            autoCompleteClass.clearFocus()
+            autoCompleteDate.clearFocus()
+        }
+    }
 }

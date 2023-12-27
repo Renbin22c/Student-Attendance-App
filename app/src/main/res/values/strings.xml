@@ -40,4 +40,17 @@
     <string name="lesson_page">Lesson Page</string>
     <string name="empty">empty</string>
     <string name="it_was_no_lesson_for_now">It was no lesson for now</string>
+    <string name="it_don_t_have_any_class_yet">It don\'t have any class yet</string>
+    <string name="class_page">Class Page</string>
+    <string name="home_page">Home Page</string>
+    <string name="today_don_t_have_any_lesson">Today don\'t have any lesson</string>
+    <string name="student_details">Student Details</string>
+    <string name="student_list">Student List</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="n_a">N/A</string>
+    <string name="update">Update</string>
+    <string name="check">Check</string>
+    <string name="student_details_edit">Student Details Edit</string>
+    <string name="search_by_email">Search by email</string>
 </resources>

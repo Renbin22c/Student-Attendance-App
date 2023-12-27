@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:text="@string/classes"
             android:textStyle="bold"
-            style="@style/TextAppearance.Material3.DisplayMedium"/>
+            style="@style/TextAppearance.Material3.TitleLarge"/>
 
         <TextView
             android:id="@+id/studentCount"
@@ -54,7 +54,7 @@
             android:layout_weight="1"
             android:text="@string/count"
             android:textAlignment="textEnd"
-            style="@style/TextAppearance.Material3.DisplaySmall"/>
+            style="@style/TextAppearance.Material3.TitleMedium"/>
 
     </LinearLayout>
 
@@ -66,7 +66,8 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/border">
             <TableRow android:background="@color/black" android:padding="5dp">
                 <TextView
                     android:layout_width="0dp"
@@ -81,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/email"
                     android:textAlignment="center"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:textColor="@color/white"/>
 
                 <TextView

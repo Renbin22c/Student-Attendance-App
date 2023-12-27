@@ -12,35 +12,40 @@ class StudentRepoImpl(
     private val authService: AuthService,
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ): StudentRepo {
+    // Get the reference to the FireStore collection for students
     private fun getDbRef(): CollectionReference {
         return db.collection("students")
     }
 
-    private fun getUid(): String{
+    // Get the UID of the current authenticated user
+    private fun getUid(): String {
         val firebaseUser = authService.getCurrentUser()
-        return firebaseUser?.uid ?: throw Exception("No authentication user found")
+        return firebaseUser?.uid ?: throw Exception("No authenticated user found")
     }
 
+    // Function to add a new student to the repository
     override suspend fun addStudent(student: Student) {
         getDbRef().document(getUid()).set(student.toHashMap()).await()
     }
 
+    // Function to get a single student from the repository
     override suspend fun getStudent(): Student? {
-        val doc =  getDbRef().document(getUid()).get().await()
+        val doc = getDbRef().document(getUid()).get().await()
         return doc.data?.let {
             it["id"] = getUid()
             Student.fromHashMap(it)
         }
     }
 
-    override suspend fun getAllStudents()= callbackFlow {
-        val listener = getDbRef().addSnapshotListener{ value, error ->
-            if(error != null){
+    // Function to get all students as a Flow
+    override suspend fun getAllStudents() = callbackFlow {
+        val listener = getDbRef().addSnapshotListener { value, error ->
+            if (error != null) {
                 throw error
             }
             val students = mutableListOf<Student>()
-            value?.documents?.let {docs ->
-                for(doc in docs){
+            value?.documents?.let { docs ->
+                for (doc in docs) {
                     doc.data?.let {
                         it["id"] = doc.id
                         students.add(Student.fromHashMap(it))
@@ -49,15 +54,19 @@ class StudentRepoImpl(
                 trySend(students)
             }
         }
-        awaitClose{
+        awaitClose {
             listener.remove()
         }
     }
 
+    // Function to update an existing student in the repository
     override suspend fun updateStudent(student: Student) {
-        getDbRef().document(getUid()).set(student.toHashMap()).await()
+        if (student.id != null) {
+            getDbRef().document(student.id).set(student.toHashMap()).await()
+        }
     }
 
+    // Function to get all students in a specific class
     override suspend fun getAllStudentByClass(classes: String): List<Student> {
         return try {
             val querySnapshot = getDbRef()
@@ -80,16 +89,17 @@ class StudentRepoImpl(
         }
     }
 
-    override suspend fun getAllStudentByClassUseFlow(classes: String)= callbackFlow {
-        val listener = getDbRef().addSnapshotListener{value, error ->
-            if(error != null){
+    // Function to get all students in a specific class as a Flow
+    override suspend fun getAllStudentByClassUseFlow(classes: String) = callbackFlow {
+        val listener = getDbRef().addSnapshotListener { value, error ->
+            if (error != null) {
                 throw error
             }
             val students = mutableListOf<Student>()
-            value?.documents?.let {docs ->
-                for (doc in docs){
+            value?.documents?.let { docs ->
+                for (doc in docs) {
                     doc.data?.let {
-                        if (it["classes"] == classes){
+                        if (it["classes"] == classes) {
                             it["id"] = doc.id
                             students.add(Student.fromHashMap(it))
                         }
@@ -99,7 +109,7 @@ class StudentRepoImpl(
             }
         }
 
-        awaitClose{
+        awaitClose {
             listener.remove()
         }
     }
