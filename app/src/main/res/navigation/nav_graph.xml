@@ -88,8 +88,16 @@
             android:id="@+id/action_teacherTabContainer_to_classesDetails"
             app:destination="@id/classesDetailsFragment" />
         <action
+
+            android:id="@+id/action_teacherTabContainer_to_addNote"
+            app:destination="@+id/addNoteFragment" />
+        <action
+            android:id="@+id/action_teacherTabContainer_to_noteDetails"
+            app:destination="@+id/noteDetailsFragment" />
+
             android:id="@+id/action_teacherTabContainer_to_studentDetails"
             app:destination="@id/studentDetailsFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/addLessonFragment"
@@ -106,6 +114,26 @@
             app:argType="string"/>
     </fragment>
     <fragment
+
+        android:id="@+id/addNoteFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.note.AddNoteFragment"
+        android:label="fragment_add_note"
+        tools:layout="@layout/fragment_add_note" />
+    <fragment
+        android:id="@+id/teacherNoteFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.note.TeacherNoteFragment"
+        android:label="fragment_teacher_note"
+        tools:layout="@layout/fragment_teacher_note" >
+        <action
+            android:id="@+id/action_teacherNoteFragment_to_addNoteFragment"
+            app:destination="@id/addNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noteDetailsFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.note.NoteDetailsFragment"
+        android:label="fragment_note_details"
+        tools:layout="@layout/fragment_note_details" />
+
         android:id="@+id/studentDetailsFragment"
         android:name="com.renbin.student_attendance_app.ui.screens.student.StudentDetailsFragment"
         android:label="fragment_student_details"
@@ -119,4 +147,5 @@
         android:name="com.renbin.student_attendance_app.ui.screens.student.StudentDetailsEditFragment"
         android:label="fragment_student_details_edit"
         tools:layout="@layout/fragment_student_details_edit" />
+
 </navigation>

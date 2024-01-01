@@ -12,7 +12,7 @@ import com.renbin.student_attendance_app.ui.adapter.FragmentAdapter
 import com.renbin.student_attendance_app.ui.screens.classes.TeacherClassesFragment
 import com.renbin.student_attendance_app.ui.screens.home.TeacherHomeFragment
 import com.renbin.student_attendance_app.ui.screens.lesson.TeacherLessonFragment
-import com.renbin.student_attendance_app.ui.screens.note.NoteFragment
+import com.renbin.student_attendance_app.ui.screens.note.TeacherNoteFragment
 import com.renbin.student_attendance_app.ui.screens.profile.TeacherProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +38,7 @@ class TeacherTabContainerFragment : Fragment() {
                 TeacherClassesFragment(),
                 TeacherLessonFragment(),
                 TeacherHomeFragment(),
-                NoteFragment(),
+                TeacherNoteFragment(),
                 TeacherProfileFragment()
             )
         )

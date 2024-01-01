@@ -5,6 +5,8 @@ import com.renbin.student_attendance_app.data.repo.lesson.LessonRepo
 import com.renbin.student_attendance_app.data.repo.lesson.LessonRepoImpl
 import com.renbin.student_attendance_app.data.repo.classes.ClassesRepo
 import com.renbin.student_attendance_app.data.repo.classes.ClassesRepoImpl
+import com.renbin.student_attendance_app.data.repo.notes.NoteRepo
+import com.renbin.student_attendance_app.data.repo.notes.NoteRepoImpl
 import com.renbin.student_attendance_app.data.repo.student.StudentRepo
 import com.renbin.student_attendance_app.data.repo.student.StudentRepoImpl
 import com.renbin.student_attendance_app.data.repo.teacher.TeacherRepo
@@ -45,5 +47,11 @@ class RepoModule {
     @Singleton
     fun provideLessonsRepo(authService: AuthService): LessonRepo{
         return LessonRepoImpl(authService = authService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotesRepo(authService: AuthService): NoteRepo{
+        return NoteRepoImpl(authService = authService)
     }
 }
