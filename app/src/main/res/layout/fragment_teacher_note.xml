@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.screens.note.TeacherNoteFragment">
 
+    <RelativeLayout
+        android:id="@+id/rlTop"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/note_page"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNotes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingHorizontal="12dp"
+        android:layout_marginTop="50dp"
         android:padding="16dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -19,9 +33,9 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:src="@drawable/ic_add"
         android:contentDescription="@string/add" />
 
-</FrameLayout>
+</RelativeLayout>

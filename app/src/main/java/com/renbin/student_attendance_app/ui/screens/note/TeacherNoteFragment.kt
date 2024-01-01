@@ -65,7 +65,12 @@ class TeacherNoteFragment : BaseFragment<FragmentTeacherNoteBinding>() {
         adapter = NoteAdapter(emptyList(), emptyList())
         adapter.listener = object :NoteAdapter.Listener{
             override fun onClick(note: Note) {
-                val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerToNoteDetails()
+                val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerToNoteDetails(
+                    note.title,
+                    note.desc,
+                    note.classes,
+                    note.createdBy
+                )
                 navController.navigate(action)
             }
         }
