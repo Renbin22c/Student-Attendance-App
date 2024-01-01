@@ -38,6 +38,15 @@ class NoteDetailsFragment : BaseFragment<FragmentNoteDetailsBinding>() {
         return binding.root
     }
 
+    override fun setupUIComponents(view: View) {
+        super.setupUIComponents(view)
+        binding.run {
+            ibBack.setOnClickListener {
+                navController.popBackStack()
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

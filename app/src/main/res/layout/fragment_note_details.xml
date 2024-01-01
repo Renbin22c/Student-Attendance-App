@@ -1,59 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="10dp"
-    app:cardCornerRadius="10dp"
-    app:cardUseCompatPadding="true"
-    android:layout_gravity="center"
+    android:gravity="center"
     tools:context=".ui.screens.note.NoteDetailsFragment">
 
-    <ImageView
-        android:id="@+id/ivEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_edit"
-        android:layout_gravity="end"/>
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/rlTop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_height="?actionBarSize">
+
+        <ImageButton
+            android:id="@+id/ibBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_back"
+            android:contentDescription="@string/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/note_details"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="true"
+        android:layout_gravity="center"
+        tools:context=".ui.screens.note.NoteDetailsFragment">
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            android:layout_gravity="end"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title"
+                    android:paddingTop="20dp"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.Material3.TitleLarge" />
+
             <TextView
-                android:id="@+id/tvTitle"
+                android:id="@+id/tvDesc"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="@string/description"
+                android:paddingBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:paddingHorizontal="10dp"/>
+
+            <TextView
+                android:id="@+id/tvClassName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title"
-                android:paddingTop="20dp"
-                android:textStyle="bold"
-                style="@style/TextAppearance.Material3.TitleLarge" />
+                android:text="@string/classname" />
 
-        <TextView
-            android:id="@+id/tvDesc"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="@string/description"
-            android:paddingBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:textAlignment="center"
-            android:paddingHorizontal="10dp"/>
-
-        <TextView
-            android:id="@+id/tvClassName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/classname" />
-
-        <TextView
-            android:id="@+id/tvCreatedBy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/creadtedby" />
-
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvCreatedBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/creadtedby" />
+        </LinearLayout>
 
 
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>
