@@ -40,4 +40,8 @@
     <string name="lesson_page">Lesson Page</string>
     <string name="empty">empty</string>
     <string name="it_was_no_lesson_for_now">It was no lesson for now</string>
+    <string name="note">Note</string>
+    <string name="add_note">Add Note</string>
+    <string name="title">Title</string>
+    <string name="desc">Desc</string>
 </resources>
