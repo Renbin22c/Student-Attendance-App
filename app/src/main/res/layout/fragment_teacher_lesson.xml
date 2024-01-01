@@ -9,14 +9,15 @@
     <RelativeLayout
         android:id="@+id/rlTop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?actionBarSize"
         android:paddingHorizontal="8dp"
         android:layout_marginTop="5dp">
 
         <ImageView
             android:id="@+id/btnClear"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_refresh"
             android:contentDescription="@string/refresh"
             android:layout_alignParentStart="true"/>
@@ -30,8 +31,9 @@
 
         <ImageView
             android:id="@+id/btnAddLesson"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_add"
             android:contentDescription="@string/add"
             android:layout_alignParentEnd="true"/>
@@ -42,9 +44,9 @@
         android:layout_below="@id/rlTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="14dp"
+        android:paddingHorizontal="10dp"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp">
+        android:layout_marginVertical="5dp">
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"

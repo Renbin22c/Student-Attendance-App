@@ -3,33 +3,39 @@
     android:id="@+id/trAttendance"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:background="@drawable/border">
 
     <TextView
         android:id="@+id/tvStudentName"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:textAlignment="center"
         android:layout_gravity="center"
-        android:text="@string/student_name"/>
+        android:text="@string/student_name"
+        android:background="@drawable/border"
+        android:padding="4dp"/>
 
     <TextView
         android:id="@+id/tvAttendanceTime"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:textAlignment="center"
         android:layout_gravity="center"
-        android:text="@string/time" />
+        android:text="@string/time"
+        android:background="@drawable/border"
+        android:padding="4dp"/>
 
     <ImageView
         android:id="@+id/ivAttendanceStatus"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_gravity="center"
         android:src="@drawable/ic_check"
-        android:contentDescription="@string/status"/>
+        android:contentDescription="@string/status"
+        android:background="@drawable/border"
+        android:padding="4dp"/>
 
 </TableRow>

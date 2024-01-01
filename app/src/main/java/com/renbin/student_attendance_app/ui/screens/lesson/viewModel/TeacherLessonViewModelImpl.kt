@@ -22,7 +22,7 @@ class TeacherLessonViewModelImpl @Inject constructor(
     private val studentRepo: StudentRepo,
     private val teacherRepo: TeacherRepo,
     authService: AuthService
-): BaseViewModel(), TeacherLessonViewModel {
+): BaseViewModel(), TeacherLessonViewModel, LessonViewModel {
     private val _lessons: MutableStateFlow<List<Lesson>> = MutableStateFlow(emptyList())
     override val lessons: StateFlow<List<Lesson>> = _lessons
 
@@ -53,7 +53,7 @@ class TeacherLessonViewModelImpl @Inject constructor(
     override fun getAllLesson() {
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler { lessonRepo.getAllLessons() }?.collect{
-                _lessons.value = it
+                _lessons.value = it.sortedByDescending{ lesson -> lesson.date  }
                 getClassesAndDates()
             }
         }

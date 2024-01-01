@@ -21,7 +21,7 @@ class ClassesDetailsViewModelImpl @Inject constructor(
     override fun getAllStudentsByClass(classes: String) {
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler { studentRepo.getAllStudentByClassUseFlow(classes) }?.collect{
-                _students.value = it
+                _students.value = it.sortedBy { student -> student.name }
             }
         }
     }

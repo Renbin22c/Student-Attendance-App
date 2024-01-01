@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/trStudent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border">
+
+    <TextView
+        android:id="@+id/tvStudentName"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:text="@string/student_name"
+        android:padding="4dp"/>
+
+    <TextView
+        android:id="@+id/tvStudentEmail"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="@drawable/border"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:text="@string/student_email"
+        android:padding="4dp"/>
+
+    <TextView
+        android:id="@+id/tvStudentClass"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:text="@string/student_class"
+        android:padding="4dp"/>
+
+    <TextView
+        android:id="@+id/tvStudentCreatedAt"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:text="@string/created_at"
+        android:padding="4dp"/>
+
+</TableRow>

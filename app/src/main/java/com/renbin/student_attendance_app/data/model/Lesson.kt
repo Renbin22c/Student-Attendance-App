@@ -1,5 +1,6 @@
 package com.renbin.student_attendance_app.data.model
 
+// Define a data class representing a Lesson model
 data class Lesson(
     val id: String? = null,
     val name: String,
@@ -12,6 +13,7 @@ data class Lesson(
     val attendance: List<Boolean>,
     val createdBy: String
 ) {
+    // Function to convert the lesson instance to a HashMap for FireStore
     fun toHashMap(): HashMap<String, Any> {
         return hashMapOf(
             "name" to name,
@@ -26,6 +28,7 @@ data class Lesson(
         )
     }
 
+    // Companion object containing a function to create a Lesson instance from a HashMap
     companion object {
         fun fromHashMap(hash: Map<String, Any>): Lesson {
             return Lesson(
@@ -43,3 +46,4 @@ data class Lesson(
         }
     }
 }
+
