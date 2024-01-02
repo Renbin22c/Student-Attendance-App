@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/app_bg"
     tools:context=".ui.screens.tabContainer.StudentTabContainerFragment">
 
     <FrameLayout
@@ -23,6 +24,9 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tlStudentTabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:background="@color/app_bg"
+        />
 
 </LinearLayout>

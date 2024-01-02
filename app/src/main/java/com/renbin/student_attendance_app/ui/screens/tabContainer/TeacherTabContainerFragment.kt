@@ -43,24 +43,33 @@ class TeacherTabContainerFragment : Fragment() {
             )
         )
 
-        TabLayoutMediator(binding.tlTeacherTabs, binding.vpTeacherContainer){ tab, position ->
-            when(position){
-                0 ->{
-                    tab.setIcon(R.drawable.ic_class)
+        TabLayoutMediator(binding.tlTeacherTabs, binding.vpTeacherContainer) { tab, position ->
+            // Inflate custom tab view
+            val customTabView = layoutInflater.inflate(R.layout.custom_tab_layout, null)
+            val tabGifIcon = customTabView.findViewById<pl.droidsonroids.gif.GifImageView>(R.id.tabGifIcon)
+
+            when (position) {
+                0 -> {
+                    tabGifIcon.setImageResource(R.drawable.presentation)
+
                 }
                 1 -> {
-                    tab.setIcon(R.drawable.ic_notifications)
+                    tabGifIcon.setImageResource(R.drawable.alarm)
+
                 }
-                2->{
-                    tab.setIcon(R.drawable.ic_home)
+                2 -> {
+                    tabGifIcon.setImageResource(R.drawable.home)
                 }
-                3 ->{
-                    tab.setIcon(R.drawable.ic_book)
+                3 -> {
+                    tabGifIcon.setImageResource(R.drawable.book)
                 }
-                else ->{
-                    tab.setIcon(R.drawable.ic_person)
+                else -> {
+                    tabGifIcon.setImageResource(R.drawable.profile)
                 }
             }
+
+            // Set custom view for the tab
+            tab.customView = customTabView
         }.attach()
 
         binding.vpTeacherContainer.setCurrentItem(2, false)

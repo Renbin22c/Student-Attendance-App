@@ -13,10 +13,8 @@ import com.renbin.student_attendance_app.databinding.FragmentTeacherNoteBinding
 import com.renbin.student_attendance_app.ui.adapter.NoteAdapter
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
 import com.renbin.student_attendance_app.ui.screens.note.viewModel.TeacherNoteViewModelImpl
-import com.renbin.student_attendance_app.ui.screens.tabContainer.TeacherTabContainerFragment
 import com.renbin.student_attendance_app.ui.screens.tabContainer.TeacherTabContainerFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
