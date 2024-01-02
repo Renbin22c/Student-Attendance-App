@@ -57,4 +57,10 @@
     <string name="check">Check</string>
     <string name="student_details_edit">Student Details Edit</string>
     <string name="search_by_email">Search by email</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="description">Description</string>
+    <string name="creadtedby">CreadtedBy</string>
+    <string name="classname">ClassName</string>
+    <string name="note_page">Note Page</string>
+    <string name="note_details">note details</string>
 </resources>
