@@ -7,6 +7,7 @@ import com.renbin.student_attendance_app.data.model.Classes
 import com.renbin.student_attendance_app.data.model.Note
 import com.renbin.student_attendance_app.data.repo.classes.ClassesRepo
 import com.renbin.student_attendance_app.data.repo.notes.NoteRepo
+import com.renbin.student_attendance_app.data.repo.student.StudentRepo
 import com.renbin.student_attendance_app.ui.screens.base.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class AddNoteViewModelImpl @Inject constructor(
     private val noteRepo: NoteRepo,
     private val classesRepo: ClassesRepo,
-    private val authService: AuthService
+    private val authService: AuthService,
+    private val studentRepo: StudentRepo,
 ): BaseViewModel(), AddNoteViewModel {
     private val _classesName = MutableStateFlow<List<String>>(emptyList())
     override val classesName: StateFlow<List<String>> =_classesName
@@ -48,8 +50,11 @@ class AddNoteViewModelImpl @Inject constructor(
     override fun addNotes(title: String, desc: String, classes: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val user = authService.getCurrentUser()
+
+            val students = studentRepo.getAllStudentByClass(classes)
+                .mapNotNull { student -> student.id }
             user?.let{
-                errorHandler { noteRepo.addNote(Note(title = title, desc = desc, classes = classes, createdBy = it.uid)) }
+                errorHandler { noteRepo.addNote(Note(title = title, desc = desc, classes = classes, student = students,createdBy = it.uid)) }
                 _success.emit("Add Note Successfully")
             }
         }
