@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.renbin.student_attendance_app.databinding.FragmentTeacherProfileBinding
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
 import com.renbin.student_attendance_app.ui.screens.profile.viewModel.TeacherProfileViewModelImpl
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TeacherProfileFragment : BaseFragment<FragmentTeacherProfileBinding>() {
@@ -22,4 +24,14 @@ class TeacherProfileFragment : BaseFragment<FragmentTeacherProfileBinding>() {
         return binding.root
     }
 
+    override fun setupViewModelObserver() {
+        super.setupViewModelObserver()
+
+        lifecycleScope.launch {
+            viewModel.user.collect {
+                binding.tvUserName.text = it.name
+                binding.tvUserEmail.text = it.email
+            }
+        }
+    }
 }

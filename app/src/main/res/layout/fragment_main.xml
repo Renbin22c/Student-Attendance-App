@@ -3,27 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@color/app_bg"
     tools:context=".ui.screens.main.MainFragment">
 
 
-    <Button
-        android:id="@+id/btnRegisterTeacher"
+    <pl.droidsonroids.gif.GifImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register_to_teacher"/>
+        android:src="@drawable/learning"/>
 
-    <Button
-        android:id="@+id/btnRegisterStudent"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/register_to_student"/>
+        android:orientation="horizontal"
+        android:gravity="center">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegisterTeacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register as Teacher"
+            android:layout_marginRight="10dp"
+            app:cornerRadius="10dp"
+            android:backgroundTint="@color/accent"/>
 
-    <Button
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegisterStudent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register as Student"
+            app:cornerRadius="10dp"
+            android:backgroundTint="@color/accent"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLoginStudent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login"/>
+        android:text="@string/login"
+        android:layout_marginTop="10dp"
+        app:cornerRadius="10dp"
+        android:backgroundTint="@color/accent"/>
 
 </LinearLayout>
