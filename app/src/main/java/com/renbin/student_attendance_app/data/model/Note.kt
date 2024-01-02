@@ -5,13 +5,15 @@ data class Note(
     val title: String,
     val desc: String,
     val classes: String,
+    val student: List<String>,
     val createdBy: String
 ) {
-    fun toHashMap(): Map<String, String> {
+    fun toHashMap(): Map<String, Any> {
         return mapOf(
             "title" to title,
             "desc" to desc,
             "classes" to classes,
+            "student" to student,
             "createdBy" to createdBy
         )
     }
@@ -22,6 +24,7 @@ data class Note(
                 title = hash["title"].toString(),
                 desc = hash["desc"].toString(),
                 classes = hash["classes"].toString(),
+                student = (hash["student"] as? List<String>) ?: emptyList(),
                 createdBy = hash["createdBy"].toString()
             )
         }
