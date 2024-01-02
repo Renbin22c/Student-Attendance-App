@@ -101,7 +101,6 @@
         <action
             android:id="@+id/action_teacherTabContainerFragment_to_studentDetailsEditFragment2"
             app:destination="@id/studentDetailsEditFragment2" />
-            app:destination="@+id/NoteDetailsFragment" />
 
         <action
             android:id="@+id/action_teacherTabContainer_to_studentDetails"
@@ -139,8 +138,6 @@
         android:id="@+id/NoteDetailsFragment"
         android:name="com.renbin.student_attendance_app.ui.screens.note.NoteDetailsFragment"
         android:label="fragment_note_details"
-
-        tools:layout="@layout/fragment_note_details" />
         tools:layout="@layout/fragment_note_details" >
         <argument
             android:name="noteTitle"
