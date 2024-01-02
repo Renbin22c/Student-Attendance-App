@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="20dp"
+    android:background="@color/app_bg"
     tools:context=".ui.screens.register.StudentRegisterFragment">
 
     <LinearLayout
@@ -86,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/register"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/accent"
             app:cornerRadius="5dp"/>
     </LinearLayout>
 

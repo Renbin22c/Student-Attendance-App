@@ -39,7 +39,7 @@ class StudentDetailsFragment : BaseFragment<FragmentStudentDetailsBinding>() {
             }
 
             ibEdit.setOnClickListener {
-                val action = StudentDetailsFragmentDirections.actionStudentDetailsToStudentDetailsEdit()
+                val action = StudentDetailsFragmentDirections.actionStudentDetailsFragmentToStudentDetailsEditFragment2()
                 navController.navigate(action)
             }
         }

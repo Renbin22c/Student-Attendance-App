@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
@@ -92,6 +92,10 @@
             app:destination="@+id/addNoteFragment" />
         <action
             android:id="@+id/action_teacherTabContainer_to_noteDetails"
+            app:destination="@+id/noteDetailsFragment" />
+        <action
+            android:id="@+id/action_teacherTabContainerFragment_to_studentDetailsEditFragment2"
+            app:destination="@id/studentDetailsEditFragment2" />
             app:destination="@+id/NoteDetailsFragment" />
 
         <action
@@ -130,6 +134,8 @@
         android:id="@+id/NoteDetailsFragment"
         android:name="com.renbin.student_attendance_app.ui.screens.note.NoteDetailsFragment"
         android:label="fragment_note_details"
+
+        tools:layout="@layout/fragment_note_details" />
         tools:layout="@layout/fragment_note_details" >
         <argument
             android:name="noteTitle"
@@ -153,11 +159,11 @@
         android:label="fragment_student_details"
         tools:layout="@layout/fragment_student_details" >
         <action
-            android:id="@+id/action_studentDetails_to_studentDetailsEdit"
-            app:destination="@id/studentDetailsEditFragment" />
+            android:id="@+id/action_studentDetailsFragment_to_studentDetailsEditFragment2"
+            app:destination="@id/studentDetailsEditFragment2" />
     </fragment>
     <fragment
-        android:id="@+id/studentDetailsEditFragment"
+        android:id="@+id/studentDetailsEditFragment2"
         android:name="com.renbin.student_attendance_app.ui.screens.student.StudentDetailsEditFragment"
         android:label="fragment_student_details_edit"
         tools:layout="@layout/fragment_student_details_edit" />

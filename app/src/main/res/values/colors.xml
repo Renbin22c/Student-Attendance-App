@@ -4,4 +4,6 @@
     <color name="gray">#BFBFBF</color>
     <color name="white">#FFFFFFFF</color>
     <color name="error">#F30000</color>
+    <color name="accent">#92E3A9</color>
+    <color name="app_bg">#F5FFFF</color>
 </resources>
