@@ -35,5 +35,7 @@ class AuthServiceImpl(
     override suspend fun logout() {
         // Use FirebaseAuth to sign out the current user
         auth.signOut()
+        
     }
+
 }

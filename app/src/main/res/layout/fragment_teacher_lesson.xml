@@ -39,49 +39,25 @@
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/llOption"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilClass"
         android:layout_below="@id/rlTop"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="10dp"
-        android:orientation="horizontal"
-        android:layout_marginVertical="5dp">
+        android:paddingHorizontal="20dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="5dp">
-
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteClass"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/classes"
-                android:inputType="none"
-                android:padding="4dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="5dp">
-
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteDate"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/date"
-                android:inputType="none"
-                android:padding="4dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteClass"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/classes"
+            android:inputType="none"
+            android:padding="4dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ScrollView
-        android:layout_below="@id/llOption"
+        android:layout_below="@id/tilClass"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp">

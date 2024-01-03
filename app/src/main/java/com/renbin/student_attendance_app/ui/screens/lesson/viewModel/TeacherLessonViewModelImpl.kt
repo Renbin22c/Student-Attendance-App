@@ -92,10 +92,9 @@ class TeacherLessonViewModelImpl @Inject constructor(
         }
     }
 
-    override fun filterLessons(classSelect: String?, dateSelect: String?) {
+    override fun filterLessons(classSelect: String?) {
         val filteredLessons = _lessons.value.filter { lesson ->
-            (classSelect == null || lesson.classes == classSelect) &&
-                    (dateSelect == null || lesson.date == dateSelect)
+            (classSelect == null || lesson.classes == classSelect)
         }
         _filteredLessons.value = filteredLessons
     }

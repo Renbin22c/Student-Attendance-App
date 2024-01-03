@@ -53,6 +53,13 @@ class StudentDetailsEditViewModelImpl @Inject constructor(
         }
     }
 
+    override fun deleteStudent(id: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            errorHandler { studentRepo.deleteStudent(id) }
+            _success.emit("Delete successfully")
+        }
+    }
+
     override fun getAllClassesName() {
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler {

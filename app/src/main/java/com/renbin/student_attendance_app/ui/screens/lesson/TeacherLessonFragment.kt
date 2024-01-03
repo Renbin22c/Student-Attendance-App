@@ -25,7 +25,6 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
     private lateinit var classAdapter: ArrayAdapter<String>
     private lateinit var dateAdapter: ArrayAdapter<String>
     private var classSelect: String? = null
-    private var dateSelect: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,11 +45,6 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
             emptyList()
         )
 
-        dateAdapter = ArrayAdapter(
-            requireContext(),
-            androidx.transition.R.layout.support_simple_spinner_dropdown_item,
-            emptyList()
-        )
 
         binding.run {
             btnAddLesson.setOnClickListener {
@@ -63,21 +57,14 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
             autoCompleteClass.addTextChangedListener {
                 classSelect = it.toString()
                 autoCompleteClass.clearFocus()
-                viewModel.filterLessons(classSelect, dateSelect)
-            }
-
-            autoCompleteDate.addTextChangedListener {
-                dateSelect = it.toString()
-                autoCompleteDate.clearFocus()
-                viewModel.filterLessons(classSelect, dateSelect)
+                viewModel.filterLessons(classSelect)
             }
 
             btnClear.setOnClickListener {
                 classSelect = null
-                dateSelect = null
                 clearOption()
 
-                viewModel.filterLessons(null, null)
+                viewModel.filterLessons(null)
             }
         }
     }
@@ -87,7 +74,7 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
 
         lifecycleScope.launch {
             viewModel.lessons.collect{
-                if (classSelect == null && dateSelect == null){
+                if (classSelect == null){
                     lessonAdapter.setLessons(it)
                 }
             }
@@ -116,20 +103,10 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
             }
         }
 
-        lifecycleScope.launch {
-            viewModel.dates.collect{
-                dateAdapter = ArrayAdapter(
-                    requireContext(),
-                    androidx.transition.R.layout.support_simple_spinner_dropdown_item,
-                    it.sorted()
-                )
-                binding.autoCompleteDate.setAdapter(dateAdapter)
-            }
-        }
 
         lifecycleScope.launch {
             viewModel.filteredLessons.collect {
-                if (classSelect !=null || dateSelect != null){
+                if (classSelect !=null){
                     if(it.isEmpty()){
                         binding.tvEmpty.visibility = View.VISIBLE
                     } else {
@@ -160,13 +137,10 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
     private fun clearOption(){
         binding.run {
             classSelect = null
-            dateSelect = null
 
             autoCompleteClass.text.clear()
-            autoCompleteDate.text.clear()
 
             autoCompleteClass.clearFocus()
-            autoCompleteDate.clearFocus()
         }
     }
 }
