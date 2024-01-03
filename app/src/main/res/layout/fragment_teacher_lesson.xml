@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.screens.lesson.TeacherLessonFragment">
 
@@ -25,9 +26,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lesson_page"
             android:layout_centerInParent="true"
-            android:textStyle="bold"/>
+            android:text="@string/lesson_page"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/btnAddLesson"

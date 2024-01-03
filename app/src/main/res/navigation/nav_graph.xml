@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
@@ -75,7 +75,12 @@
         android:id="@+id/studentTabContainerFragment"
         android:name="com.renbin.student_attendance_app.ui.screens.tabContainer.StudentTabContainerFragment"
         android:label="fragment_student_tab_container"
-        tools:layout="@layout/fragment_student_tab_container" />
+        tools:layout="@layout/fragment_student_tab_container" >
+        <action
+            android:id="@+id/action_studentTabContainer_to_studentNoteDetails"
+            app:destination="@id/studentNoteDetailsFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/teacherTabContainerFragment"
         android:name="com.renbin.student_attendance_app.ui.screens.tabContainer.TeacherTabContainerFragment"
@@ -88,8 +93,18 @@
             android:id="@+id/action_teacherTabContainer_to_classesDetails"
             app:destination="@id/classesDetailsFragment" />
         <action
+            android:id="@+id/action_teacherTabContainer_to_addNote"
+            app:destination="@+id/addNoteFragment" />
+        <action
+            android:id="@+id/action_teacherTabContainerFragment_to_studentDetailsEditFragment2"
+            app:destination="@id/studentDetailsEditFragment2" />
+
+        <action
             android:id="@+id/action_teacherTabContainer_to_studentDetails"
             app:destination="@id/studentDetailsFragment" />
+        <action
+            android:id="@+id/action_teacherTabContainerFragment_to_NoteDetailsFragment"
+            app:destination="@id/NoteDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLessonFragment"
@@ -106,17 +121,76 @@
             app:argType="string"/>
     </fragment>
     <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.note.AddNoteFragment"
+        android:label="fragment_add_note"
+        tools:layout="@layout/fragment_add_note" />
+    <fragment
+        android:id="@+id/teacherNoteFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.note.TeacherNoteFragment"
+        android:label="fragment_teacher_note"
+        tools:layout="@layout/fragment_teacher_note" >
+        <action
+            android:id="@+id/action_teacherNoteFragment_to_addNoteFragment"
+            app:destination="@id/addNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/NoteDetailsFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.note.NoteDetailsFragment"
+        android:label="fragment_note_details"
+        tools:layout="@layout/fragment_note_details" >
+        <argument
+            android:name="noteTitle"
+            app:argType="string" />
+
+        <argument
+            android:name="noteDesc"
+            app:argType="string" />
+
+        <argument
+            android:name="noteClasses"
+            app:argType="string" />
+
+        <argument
+            android:name="noteCreatedBy"
+            app:argType="string" />
+    </fragment>
+    <fragment
         android:id="@+id/studentDetailsFragment"
         android:name="com.renbin.student_attendance_app.ui.screens.student.StudentDetailsFragment"
         android:label="fragment_student_details"
         tools:layout="@layout/fragment_student_details" >
         <action
-            android:id="@+id/action_studentDetails_to_studentDetailsEdit"
-            app:destination="@id/studentDetailsEditFragment" />
+            android:id="@+id/action_studentDetailsFragment_to_studentDetailsEditFragment2"
+            app:destination="@id/studentDetailsEditFragment2" />
     </fragment>
     <fragment
-        android:id="@+id/studentDetailsEditFragment"
+        android:id="@+id/studentDetailsEditFragment2"
         android:name="com.renbin.student_attendance_app.ui.screens.student.StudentDetailsEditFragment"
         android:label="fragment_student_details_edit"
         tools:layout="@layout/fragment_student_details_edit" />
+    <fragment
+        android:id="@+id/studentNoteFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.note.StudentNoteFragment"
+        android:label="fragment_student_note"
+        tools:layout="@layout/fragment_student_note" />
+    <fragment
+        android:id="@+id/studentNoteDetailsFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.note.StudentNoteDetailsFragment"
+        android:label="fragment_student_note_details"
+        tools:layout="@layout/fragment_student_note_details" >
+
+        <argument
+            android:name="noteTitle"
+            app:argType="string" />
+
+        <argument
+            android:name="noteDesc"
+            app:argType="string" />
+
+        <argument
+            android:name="noteCreatedBy"
+            app:argType="string" />
+
+    </fragment>
 </navigation>

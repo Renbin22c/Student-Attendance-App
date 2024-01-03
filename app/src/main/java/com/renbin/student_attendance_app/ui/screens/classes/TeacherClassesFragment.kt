@@ -42,7 +42,7 @@ class TeacherClassesFragment : BaseFragment<FragmentTeacherClassesBinding>() {
             }
 
             cvStudent.setOnClickListener {
-                val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerToStudentDetails()
+                val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerFragmentToStudentDetailsEditFragment2()
                 navController.navigate(action)
             }
         }
