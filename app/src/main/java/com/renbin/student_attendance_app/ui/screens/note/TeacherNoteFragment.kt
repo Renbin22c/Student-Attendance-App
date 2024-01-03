@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDirections
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.renbin.student_attendance_app.data.model.Note
@@ -63,7 +64,7 @@ class TeacherNoteFragment : BaseFragment<FragmentTeacherNoteBinding>() {
         adapter = NoteAdapter(emptyList(), emptyList())
         adapter.listener = object :NoteAdapter.Listener{
             override fun onClick(note: Note) {
-                val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerToNoteDetails(
+                val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerFragmentToNoteDetailsFragment(
                     note.title,
                     note.desc,
                     note.classes,
@@ -76,3 +77,5 @@ class TeacherNoteFragment : BaseFragment<FragmentTeacherNoteBinding>() {
         binding.rvNotes.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
     }
 }
+
+
