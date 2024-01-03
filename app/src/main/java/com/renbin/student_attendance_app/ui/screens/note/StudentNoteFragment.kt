@@ -62,7 +62,6 @@ class StudentNoteFragment : BaseFragment<FragmentStudentNoteBinding>() {
         adapter = StudentNoteAdapter(emptyList(), emptyList(), emptyList(), viewModel.user)
         adapter.listener = object : StudentNoteAdapter.Listener{
             override fun onClick(note: Note) {
-                Log.d("Navigation", "Current Destination: ${navController.currentDestination?.displayName}")
                 val action = StudentTabContainerFragmentDirections.actionStudentTabContainerToStudentNoteDetails(
                     note.title,
                     note.desc,
