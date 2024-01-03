@@ -67,7 +67,7 @@ class StudentDetailsEditFragment : BaseFragment<FragmentStudentDetailsEditBindin
             }
 
             override fun onDelete(student: Student) {
-                TODO("Not yet implemented")
+                viewModel.deleteStudent(student.id.toString())
             }
 
         }

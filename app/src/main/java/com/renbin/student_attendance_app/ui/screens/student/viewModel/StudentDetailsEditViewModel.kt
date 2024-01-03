@@ -11,4 +11,5 @@ interface StudentDetailsEditViewModel {
     fun getAllStudent()
     fun updateStudent(student: Student, classes: String)
     fun filterEmailByQuery(query: String): List<Student>
+    fun deleteStudent(id: String)
 }

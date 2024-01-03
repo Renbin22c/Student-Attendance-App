@@ -114,4 +114,8 @@ class StudentRepoImpl(
             listener.remove()
         }
     }
+
+    override suspend fun deleteStudent(id: String) {
+        getDbRef().document(id).delete().await()
+    }
 }

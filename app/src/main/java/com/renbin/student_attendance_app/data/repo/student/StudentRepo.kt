@@ -21,4 +21,6 @@ interface StudentRepo {
 
     // Function to get all students in a specific class as a Flow
     suspend fun getAllStudentByClassUseFlow(classes: String): Flow<List<Student>>
+
+    suspend fun deleteStudent(id: String)
 }

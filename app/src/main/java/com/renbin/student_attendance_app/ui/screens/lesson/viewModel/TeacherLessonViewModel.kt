@@ -12,5 +12,5 @@ interface TeacherLessonViewModel {
 
     fun getClassesAndDates()
     fun deleteLesson(id: String)
-    fun filterLessons(classSelect: String?, dateSelect: String?)
+    fun filterLessons(classSelect: String?)
 }
