@@ -6,11 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseUser
 import com.renbin.student_attendance_app.R
+import com.renbin.student_attendance_app.core.util.Utility.formatDatestamp
 import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.model.Teacher
 import com.renbin.student_attendance_app.databinding.ItemLayoutLessonBinding
 import com.renbin.student_attendance_app.databinding.ItemLayoutStudentAttendanceBinding
+import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Locale
 
 // Define the LessonAdapter class extending RecyclerView.Adapter
 class LessonAdapter(
@@ -58,6 +64,33 @@ class LessonAdapter(
         notifyDataSetChanged()
     }
 
+    private fun checkDateForCheckIn(date: String): Boolean{
+        val currentDate = formatDatestamp(System.currentTimeMillis())
+        return  currentDate == date
+    }
+
+    private fun checkTimeForCheckIn(lessonTime: String): Boolean {
+        // Get the current time
+        val currentTime = Calendar.getInstance().time
+
+        // Format the lesson time and current time using SimpleDateFormat
+        val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val formattedLessonTime = timeFormat.format(timeFormat.parse(lessonTime))
+        val formattedCurrentTime = timeFormat.format(currentTime)
+
+        // Convert the formatted times to LocalTime objects
+        val lessonLocalTime = LocalTime.parse(formattedLessonTime, DateTimeFormatter.ofPattern("hh:mm a", Locale.getDefault()))
+        val currentLocalTime = LocalTime.parse(formattedCurrentTime, DateTimeFormatter.ofPattern("hh:mm a", Locale.getDefault()))
+
+        // Calculate half an hour before the lesson time
+        val halfHourBeforeLesson = lessonLocalTime.minusMinutes(30)
+
+        // Check if the current time is between half an hour before the lesson time and the lesson time
+        return currentLocalTime.isAfter(halfHourBeforeLesson) && currentLocalTime.isBefore(lessonLocalTime)
+    }
+
+
+
     // Inner class for the ViewHolder
     inner class AttendanceItemViewHolder(
         private val binding: ItemLayoutLessonBinding
@@ -77,9 +110,13 @@ class LessonAdapter(
                 // Show delete button if the user created the lesson
                 if(user?.uid == lesson.createdBy) ivDeleteLesson.visibility = View.VISIBLE
 
-                // Show check-in button if the user is a student in the lesson
-                val filterStudent = lesson.student.contains(user?.uid)
-                if (filterStudent) ivCheckIn.visibility = View.VISIBLE
+                if (checkDateForCheckIn(lesson.date)){
+                    if (checkTimeForCheckIn(lesson.time)){
+                        // Show check-in button if the user is a student in the lesson
+                        val filterStudent = lesson.student.contains(user?.uid)
+                        if (filterStudent) ivCheckIn.visibility = View.VISIBLE
+                    }
+                }
 
                 // Remove all previous views from llItems
                 llItems.removeAllViews()
