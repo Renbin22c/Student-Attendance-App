@@ -64,4 +64,8 @@
     <string name="classname">ClassName</string>
     <string name="note_page">Note Page</string>
     <string name="note_details">note details</string>
+    <string name="logout_confirmation">Logout Confirmation</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="are_you_sure_want_to_logout">Are you sure want to logout ?</string>
 </resources>

@@ -17,6 +17,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
             android:layout_marginVertical="5dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etName"
@@ -28,6 +30,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
             android:layout_marginVertical="5dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
@@ -42,6 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
             app:passwordToggleEnabled="true">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
@@ -56,6 +62,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
             app:passwordToggleEnabled="true">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etConfirmPassword"
@@ -70,6 +78,8 @@
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
             android:layout_marginVertical="8dp">
 
             <AutoCompleteTextView
