@@ -5,6 +5,7 @@ import android.text.format.DateFormat
 import android.widget.Toast
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 // Define a Utility object with functions for common utility operations
@@ -23,7 +24,7 @@ object Utility {
     }
 
     // Function to format a timestamp into a string with AM/PM notation
-    fun formatTimestamp(timestamp: Long): String{
+    fun formatTimestamp(timestamp: Long): String {
         val cal = Calendar.getInstance(Locale.ENGLISH)
         cal.timeInMillis = timestamp
 
