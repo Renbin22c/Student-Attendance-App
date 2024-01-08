@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.databinding.FragmentStudentHomeBinding
 import com.renbin.student_attendance_app.ui.adapter.LessonAdapter
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
@@ -34,7 +37,7 @@ class StudentHomeFragment : BaseFragment<FragmentStudentHomeBinding>() {
 
         binding.run {
             btnStudentLogout.setOnClickListener {
-                viewModel.logout()
+                alertLogout()
             }
         }
     }
@@ -77,6 +80,28 @@ class StudentHomeFragment : BaseFragment<FragmentStudentHomeBinding>() {
         lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList(), viewModel.user)
         binding.rvLesson.adapter = lessonAdapter
         binding.rvLesson.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun alertLogout(){
+        val dialogView = layoutInflater.inflate(R.layout.alert_dialog, null)
+        val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.MaterialAlertDialog_Rounded)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
+        val btnConfirm = dialogView.findViewById<Button>(R.id.btnConfirm)
+
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        btnConfirm.setOnClickListener {
+            viewModel.logout()
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
     }
 
 }
