@@ -7,8 +7,10 @@ import kotlinx.coroutines.flow.StateFlow
 interface TeacherClassesViewModel {
     val classes: StateFlow<List<Classes>>
     val teachers: StateFlow<List<Teacher>>
+    val isStudentsEmpty: StateFlow<Boolean>
 
     fun getAllTeachers()
     fun getAllClasses()
-    fun deleteClasses(id :String, name: String)
+    fun checkClassStudents(name: String)
+    fun deleteClasses(id :String)
 }

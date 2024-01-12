@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/app_bg"
     tools:context=".ui.screens.classes.ClassesDetailsFragment">
     <RelativeLayout
@@ -31,75 +32,108 @@
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/llClass"
+    <androidx.cardview.widget.CardView
         android:layout_below="@id/rlTop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="12dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/className"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/classes"
-            android:textStyle="bold"
-            style="@style/TextAppearance.Material3.TitleLarge"/>
-
-        <TextView
-            android:id="@+id/studentCount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/count"
-            android:textAlignment="textEnd"
-            style="@style/TextAppearance.Material3.TitleMedium"/>
-
-    </LinearLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_below="@id/llClass"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="12dp">
-
-        <TableLayout
+        app:cardUseCompatPadding="true"
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="5dp">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/border">
-            <TableRow android:background="@color/black" android:padding="5dp">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:text="@string/name"
-                    android:textColor="@color/white"/>
+            android:paddingVertical="16dp">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/email"
-                    android:textAlignment="center"
-                    android:layout_weight="2"
-                    android:textColor="@color/white"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:text="@string/created_at"
-                    android:textColor="@color/white"/>
-            </TableRow>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvStudent"
+            <LinearLayout
+                android:id="@+id/llClass"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </TableLayout>
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
 
-    </androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/className"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/classes"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.Material3.TitleLarge"/>
+
+                <TextView
+                    android:id="@+id/studentCount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/count"
+                    android:textAlignment="textEnd"
+                    style="@style/TextAppearance.Material3.TitleMedium"/>
+
+            </LinearLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_below="@id/llClass"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="12dp">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border">
+                    <TableRow android:background="@color/black" android:padding="5dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textAlignment="center"
+                            android:text="@string/name"
+                            android:textColor="@color/white"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/email"
+                            android:textAlignment="center"
+                            android:layout_weight="2"
+                            android:textColor="@color/white"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textAlignment="center"
+                            android:text="@string/created_at"
+                            android:textColor="@color/white"/>
+                    </TableRow>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvStudent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </TableLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <TextView
+                android:id="@+id/tvEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingHorizontal="12dp"
+                android:text="@string/don_t_have_any_student_yet"
+                style="@style/TextAppearance.Material3.DisplaySmall"
+                android:textAlignment="center"
+                android:visibility="gone"/>
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

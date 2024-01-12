@@ -32,8 +32,10 @@ class StudentDetailsEditViewModelImpl @Inject constructor(
 
     override fun getAllStudent() {
         viewModelScope.launch(Dispatchers.IO) {
+            _loading.emit(true)
             errorHandler { studentRepo.getAllStudents() }?.collect{
                 _students.value = it
+                _loading.emit(false)
             }
         }
     }

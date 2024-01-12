@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.data.model.Classes
 import com.renbin.student_attendance_app.databinding.FragmentTeacherClassesBinding
 import com.renbin.student_attendance_app.ui.adapter.TeacherClassesAdapter
@@ -42,7 +46,7 @@ class TeacherClassesFragment : BaseFragment<FragmentTeacherClassesBinding>() {
             }
 
             cvStudent.setOnClickListener {
-                val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerFragmentToStudentDetailsEditFragment2()
+                val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerToStudentDetails()
                 navController.navigate(action)
             }
         }
@@ -54,17 +58,27 @@ class TeacherClassesFragment : BaseFragment<FragmentTeacherClassesBinding>() {
         lifecycleScope.launch {
             viewModel.classes.collect{
                 adapter.setClasses(it.sortedBy { classes -> classes.name })
-                if (it.isEmpty()){
-                    binding.tvEmpty.visibility = View.VISIBLE
-                } else{
-                    binding.tvEmpty.visibility = View.GONE
-                }
             }
         }
 
         lifecycleScope.launch {
             viewModel.teachers.collect{
                 adapter.setTeachers(it)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.loading.collect{
+                if (it){
+                    binding.progressbar.visibility = View.VISIBLE
+                } else {
+                    binding.progressbar.visibility = View.GONE
+                    if(adapter.itemCount == 0){
+                        binding.tvEmpty.visibility = View.VISIBLE
+                    } else {
+                        binding.tvEmpty.visibility = View.GONE
+                    }
+                }
             }
         }
 
@@ -79,12 +93,51 @@ class TeacherClassesFragment : BaseFragment<FragmentTeacherClassesBinding>() {
             }
 
             override fun onDelete(classes: Classes) {
-                viewModel.deleteClasses(classes.id.toString(), classes.name)
+                viewModel.checkClassStudents(classes.name)
+                alertDelete(classes.id!!)
             }
 
         }
 
         binding.rvClasses.adapter = adapter
         binding.rvClasses.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+    }
+
+    private fun alertDelete(id: String){
+        val dialogView = layoutInflater.inflate(R.layout.alert_dialog, null)
+        val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.MaterialAlertDialog_Rounded)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
+        val btnConfirm = dialogView.findViewById<Button>(R.id.btnConfirm)
+        val tvTitle = dialogView.findViewById<TextView>(R.id.tvTitle)
+        val tvMessage = dialogView.findViewById<TextView>(R.id.tvMessage)
+
+        tvTitle.text = getString(R.string.delete_confirmation)
+
+        lifecycleScope.launch {
+            viewModel.isStudentsEmpty.collect{
+                if (it){
+                    tvMessage.text = getString(R.string.delete_class)
+                    btnConfirm.visibility = View.VISIBLE
+                } else{
+                    tvMessage.text = getString(R.string.cannot_delete_class)
+                    btnConfirm.visibility = View.GONE
+                }
+            }
+        }
+
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        btnConfirm.setOnClickListener {
+            viewModel.deleteClasses(id)
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
     }
 }

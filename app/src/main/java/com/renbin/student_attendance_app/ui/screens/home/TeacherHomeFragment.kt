@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.databinding.FragmentTeacherHomeBinding
 import com.renbin.student_attendance_app.ui.adapter.LessonAdapter
@@ -35,7 +38,7 @@ class TeacherHomeFragment : BaseFragment<FragmentTeacherHomeBinding>() {
 
         binding.run {
             btnTeacherLogout.setOnClickListener {
-                viewModel.logout()
+                alertLogout()
             }
         }
     }
@@ -53,11 +56,6 @@ class TeacherHomeFragment : BaseFragment<FragmentTeacherHomeBinding>() {
         lifecycleScope.launch {
             viewModel.lessons.collect{
                 lessonAdapter.setLessons(it)
-                if (it.isEmpty()){
-                    binding.tvEmpty.visibility = View.VISIBLE
-                } else {
-                    binding.tvEmpty.visibility = View.GONE
-                }
             }
         }
 
@@ -72,12 +70,49 @@ class TeacherHomeFragment : BaseFragment<FragmentTeacherHomeBinding>() {
                 lessonAdapter.setTeachers(it)
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.loading.collect{
+                if (it){
+                    binding.progressbar.visibility = View.VISIBLE
+                } else {
+                    binding.progressbar.visibility = View.GONE
+                    if(lessonAdapter.itemCount == 0){
+                        binding.tvEmpty.visibility = View.VISIBLE
+                    } else {
+                        binding.tvEmpty.visibility = View.GONE
+                    }
+                }
+            }
+        }
     }
 
     private fun setupLessonAdapter(){
         lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList(), viewModel.user)
         binding.rvLesson.adapter = lessonAdapter
         binding.rvLesson.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun alertLogout(){
+        val dialogView = layoutInflater.inflate(R.layout.alert_dialog, null)
+        val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.MaterialAlertDialog_Rounded)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
+        val btnConfirm = dialogView.findViewById<Button>(R.id.btnConfirm)
+
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        btnConfirm.setOnClickListener {
+            viewModel.logout()
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
     }
 
 }

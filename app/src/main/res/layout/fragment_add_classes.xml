@@ -32,6 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
             app:hintEnabled="false">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etClasses"

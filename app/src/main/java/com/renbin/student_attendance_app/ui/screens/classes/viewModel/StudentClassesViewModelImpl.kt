@@ -30,16 +30,20 @@ class StudentClassesViewModelImpl @Inject constructor(
 
     override fun getCurrentUser() {
         viewModelScope.launch(Dispatchers.IO) {
+            _loading.emit(true)
             errorHandler { studentRepo.getStudent() }?.let {
                 _student.value = it
+                _loading.emit(false)
             }
         }
     }
 
     override fun getAllStudentsByClass(classes: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            _loading.emit(true)
             errorHandler { studentRepo.getAllStudentByClassUseFlow(classes) }?.collect{
                 _students.value = it
+                _loading.emit(false)
             }
         }
     }

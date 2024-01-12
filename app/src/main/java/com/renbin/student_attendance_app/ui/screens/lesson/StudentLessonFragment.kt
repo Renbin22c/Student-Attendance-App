@@ -54,6 +54,21 @@ class StudentLessonFragment : BaseFragment<FragmentStudentLessonBinding>() {
                 lessonAdapter.setTeachers(it)
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.loading.collect{
+                if (it){
+                    binding.progressbar.visibility = View.VISIBLE
+                } else {
+                    binding.progressbar.visibility = View.GONE
+                    if(lessonAdapter.itemCount == 0){
+                        binding.tvEmpty.visibility = View.VISIBLE
+                    } else {
+                        binding.tvEmpty.visibility = View.GONE
+                    }
+                }
+            }
+        }
     }
 
     private fun setupLessonAdapter(){
