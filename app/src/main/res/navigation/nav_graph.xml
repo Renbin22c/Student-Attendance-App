@@ -20,12 +20,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/classesFragment"
-        android:name="com.renbin.student_attendance_app.ui.screens.classes.TeacherClassesFragment"
-        android:label="fragment_classes"
-        tools:layout="@layout/fragment_teacher_classes" />
-
-    <fragment
         android:id="@+id/loginFragment"
         android:name="com.renbin.student_attendance_app.ui.screens.login.LoginFragment"
         android:label="fragment_login"
@@ -95,9 +89,6 @@
         <action
             android:id="@+id/action_teacherTabContainer_to_addNote"
             app:destination="@+id/addNoteFragment" />
-        <action
-            android:id="@+id/action_teacherTabContainerFragment_to_studentDetailsEditFragment2"
-            app:destination="@id/studentDetailsEditFragment2" />
 
         <action
             android:id="@+id/action_teacherTabContainer_to_studentDetails"
@@ -169,11 +160,6 @@
         android:name="com.renbin.student_attendance_app.ui.screens.student.StudentDetailsEditFragment"
         android:label="fragment_student_details_edit"
         tools:layout="@layout/fragment_student_details_edit" />
-    <fragment
-        android:id="@+id/studentNoteFragment"
-        android:name="com.renbin.student_attendance_app.ui.screens.note.StudentNoteFragment"
-        android:label="fragment_student_note"
-        tools:layout="@layout/fragment_student_note" />
     <fragment
         android:id="@+id/studentNoteDetailsFragment"
         android:name="com.renbin.student_attendance_app.ui.screens.note.StudentNoteDetailsFragment"

@@ -9,6 +9,7 @@
     tools:context=".ui.screens.register.StudentRegisterFragment">
 
     <LinearLayout
+        android:id="@+id/llForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -100,5 +101,14 @@
             android:backgroundTint="@color/accent"
             app:cornerRadius="5dp"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_below="@id/llForm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/already_have_account"
+        android:textColor="@color/gray"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

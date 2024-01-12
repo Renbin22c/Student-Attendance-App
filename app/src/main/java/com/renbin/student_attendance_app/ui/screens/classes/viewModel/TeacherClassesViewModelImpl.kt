@@ -26,6 +26,10 @@ class TeacherClassesViewModelImpl @Inject constructor(
     private val _teachers: MutableStateFlow<List<Teacher>> = MutableStateFlow(emptyList())
     override val teachers: StateFlow<List<Teacher>> = _teachers
 
+    private val _isStudentsEmpty: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    override val isStudentsEmpty: StateFlow<Boolean> = _isStudentsEmpty
+
+
     override fun onCreate() {
         super.onCreate()
         getAllClasses()
@@ -35,22 +39,27 @@ class TeacherClassesViewModelImpl @Inject constructor(
 
     override fun getAllClasses() {
         viewModelScope.launch(Dispatchers.IO) {
+            _loading.emit(true)
             errorHandler { classesRepo.getAllClasses() }?.collect{
                 _classes.value = it
+                _loading.emit(false)
             }
         }
     }
 
-    override fun deleteClasses(id: String, name: String) {
+    override fun checkClassStudents(name: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val students = studentRepo.getAllStudentByClass(name)
                 .mapNotNull { student -> student.id }
-            if (students.isEmpty()){
-                errorHandler { classesRepo.deleteClasses(id) }
-                _success.emit("Delete class successfully")
-            } else{
-                _error.emit("Still got student in class")
-            }
+
+            _isStudentsEmpty.value = students.isEmpty()
+        }
+    }
+
+    override fun deleteClasses(id: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            errorHandler { classesRepo.deleteClasses(id) }
+            _success.emit("Delete class successfully")
         }
     }
 

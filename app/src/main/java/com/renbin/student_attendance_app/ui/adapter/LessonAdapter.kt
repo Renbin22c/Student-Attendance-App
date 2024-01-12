@@ -79,8 +79,10 @@ class LessonAdapter(
         val formattedCurrentTime = timeFormat.format(currentTime)
 
         // Convert the formatted times to LocalTime objects
-        val lessonLocalTime = LocalTime.parse(formattedLessonTime, DateTimeFormatter.ofPattern("hh:mm a", Locale.getDefault()))
-        val currentLocalTime = LocalTime.parse(formattedCurrentTime, DateTimeFormatter.ofPattern("hh:mm a", Locale.getDefault()))
+        val lessonLocalTime = LocalTime.parse(formattedLessonTime,
+            DateTimeFormatter.ofPattern("hh:mm a", Locale.getDefault()))
+        val currentLocalTime = LocalTime.parse(formattedCurrentTime,
+            DateTimeFormatter.ofPattern("hh:mm a", Locale.getDefault()))
 
         // Calculate half an hour before the lesson time
         val halfHourBeforeLesson = lessonLocalTime.minusMinutes(30)

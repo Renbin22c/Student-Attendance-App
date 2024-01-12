@@ -63,7 +63,7 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
             btnClear.setOnClickListener {
                 classSelect = null
                 clearOption()
-
+                viewModel.getAllLesson()
                 viewModel.filterLessons(null)
             }
         }
@@ -107,12 +107,22 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
         lifecycleScope.launch {
             viewModel.filteredLessons.collect {
                 if (classSelect !=null){
-                    if(it.isEmpty()){
+                    lessonAdapter.setLessons(it)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.loading.collect{
+                if (it){
+                    binding.progressbar.visibility = View.VISIBLE
+                } else {
+                    binding.progressbar.visibility = View.GONE
+                    if(lessonAdapter.itemCount == 0){
                         binding.tvEmpty.visibility = View.VISIBLE
                     } else {
                         binding.tvEmpty.visibility = View.GONE
                     }
-                    lessonAdapter.setLessons(it)
                 }
             }
         }
@@ -139,8 +149,9 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
             classSelect = null
 
             autoCompleteClass.text.clear()
-
             autoCompleteClass.clearFocus()
         }
     }
+
+
 }
