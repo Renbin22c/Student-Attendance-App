@@ -1,5 +1,9 @@
 package com.renbin.student_attendance_app.ui.screens.home
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +11,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.renbin.student_attendance_app.core.util.MyBroadcastReceiver
+import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.databinding.FragmentStudentHomeBinding
 import com.renbin.student_attendance_app.ui.adapter.LessonAdapter
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
@@ -27,6 +33,7 @@ class StudentHomeFragment : BaseFragment<FragmentStudentHomeBinding>() {
         binding = FragmentStudentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun setupUIComponents(view: View) {
         super.setupUIComponents(view)

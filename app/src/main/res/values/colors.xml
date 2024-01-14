@@ -6,4 +6,5 @@
     <color name="error">#F30000</color>
     <color name="accent">#92E3A9</color>
     <color name="app_bg">#F5FFFF</color>
+    <color name="ok">#F0ECE5</color>
 </resources>

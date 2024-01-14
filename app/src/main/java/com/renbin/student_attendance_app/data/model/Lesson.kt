@@ -42,6 +42,7 @@ data class Lesson(
                 attendanceTime = hash["attendanceTime"] as List<String>,
                 attendance = (hash["attendance"] as List<*>).map { it as Boolean },
                 createdBy = hash["createdBy"].toString()
+
             )
         }
     }

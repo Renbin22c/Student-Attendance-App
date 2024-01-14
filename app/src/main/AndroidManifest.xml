@@ -29,10 +29,13 @@
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
+
         </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="lesson_notification_channel_id" />
-    </application>
 
+        <receiver android:name=".core.util.MyBroadcastReceiver" />
+    </application>
 </manifest>

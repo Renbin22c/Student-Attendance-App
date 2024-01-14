@@ -12,6 +12,7 @@ import com.renbin.student_attendance_app.databinding.ItemLayoutNoteBinding
 class NoteAdapter(
     private var teachers: List<Teacher>,
     private var notes: List<Note>,
+    private var user: FirebaseUser?
 ): RecyclerView.Adapter<NoteAdapter.NoteItemViewHolder>() {
     var listener: Listener? = null
 
@@ -54,14 +55,22 @@ class NoteAdapter(
                 val matchTeacher = teachers.find {it.id == note.createdBy }
                 tvNoteTeacher.text = matchTeacher?.name
 
+                if(user?.uid == note.createdBy) btnDelete.visibility = View.VISIBLE
+
                 cvNotes.setOnClickListener {
                     listener?.onClick(note)
+                }
+                btnDelete.setOnClickListener {
+                    listener?.onDelete(note)
+                    btnDelete.visibility = View.GONE
                 }
             }
         }
     }
     interface Listener {
         fun onClick(note: Note)
+
+        fun onDelete(note: Note)
     }
 
 }

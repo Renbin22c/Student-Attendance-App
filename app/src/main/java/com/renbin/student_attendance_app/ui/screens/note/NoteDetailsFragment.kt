@@ -16,6 +16,7 @@ import com.renbin.student_attendance_app.ui.adapter.StudentAdapter
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
 import com.renbin.student_attendance_app.ui.screens.classes.ClassesDetailsFragmentArgs
 import com.renbin.student_attendance_app.ui.screens.note.viewModel.NoteDetailsViewModelImpl
+import com.renbin.student_attendance_app.ui.screens.tabContainer.TeacherTabContainerFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -43,6 +44,10 @@ class NoteDetailsFragment : BaseFragment<FragmentNoteDetailsBinding>() {
         binding.run {
             ibBack.setOnClickListener {
                 navController.popBackStack()
+            }
+            ivEdit.setOnClickListener {
+                val action =  NoteDetailsFragmentDirections.actionNoteDetailsFragmentToEditNoteFragment(noteId = args.noteId)
+                navController.navigate(action)
             }
         }
     }

@@ -105,6 +105,9 @@
         <action
             android:id="@+id/action_teacherTabContainerFragment_to_NoteDetailsFragment"
             app:destination="@id/NoteDetailsFragment" />
+        <action
+            android:id="@+id/action_teacherTabContainer_to_editNote"
+            app:destination="@+id/editNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLessonFragment"
@@ -139,6 +142,10 @@
         android:name="com.renbin.student_attendance_app.ui.screens.note.NoteDetailsFragment"
         android:label="fragment_note_details"
         tools:layout="@layout/fragment_note_details" >
+
+        <argument
+            android:name="noteId"
+            app:argType="string"/>
         <argument
             android:name="noteTitle"
             app:argType="string" />
@@ -154,6 +161,9 @@
         <argument
             android:name="noteCreatedBy"
             app:argType="string" />
+        <action
+            android:id="@+id/action_NoteDetailsFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/studentDetailsFragment"
@@ -192,5 +202,14 @@
             android:name="noteCreatedBy"
             app:argType="string" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/editNoteFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.note.EditNoteFragment"
+        android:label="fragment_edit_note"
+        tools:layout="@layout/fragment_edit_note" >
+        <argument
+            android:name="noteId"
+            app:argType="string"/>
     </fragment>
 </navigation>
