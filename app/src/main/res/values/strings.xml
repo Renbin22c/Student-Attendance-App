@@ -65,4 +65,16 @@
     <string name="note_page">Note Page</string>
     <string name="note_details">note details</string>
     <string name="on_submit_msg">Check out your mailbox, you will receive an email containing link where you can reset your password</string>
+    <string name="logout_confirmation">Logout Confirmation</string>
+    <string name="delete_confirmation">Delete Confirmation</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="are_you_sure_want_to_logout">Are you sure want to logout ?</string>
+    <string name="already_have_account">Already have account ?</string>
+    <string name="don_t_have_any_lesson_yet">Don\'t have any lesson yet</string>
+    <string name="don_t_have_any_student_yet">Don\'t have any student yet</string>
+    <string name="delete_class">Do you sure want to delete this class ?</string>
+    <string name="delete_student">Do you sure want to delete this student ?</string>
+    <string name="delete_lesson">Do you sure want to delete this lesson ?</string>
+    <string name="cannot_delete_class">You cannot delete this class, because it still have student</string>
 </resources>

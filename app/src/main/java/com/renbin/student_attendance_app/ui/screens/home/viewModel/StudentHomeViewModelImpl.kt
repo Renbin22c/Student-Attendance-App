@@ -44,6 +44,7 @@ class StudentHomeViewModelImpl @Inject constructor(
 
     override fun getAllLesson() {
         viewModelScope.launch(Dispatchers.IO) {
+            _loading.emit(true)
             errorHandler { lessonRepo.getAllLessons() }?.collect{
                 val filterLesson = it.filter {lesson ->
                     lesson.student.contains(user?.uid)
@@ -53,6 +54,7 @@ class StudentHomeViewModelImpl @Inject constructor(
                     lesson.date == Utility.formatDatestamp(System.currentTimeMillis())
                 }
                 _lessons.value = lessonsToday
+                _loading.emit(false)
             }
         }
     }

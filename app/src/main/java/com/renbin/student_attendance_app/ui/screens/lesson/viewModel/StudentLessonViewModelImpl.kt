@@ -44,11 +44,13 @@ class StudentLessonViewModelImpl @Inject constructor(
 
     override fun getAllLesson() {
         viewModelScope.launch(Dispatchers.IO) {
+            _loading.emit(true)
             errorHandler { lessonRepo.getAllLessons() }?.collect{
                 val filterLesson = it.filter {lesson ->
                     lesson.student.contains(user?.uid)
                 }
                 _lessons.value = filterLesson
+                _loading.emit(false)
             }
         }
     }

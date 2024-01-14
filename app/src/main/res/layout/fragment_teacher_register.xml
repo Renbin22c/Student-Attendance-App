@@ -9,6 +9,7 @@
     tools:context=".ui.screens.register.TeacherRegisterFragment">
 
     <LinearLayout
+        android:id="@+id/llForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -17,6 +18,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
             android:layout_marginVertical="5dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etName"
@@ -28,6 +31,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
             android:layout_marginVertical="5dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
@@ -40,6 +45,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
             android:layout_marginVertical="5dp"
             app:passwordToggleEnabled="true">
             <com.google.android.material.textfield.TextInputEditText
@@ -53,6 +60,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
             android:layout_marginVertical="5dp"
             app:passwordToggleEnabled="true">
             <com.google.android.material.textfield.TextInputEditText
@@ -73,5 +82,14 @@
             app:cornerRadius="5dp"/>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_below="@id/llForm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/already_have_account"
+        android:textColor="@color/gray"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

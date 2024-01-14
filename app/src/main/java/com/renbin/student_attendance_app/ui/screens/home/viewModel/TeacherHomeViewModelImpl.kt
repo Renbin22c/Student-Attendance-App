@@ -45,6 +45,7 @@ class TeacherHomeViewModelImpl @Inject constructor(
 
     override fun getAllLesson() {
         viewModelScope.launch(Dispatchers.IO) {
+            _loading.emit(true)
             errorHandler { lessonRepo.getAllLessons() }?.collect{
 
                 val lessonsToday = it.filter { lesson ->
@@ -52,6 +53,7 @@ class TeacherHomeViewModelImpl @Inject constructor(
                 }
 
                 _lessons.value = lessonsToday
+                _loading.emit(false)
             }
         }
     }

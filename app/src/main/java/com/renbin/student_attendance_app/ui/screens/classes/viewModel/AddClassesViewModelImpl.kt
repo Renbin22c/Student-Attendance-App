@@ -17,11 +17,23 @@ class AddClassesViewModelImpl @Inject constructor(
 ): BaseViewModel(), AddClassesViewModel {
     override fun addClasses(name: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val user = authService.getCurrentUser()
-            user?.let{
-                errorHandler { classesRepo.addClasses(Classes(name= name, teacher = it.uid)) }
-                _success.emit("Add Class Successfully")
+            val error = validation(name)
+            if (error != null){
+                _error.emit(error)
+            } else{
+                val user = authService.getCurrentUser()
+                user?.let{
+                    errorHandler { classesRepo.addClasses(Classes(name= name, teacher = it.uid)) }
+                    _success.emit("Add Class Successfully")
+                }
             }
         }
+    }
+
+    override fun validation(name: String): String? {
+        if (name.isEmpty())(
+            return  "Class name cannot be empty"
+        )
+        return null
     }
 }

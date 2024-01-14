@@ -52,6 +52,16 @@ class StudentClassesFragment : BaseFragment<FragmentStudentClassesBinding>() {
                 binding.studentCount.text = "${it.size} ${getString(R.string.person)}"
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.loading.collect{
+                if (it){
+                    binding.progressbar.visibility = View.VISIBLE
+                } else {
+                    binding.progressbar.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun setupStudentAdapter(){
