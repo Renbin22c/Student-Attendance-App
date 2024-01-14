@@ -1,5 +1,6 @@
 package com.renbin.student_attendance_app.data.repo.teacher
 
+import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.model.Teacher
 import kotlinx.coroutines.flow.Flow
 
@@ -10,6 +11,7 @@ interface TeacherRepo {
     // Function to get a single teacher from the repository
     suspend fun getTeacher(): Teacher?
 
+    suspend fun updateTeacher(teacher: Teacher)
     // Function to get all teachers as a Flow
     suspend fun getAllTeachers(): Flow<List<Teacher>>
 }

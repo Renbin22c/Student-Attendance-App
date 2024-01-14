@@ -52,9 +52,11 @@ class TeacherLessonViewModelImpl @Inject constructor(
 
     override fun getAllLesson() {
         viewModelScope.launch(Dispatchers.IO) {
+            _loading.emit(true)
             errorHandler { lessonRepo.getAllLessons() }?.collect{
                 _lessons.value = it.sortedByDescending{ lesson -> lesson.date  }
                 getClassesAndDates()
+                _loading.emit(false)
             }
         }
     }
@@ -89,13 +91,18 @@ class TeacherLessonViewModelImpl @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler { lessonRepo.deleteLesson(id) }
             _success.emit("Delete Lesson Successfully")
+            getAllLesson()
         }
     }
 
     override fun filterLessons(classSelect: String?) {
-        val filteredLessons = _lessons.value.filter { lesson ->
-            (classSelect == null || lesson.classes == classSelect)
+        viewModelScope.launch(Dispatchers.IO) {
+            _loading.emit(true)
+            val filteredLessons = _lessons.value.filter { lesson ->
+                (classSelect == null || lesson.classes == classSelect)
+            }
+            _filteredLessons.value = filteredLessons
+            _loading.emit(false)
         }
-        _filteredLessons.value = filteredLessons
     }
 }

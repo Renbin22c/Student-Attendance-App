@@ -50,6 +50,11 @@ class StudentRegisterFragment : BaseFragment<FragmentStudentRegisterBinding>() {
             autoCompleteCategory.addTextChangedListener {
                 classSelect = it.toString()
             }
+
+            tvLogin.setOnClickListener {
+                val action = StudentRegisterFragmentDirections.actionGlobalLogin()
+                navController.navigate(action)
+            }
         }
     }
 

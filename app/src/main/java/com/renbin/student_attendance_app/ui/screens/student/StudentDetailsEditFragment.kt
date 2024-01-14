@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.databinding.FragmentStudentDetailsEditBinding
 import com.renbin.student_attendance_app.ui.adapter.StudentDetailsEditAdapter
@@ -57,6 +61,16 @@ class StudentDetailsEditFragment : BaseFragment<FragmentStudentDetailsEditBindin
                 adapter.setClass(it)
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.loading.collect{
+                if (it){
+                    binding.progressbar.visibility = View.VISIBLE
+                } else {
+                    binding.progressbar.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun setupStudentDetailsEditAdapter(){
@@ -67,7 +81,7 @@ class StudentDetailsEditFragment : BaseFragment<FragmentStudentDetailsEditBindin
             }
 
             override fun onDelete(student: Student) {
-                viewModel.deleteStudent(student.id.toString())
+                alertDelete(student.id!!)
             }
 
         }
@@ -97,6 +111,34 @@ class StudentDetailsEditFragment : BaseFragment<FragmentStudentDetailsEditBindin
                 return true
             }
         })
+    }
+
+    private fun alertDelete(id: String){
+        val dialogView = layoutInflater.inflate(R.layout.alert_dialog, null)
+        val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.MaterialAlertDialog_Rounded)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
+        val btnConfirm = dialogView.findViewById<Button>(R.id.btnConfirm)
+        val tvTitle = dialogView.findViewById<TextView>(R.id.tvTitle)
+        val tvMessage = dialogView.findViewById<TextView>(R.id.tvMessage)
+
+        tvTitle.text = getString(R.string.delete_confirmation)
+        tvMessage.text = getString(R.string.delete_student)
+
+
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        btnConfirm.setOnClickListener {
+            viewModel.deleteStudent(id)
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
     }
 
 

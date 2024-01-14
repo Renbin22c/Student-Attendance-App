@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -24,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".core.service.MyBroadcastReceiver"/>
         <service android:name=".core.service.LessonMessagingService"
             android:exported="false">
             <intent-filter>
@@ -38,4 +41,5 @@
 
         <receiver android:name=".core.util.MyBroadcastReceiver" />
     </application>
+
 </manifest>

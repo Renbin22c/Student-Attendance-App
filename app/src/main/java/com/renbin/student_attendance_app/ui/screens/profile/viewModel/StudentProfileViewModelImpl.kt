@@ -1,8 +1,9 @@
 package com.renbin.student_attendance_app.ui.screens.profile.viewModel
 
+import android.net.Uri
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.firestore.auth.User
 import com.renbin.student_attendance_app.core.service.AuthService
+import com.renbin.student_attendance_app.core.service.StorageService
 import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.repo.student.StudentRepo
 import com.renbin.student_attendance_app.ui.screens.base.viewModel.BaseViewModel
@@ -16,24 +17,57 @@ import javax.inject.Inject
 @HiltViewModel
 class StudentProfileViewModelImpl @Inject constructor(
     private val authService: AuthService,
-    private val studentRepo: StudentRepo
-): BaseViewModel(), StudentProfileViewModel {
+    private val studentRepo: StudentRepo,
+    private val storageService: StorageService
+) : BaseViewModel(), StudentProfileViewModel {
     private val _user = MutableStateFlow(Student(name = "Unknown", email = "Unknown"))
-    override val user: StateFlow<Student>  = _user
+    override val user: StateFlow<Student> = _user
+    private val _profileUri = MutableStateFlow<Uri?>(null)
+    val profileUri: StateFlow<Uri?> = _profileUri
 
     init {
         getCurrentUser()
+        getProfilePicUri()
     }
 
     override fun getCurrentUser() {
         val firebaseUser = authService.getCurrentUser()
-        firebaseUser?.let{
+        firebaseUser?.let {
             viewModelScope.launch(Dispatchers.IO) {
-                errorHandler { studentRepo.getStudent() }?.let{user ->
+                errorHandler { studentRepo.getStudent() }?.let { user ->
                     _user.value = user
                 }
             }
         }
     }
+
+    fun updateProfile(name: String?, imageUri: Uri?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val currentUser = studentRepo.getStudent()
+
+            val updatedUser = currentUser?.copy()
+
+            name?.let { updatedUser?.name = it }
+
+            imageUri?.let { updatedUser?.profilePicUrl = it.toString() }
+
+            errorHandler {
+                if (updatedUser != null) {
+                    studentRepo.updateStudent(updatedUser)
+                }
+            }
+
+            getCurrentUser()
+        }
+    }
+
+    fun getProfilePicUri() {
+        viewModelScope.launch(Dispatchers.IO) {
+            authService.getCurrentUser()?.uid?.let {
+                _profileUri.value = storageService.loadSelectedImageUri("$it.jpg")
+            }
+        }
+    }
+
 
 }

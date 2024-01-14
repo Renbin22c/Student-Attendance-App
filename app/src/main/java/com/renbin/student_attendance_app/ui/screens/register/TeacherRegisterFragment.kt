@@ -36,6 +36,11 @@ class TeacherRegisterFragment : BaseFragment<FragmentTeacherRegisterBinding>() {
 
                 viewModel.teacherRegister(name, email, pass, confirmPass)
             }
+
+            tvLogin.setOnClickListener {
+                val action = TeacherRegisterFragmentDirections.actionGlobalLogin()
+                navController.navigate(action)
+            }
         }
     }
 

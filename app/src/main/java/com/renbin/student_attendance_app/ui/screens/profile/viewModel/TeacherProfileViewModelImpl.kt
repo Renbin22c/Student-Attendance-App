@@ -1,5 +1,6 @@
 package com.renbin.student_attendance_app.ui.screens.profile.viewModel
 
+import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.renbin.student_attendance_app.core.service.AuthService
 import com.renbin.student_attendance_app.data.model.Student
@@ -37,6 +38,26 @@ class TeacherProfileViewModelImpl @Inject constructor(
                     _user.value = user
                 }
             }
+        }
+    }
+
+    fun updateProfile(name: String?, imageUri: Uri?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val currentUser = teacherRepo.getTeacher()
+
+            val updatedUser = currentUser?.copy()
+
+            name?.let { updatedUser?.name = it }
+
+            imageUri?.let { updatedUser?.profilePicUrl = it.toString() }
+
+            errorHandler {
+                if (updatedUser != null) {
+                    teacherRepo.updateTeacher(updatedUser)
+                }
+            }
+
+            getCurrentUser()
         }
     }
 }
