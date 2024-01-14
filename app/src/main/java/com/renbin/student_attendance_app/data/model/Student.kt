@@ -3,10 +3,10 @@ package com.renbin.student_attendance_app.data.model
 // Define a data class representing a Student model
 data class Student(
     val id: String? = null,
-    val name: String,
+    var name: String,
     val email: String,
     val classes: String = "",
-    val profilePicUrl: String = "",
+    var profilePicUrl: String = "",
     val createdAt: Long = System.currentTimeMillis()
 ){
     // Function to convert the student instance to a HashMap for FireStore

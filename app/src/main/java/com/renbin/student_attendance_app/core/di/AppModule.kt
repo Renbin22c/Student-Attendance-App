@@ -2,6 +2,7 @@ package com.renbin.student_attendance_app.core.di
 
 import com.renbin.student_attendance_app.core.service.AuthService
 import com.renbin.student_attendance_app.core.service.AuthServiceImpl
+import com.renbin.student_attendance_app.core.service.StorageService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +19,12 @@ class AppModule {
     @Singleton
     fun provideAuthService(): AuthService {
         return AuthServiceImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun provideStorageService(): StorageService {
+        return StorageService()
     }
 
 }
