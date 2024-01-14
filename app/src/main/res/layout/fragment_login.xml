@@ -16,8 +16,8 @@
         android:orientation="vertical">
 
         <pl.droidsonroids.gif.GifImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
             android:src="@drawable/education"
             android:layout_gravity="center"/>
 
@@ -56,6 +56,17 @@
             android:text="@string/login"
             android:backgroundTint="@color/accent"
             app:cornerRadius="5dp"/>
+
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="8dp"
+            android:text="Forgot Password"
+            android:textColor="@color/blue"
+            android:textSize="14sp"/>
+
     </LinearLayout>
 
 </RelativeLayout>

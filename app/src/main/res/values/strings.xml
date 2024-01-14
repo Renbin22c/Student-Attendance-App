@@ -64,4 +64,5 @@
     <string name="classname">ClassName</string>
     <string name="note_page">Note Page</string>
     <string name="note_details">note details</string>
+    <string name="on_submit_msg">Check out your mailbox, you will receive an email containing link where you can reset your password</string>
 </resources>

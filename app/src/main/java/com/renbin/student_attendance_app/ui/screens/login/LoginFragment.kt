@@ -35,6 +35,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
                 viewModel.login(email, pass)
             }
+            tvForgotPassword.setOnClickListener {
+                val action = LoginFragmentDirections.actionLoginFragmentToForgetPasswordFragment()
+                navController.navigate(action)
+            }
         }
     }
 
@@ -65,6 +69,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 }
             }
         }
+
+
     }
 
 }

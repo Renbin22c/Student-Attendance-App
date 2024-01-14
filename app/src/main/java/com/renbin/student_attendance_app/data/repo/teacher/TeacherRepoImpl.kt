@@ -37,6 +37,11 @@ class TeacherRepoImpl(
         }
     }
 
+    override suspend fun updateTeacher(teacher: Teacher) {   if (teacher.id != null) {
+        getDbRef().document(teacher.id).set(teacher.toHashMap()).await()
+    }
+    }
+
     // Function to get all teachers as a Flow
     override suspend fun getAllTeachers() = callbackFlow {
         val listener = getDbRef().addSnapshotListener { value, error ->
