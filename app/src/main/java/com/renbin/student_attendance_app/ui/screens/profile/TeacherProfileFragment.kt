@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.databinding.FragmentTeacherProfileBinding
 import com.renbin.student_attendance_app.ui.adapter.EditProfileAdapter
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
@@ -52,6 +53,7 @@ class TeacherProfileFragment : BaseFragment<FragmentTeacherProfileBinding>() {
             .into(binding.userProfilePic)
     }
 
+
     private fun launchImagePicker() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
@@ -73,6 +75,14 @@ class TeacherProfileFragment : BaseFragment<FragmentTeacherProfileBinding>() {
             viewModel.user.collect {
                 binding.tvUserName.text = it.name
                 binding.tvUserEmail.text = it.email
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.profileUri.collect {
+                Glide.with(requireContext())
+                    .load(it)
+                    .placeholder(R.drawable.placeholder)
+                    .into(binding.userProfilePic)
             }
         }
     }
