@@ -23,7 +23,7 @@ class StudentHomeViewModelImpl @Inject constructor(
     private val lessonRepo: LessonRepo,
     private val studentRepo: StudentRepo,
     private val teacherRepo: TeacherRepo,
-): BaseViewModel(), HomeViewModel {
+): BaseViewModel(), HomeViewModel, StudentHomeViewModel {
     private val _lessons: MutableStateFlow<List<Lesson>> = MutableStateFlow(emptyList())
     override val lessons: StateFlow<List<Lesson>> = _lessons
 
@@ -79,6 +79,26 @@ class StudentHomeViewModelImpl @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler { authService.logout() }
             _success.emit("Logout Successfully")
+        }
+    }
+
+    override fun updateAttendanceStatus(id: String, lesson: Lesson) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if(user != null){
+                val index = lesson.student.indexOf(user.uid)
+                if(index != -1) {
+                    val attend = lesson.attendance.toMutableList()
+                    val attendTime = lesson.attendanceTime.toMutableList()
+
+                    attend[index] = true
+                    attendTime[index] = Utility.formatTimestamp(System.currentTimeMillis())
+
+                    val newLesson = lesson.copy(attendance = attend, attendanceTime = attendTime)
+
+                    errorHandler { lessonRepo.updateLesson(id,newLesson) }
+                    _success.emit("Check In Successfully")
+                }
+            }
         }
     }
 }
