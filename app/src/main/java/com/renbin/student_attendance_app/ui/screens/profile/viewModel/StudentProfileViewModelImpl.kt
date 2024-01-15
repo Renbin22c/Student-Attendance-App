@@ -1,6 +1,7 @@
 package com.renbin.student_attendance_app.ui.screens.profile.viewModel
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.renbin.student_attendance_app.core.service.AuthService
 import com.renbin.student_attendance_app.core.service.StorageService
@@ -41,6 +42,7 @@ class StudentProfileViewModelImpl @Inject constructor(
         }
     }
 
+
     fun updateProfile(name: String?, imageUri: Uri?) {
         viewModelScope.launch(Dispatchers.IO) {
             val currentUser = studentRepo.getStudent()
@@ -49,7 +51,13 @@ class StudentProfileViewModelImpl @Inject constructor(
 
             name?.let { updatedUser?.name = it }
 
-            imageUri?.let { updatedUser?.profilePicUrl = it.toString() }
+            imageUri?.let {
+                val userId = authService.getCurrentUser()?.uid
+                val imageName = "$userId.jpg"
+                updatedUser?.profilePicUrl = imageName
+                storageService.saveSelectedImageUri(imageName, it)
+                getProfilePicUri()
+            }
 
             errorHandler {
                 if (updatedUser != null) {
@@ -64,7 +72,11 @@ class StudentProfileViewModelImpl @Inject constructor(
     fun getProfilePicUri() {
         viewModelScope.launch(Dispatchers.IO) {
             authService.getCurrentUser()?.uid?.let {
-                _profileUri.value = storageService.loadSelectedImageUri("$it.jpg")
+                val imageName = "$it.jpg"
+                _profileUri.value = storageService.loadSelectedImageUri(imageName)
+
+                Log.d("image", imageName)
+                Log.d("profilepic", profileUri.value.toString())
             }
         }
     }
