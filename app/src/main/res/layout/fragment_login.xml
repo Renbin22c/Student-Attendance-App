@@ -16,9 +16,6 @@
         android:orientation="vertical">
 
         <pl.droidsonroids.gif.GifImageView
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
@@ -80,19 +77,6 @@
             android:text="Forgot Password"
             android:textColor="@color/blue"
             android:textSize="14sp"/>
-
-    </LinearLayout>
-
-</RelativeLayout>
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:text="@string/login"
-                android:backgroundTint="@color/accent"
-                app:cornerRadius="5dp"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

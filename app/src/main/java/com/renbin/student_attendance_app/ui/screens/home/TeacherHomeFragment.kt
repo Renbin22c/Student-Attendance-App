@@ -88,7 +88,7 @@ class TeacherHomeFragment : BaseFragment<FragmentTeacherHomeBinding>() {
     }
 
     private fun setupLessonAdapter(){
-        lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList(), viewModel.user)
+        lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList(), viewModel.user, "Home")
         binding.rvLesson.adapter = lessonAdapter
         binding.rvLesson.layoutManager = LinearLayoutManager(requireContext())
     }

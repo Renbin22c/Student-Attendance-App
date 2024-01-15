@@ -17,7 +17,6 @@ import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.databinding.FragmentStudentProfileBinding
 import com.renbin.student_attendance_app.ui.adapter.EditProfileAdapter
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
-import com.renbin.student_attendance_app.ui.screens.login.LoginFragmentDirections
 import com.renbin.student_attendance_app.ui.screens.profile.viewModel.StudentProfileViewModelImpl
 import com.renbin.student_attendance_app.ui.screens.tabContainer.StudentTabContainerFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint

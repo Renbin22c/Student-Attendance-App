@@ -1,5 +1,6 @@
 package com.renbin.student_attendance_app.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,8 @@ class LessonAdapter(
     private var lessons: List<Lesson>,
     private var students: List<Student>,
     private var teachers: List<Teacher>,
-    private var user: FirebaseUser?
+    private var user: FirebaseUser?,
+    private var currentFragment: String
 ): RecyclerView.Adapter<LessonAdapter.AttendanceItemViewHolder>() {
     var listener: Listener? = null
 
@@ -110,13 +112,14 @@ class LessonAdapter(
                 val matchTeacher = teachers.find { it.id == lesson.createdBy }
                 tvLessonTeacher.text = matchTeacher?.name
                 // Show delete button if the user created the lesson
-                if(user?.uid == lesson.createdBy) ivDeleteLesson.visibility = View.VISIBLE
+                if(user?.uid == lesson.createdBy && currentFragment == "Lesson") ivDeleteLesson.visibility = View.VISIBLE
 
-                if (checkDateForCheckIn(lesson.date)){
-                    if (checkTimeForCheckIn(lesson.time)){
-                        // Show check-in button if the user is a student in the lesson
-                        val filterStudent = lesson.student.contains(user?.uid)
-                        if (filterStudent) ivCheckIn.visibility = View.VISIBLE
+                if (checkDateForCheckIn(lesson.date) && checkTimeForCheckIn(lesson.time)){
+                    // Show check-in button if the user is a student in the lesson
+                    val filterStudent = lesson.student.contains(user?.uid)
+                    if (filterStudent) {
+                        ivCheckIn.visibility = View.VISIBLE
+                        Log.d("debugging", "Getting True")
                     }
                 }
 
@@ -137,7 +140,9 @@ class LessonAdapter(
                         // Set attendance status and update UI accordingly
                         if (lesson.attendance[i]) {
                             attBinding.ivAttendanceStatus.setImageResource(R.drawable.ic_check)
-                            ivCheckIn.visibility = View.GONE
+                            if(lesson.student[i] == user?.uid){
+                                ivCheckIn.visibility =View.GONE
+                            }
                         } else {
                             attBinding.ivAttendanceStatus.setImageResource(R.drawable.ic_close)
                         }

@@ -70,12 +70,6 @@ class AddLessonViewModelImpl @Inject constructor(
                             )
                         )
                     }
-                    val notification = createNotificationBuilder(
-                        context,
-                        "$name been created for $classes",
-                        "$name start at $date $time"
-                    ).build()
-                    notify(context, notification)
                     _success.emit("Add Lesson Successfully")
                 } else{
                     _error.emit("This class don't have any student")
