@@ -79,6 +79,7 @@ class StudentHomeViewModelImpl @Inject constructor(
             }
         }
     }
+
     override fun logout() {
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler { authService.logout() }

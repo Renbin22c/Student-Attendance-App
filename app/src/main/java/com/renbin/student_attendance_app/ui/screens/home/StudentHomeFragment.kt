@@ -1,5 +1,9 @@
 package com.renbin.student_attendance_app.ui.screens.home
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +36,7 @@ class StudentHomeFragment : BaseFragment<FragmentStudentHomeBinding>() {
         return binding.root
     }
 
+
     override fun setupUIComponents(view: View) {
         super.setupUIComponents(view)
         setupLessonAdapter()
@@ -56,6 +61,11 @@ class StudentHomeFragment : BaseFragment<FragmentStudentHomeBinding>() {
         lifecycleScope.launch {
             viewModel.lessons.collect{
                 lessonAdapter.setLessons(it)
+                if (it.isEmpty()){
+                    binding.tvEmpty.visibility = View.VISIBLE
+                } else {
+                    binding.tvEmpty.visibility = View.GONE
+                }
             }
         }
 
