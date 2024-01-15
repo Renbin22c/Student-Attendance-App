@@ -1,8 +1,10 @@
 package com.renbin.student_attendance_app.ui.screens.profile.viewModel
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.renbin.student_attendance_app.core.service.AuthService
+import com.renbin.student_attendance_app.core.service.StorageService
 import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.model.Teacher
 import com.renbin.student_attendance_app.data.repo.student.StudentRepo
@@ -19,14 +21,18 @@ import javax.inject.Inject
 class TeacherProfileViewModelImpl @Inject constructor(
 
     private val authService: AuthService,
-    private val teacherRepo: TeacherRepo
+    private val teacherRepo: TeacherRepo,
+    private val storageService: StorageService
 
 ): BaseViewModel(), TeacherProfileViewModel {
 
     private val _user = MutableStateFlow(Teacher(name = "Unknown", email = "Unknown"))
     override val user: MutableStateFlow<Teacher> = _user
+    private val _profileUri = MutableStateFlow<Uri?>(null)
+    val profileUri: StateFlow<Uri?> = _profileUri
 
     init {
+        getProfilePicUri()
         getCurrentUser()
     }
 
@@ -49,7 +55,13 @@ class TeacherProfileViewModelImpl @Inject constructor(
 
             name?.let { updatedUser?.name = it }
 
-            imageUri?.let { updatedUser?.profilePicUrl = it.toString() }
+            imageUri?.let {
+                val userId = authService.getCurrentUser()?.uid
+                val imageName = "$userId.jpg"
+                updatedUser?.profilePicUrl = imageName
+                storageService.saveSelectedImageUri(imageName, it)
+                getProfilePicUri()
+            }
 
             errorHandler {
                 if (updatedUser != null) {
@@ -58,6 +70,18 @@ class TeacherProfileViewModelImpl @Inject constructor(
             }
 
             getCurrentUser()
+        }
+    }
+
+    fun getProfilePicUri() {
+        viewModelScope.launch(Dispatchers.IO) {
+            authService.getCurrentUser()?.uid?.let {
+                val imageName = "$it.jpg"
+                _profileUri.value = storageService.loadSelectedImageUri(imageName)
+
+                Log.d("image", imageName)
+                Log.d("profilepic", profileUri.value.toString())
+            }
         }
     }
 }
