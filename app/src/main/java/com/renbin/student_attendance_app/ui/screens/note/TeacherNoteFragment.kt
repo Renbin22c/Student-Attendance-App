@@ -61,16 +61,21 @@ class TeacherNoteFragment : BaseFragment<FragmentTeacherNoteBinding>() {
     }
 
     private fun setupNoteAdapter() {
-        adapter = NoteAdapter(emptyList(), emptyList())
+        adapter = NoteAdapter(emptyList(), emptyList(), viewModel.user)
         adapter.listener = object :NoteAdapter.Listener{
             override fun onClick(note: Note) {
                 val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerFragmentToNoteDetailsFragment(
+                    noteId = note.id.toString(),
                     note.title,
                     note.desc,
                     note.classes,
                     note.createdBy
                 )
                 navController.navigate(action)
+            }
+
+            override fun onDelete(note: Note) {
+                viewModel.deleteNotes(note.id.toString())
             }
         }
         binding.rvNotes.adapter = adapter

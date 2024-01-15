@@ -50,4 +50,11 @@ class TeacherNoteViewModelImpl @Inject constructor(
             }
         }
     }
+
+    override fun deleteNotes(id: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            errorHandler { noteRepo.deleteNote(id) }
+            _success.emit("Delete Note Successfully")
+        }
+    }
 }
