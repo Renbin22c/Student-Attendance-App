@@ -129,7 +129,7 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
     }
 
     private fun setupLessonAdapter(){
-        lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList(), viewModel.user)
+        lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList(), viewModel.user, "Lesson")
         lessonAdapter.listener = object : LessonAdapter.Listener{
             override fun onClick(id: String, lesson: Lesson) {
                 TODO("Not yet implemented")
