@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.renbin.student_attendance_app.R
+import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.databinding.FragmentStudentHomeBinding
 import com.renbin.student_attendance_app.ui.adapter.LessonAdapter
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
@@ -51,7 +52,7 @@ class StudentHomeFragment : BaseFragment<FragmentStudentHomeBinding>() {
         super.setupViewModelObserver()
 
         lifecycleScope.launch {
-            viewModel.success.collect{
+            viewModel.logoutSuccess.collect{
                 val action = StudentTabContainerFragmentDirections.actionGlobalMain()
                 navController.navigate(action)
             }
@@ -97,7 +98,17 @@ class StudentHomeFragment : BaseFragment<FragmentStudentHomeBinding>() {
     }
 
     private fun setupLessonAdapter(){
-        lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList(), viewModel.user)
+        lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList(), viewModel.user, "Home")
+        lessonAdapter.listener = object : LessonAdapter.Listener{
+            override fun onClick(id: String, lesson: Lesson) {
+                viewModel.updateAttendanceStatus(id, lesson)
+            }
+
+            override fun onDelete(lesson: Lesson) {
+                TODO("Not yet implemented")
+            }
+
+        }
         binding.rvLesson.adapter = lessonAdapter
         binding.rvLesson.layoutManager = LinearLayoutManager(requireContext())
     }

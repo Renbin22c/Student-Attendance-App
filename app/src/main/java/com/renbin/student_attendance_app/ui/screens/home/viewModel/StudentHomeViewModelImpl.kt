@@ -12,7 +12,9 @@ import com.renbin.student_attendance_app.data.repo.teacher.TeacherRepo
 import com.renbin.student_attendance_app.ui.screens.base.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,6 +34,9 @@ class StudentHomeViewModelImpl @Inject constructor(
 
     private val _teachers: MutableStateFlow<List<Teacher>> = MutableStateFlow(emptyList())
     override val teachers: StateFlow<List<Teacher>> = _teachers
+
+    private val _logoutSuccess: MutableSharedFlow<String> = MutableSharedFlow()
+    override val logoutSuccess: SharedFlow<String> = _logoutSuccess
 
     val user = authService.getCurrentUser()
 
@@ -78,7 +83,27 @@ class StudentHomeViewModelImpl @Inject constructor(
     override fun logout() {
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler { authService.logout() }
-            _success.emit("Logout Successfully")
+            _logoutSuccess.emit("Logout Successfully")
+        }
+    }
+
+    override fun updateAttendanceStatus(id: String, lesson: Lesson) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if(user != null){
+                val index = lesson.student.indexOf(user.uid)
+                if(index != -1) {
+                    val attend = lesson.attendance.toMutableList()
+                    val attendTime = lesson.attendanceTime.toMutableList()
+
+                    attend[index] = true
+                    attendTime[index] = Utility.formatTimestamp(System.currentTimeMillis())
+
+                    val newLesson = lesson.copy(attendance = attend, attendanceTime = attendTime)
+
+                    errorHandler { lessonRepo.updateLesson(id,newLesson) }
+                    _success.emit("Check In Successfully")
+                }
+            }
         }
     }
 
