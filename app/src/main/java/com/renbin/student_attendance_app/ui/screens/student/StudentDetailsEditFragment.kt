@@ -22,8 +22,11 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class StudentDetailsEditFragment : BaseFragment<FragmentStudentDetailsEditBinding>() {
+    // Initialize ViewModel using Dagger Hilt
     override val viewModel: StudentDetailsEditViewModelImpl by viewModels()
+    // Initialize LessonAdapter
     private lateinit var adapter: StudentDetailsEditAdapter
+    // Hold the SearchView
     private lateinit var searchView: SearchView
 
     override fun onCreateView(
@@ -37,11 +40,13 @@ class StudentDetailsEditFragment : BaseFragment<FragmentStudentDetailsEditBindin
 
     override fun setupUIComponents(view: View) {
         super.setupUIComponents(view)
+        // Initialize and set up the adapter and search functionality
         setupStudentDetailsEditAdapter()
         search()
 
         binding.run {
             ibCheck.setOnClickListener {
+                // Navigate back when the check button is clicked
                 navController.popBackStack()
             }
         }
@@ -50,21 +55,24 @@ class StudentDetailsEditFragment : BaseFragment<FragmentStudentDetailsEditBindin
     override fun setupViewModelObserver() {
         super.setupViewModelObserver()
 
+        // Observe changes in student list and update the adapter
         lifecycleScope.launch {
-            viewModel.students.collect{
+            viewModel.students.collect {
                 adapter.setStudentDetailsEdit(it)
             }
         }
 
-        lifecycleScope.launch{
-            viewModel.classesName.collect{
+        // Observe changes in class names and update the adapter
+        lifecycleScope.launch {
+            viewModel.classesName.collect {
                 adapter.setClass(it)
             }
         }
 
+        // Observe loading state and show/hide progress bar accordingly
         lifecycleScope.launch {
-            viewModel.loading.collect{
-                if (it){
+            viewModel.loading.collect {
+                if (it) {
                     binding.progressbar.visibility = View.VISIBLE
                 } else {
                     binding.progressbar.visibility = View.GONE
@@ -73,27 +81,31 @@ class StudentDetailsEditFragment : BaseFragment<FragmentStudentDetailsEditBindin
         }
     }
 
-    private fun setupStudentDetailsEditAdapter(){
+    private fun setupStudentDetailsEditAdapter() {
+        // Initialize the adapter and set up its listeners
         adapter = StudentDetailsEditAdapter(emptyList(), emptyList(), requireContext())
-        adapter.listener = object: StudentDetailsEditAdapter.Listener{
+        adapter.listener = object : StudentDetailsEditAdapter.Listener {
             override fun onUpdate(student: Student, classes: String) {
+                // Handle student update
                 viewModel.updateStudent(student, classes)
             }
 
             override fun onDelete(student: Student) {
+                // Show delete confirmation dialog
                 alertDelete(student.id!!)
             }
-
         }
         binding.rvStudentDetailsEdit.adapter = adapter
         binding.rvStudentDetailsEdit.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun search(){
+    private fun search() {
+        // Set up search functionality using the SearchView
         searchView = binding.searchView
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if(query != null){
+                // Filter and update adapter on text submit
+                if (query != null) {
                     val filteredEmails = viewModel.filterEmailByQuery(query)
                     adapter.setStudentDetailsEdit(filteredEmails)
                 }
@@ -102,10 +114,11 @@ class StudentDetailsEditFragment : BaseFragment<FragmentStudentDetailsEditBindin
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if(newText != null){
+                // Filter and update adapter on text change
+                if (newText != null) {
                     val filteredEmails = viewModel.filterEmailByQuery(newText)
                     adapter.setStudentDetailsEdit(filteredEmails)
-                }else{
+                } else {
                     adapter.setStudentDetailsEdit(emptyList())
                 }
                 return true
@@ -113,7 +126,8 @@ class StudentDetailsEditFragment : BaseFragment<FragmentStudentDetailsEditBindin
         })
     }
 
-    private fun alertDelete(id: String){
+    private fun alertDelete(id: String) {
+        // Show delete confirmation dialog
         val dialogView = layoutInflater.inflate(R.layout.alert_dialog, null)
         val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.MaterialAlertDialog_Rounded)
             .setView(dialogView)
@@ -128,18 +142,17 @@ class StudentDetailsEditFragment : BaseFragment<FragmentStudentDetailsEditBindin
         tvTitle.text = getString(R.string.delete_confirmation)
         tvMessage.text = getString(R.string.delete_student)
 
-
         btnCancel.setOnClickListener {
+            // Dismiss the dialog on cancel button click
             alertDialog.dismiss()
         }
 
         btnConfirm.setOnClickListener {
+            // Delete the student on confirm button click
             viewModel.deleteStudent(id)
             alertDialog.dismiss()
         }
 
         alertDialog.show()
     }
-
-
 }

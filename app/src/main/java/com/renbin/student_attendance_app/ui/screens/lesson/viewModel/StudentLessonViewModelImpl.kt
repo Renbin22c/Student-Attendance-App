@@ -17,24 +17,30 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// ViewModel implementation for managing student lessons, attendance, and related data
 @HiltViewModel
 class StudentLessonViewModelImpl @Inject constructor(
     private val lessonRepo: LessonRepo,
     private val studentRepo: StudentRepo,
     private val teacherRepo: TeacherRepo,
     authService: AuthService
-):BaseViewModel(), StudentLessonViewModel, LessonViewModel {
+) : BaseViewModel(), StudentLessonViewModel, LessonViewModel {
+    // MutableStateFlow to hold the list of lessons
     private val _lessons: MutableStateFlow<List<Lesson>> = MutableStateFlow(emptyList())
     override val lessons: StateFlow<List<Lesson>> = _lessons
 
+    // MutableStateFlow to hold the list of students
     private val _students: MutableStateFlow<List<Student>> = MutableStateFlow(emptyList())
     override val students: StateFlow<List<Student>> = _students
 
+    // MutableStateFlow to hold the list of teachers
     private val _teachers: MutableStateFlow<List<Teacher>> = MutableStateFlow(emptyList())
     override val teachers: StateFlow<List<Teacher>> = _teachers
 
+    // Get the current user from the authentication service
     val user = authService.getCurrentUser()
 
+    // Function called on ViewModel creation to fetch initial data
     override fun onCreate() {
         super.onCreate()
         getAllLesson()
@@ -42,11 +48,13 @@ class StudentLessonViewModelImpl @Inject constructor(
         getAllTeachers()
     }
 
+    // Function to fetch all lessons associated with the current student
     override fun getAllLesson() {
         viewModelScope.launch(Dispatchers.IO) {
             _loading.emit(true)
-            errorHandler { lessonRepo.getAllLessons() }?.collect{
-                val filterLesson = it.filter {lesson ->
+            errorHandler { lessonRepo.getAllLessons() }?.collect {
+                // Filter lessons to only include those associated with the current student
+                val filterLesson = it.filter { lesson ->
                     lesson.student.contains(user?.uid)
                 }
                 _lessons.value = filterLesson
@@ -55,14 +63,16 @@ class StudentLessonViewModelImpl @Inject constructor(
         }
     }
 
+    // Function to fetch all students
     override fun getAllStudents() {
         viewModelScope.launch(Dispatchers.IO) {
-            errorHandler { studentRepo.getAllStudents() }?.collect{
+            errorHandler { studentRepo.getAllStudents() }?.collect {
                 _students.value = it
             }
         }
     }
 
+    // Function to fetch all teachers
     override fun getAllTeachers() {
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler { teacherRepo.getAllTeachers() }?.collect {
@@ -71,20 +81,23 @@ class StudentLessonViewModelImpl @Inject constructor(
         }
     }
 
+    // Function to update the attendance status of the current student in a lesson
     override fun updateAttendanceStatus(id: String, lesson: Lesson) {
         viewModelScope.launch(Dispatchers.IO) {
-            if(user != null){
+            if (user != null) {
                 val index = lesson.student.indexOf(user.uid)
-                if(index != -1) {
+                if (index != -1) {
                     val attend = lesson.attendance.toMutableList()
                     val attendTime = lesson.attendanceTime.toMutableList()
 
+                    // Mark the student as attended and record the attendance time
                     attend[index] = true
                     attendTime[index] = formatTimestamp(System.currentTimeMillis())
 
                     val newLesson = lesson.copy(attendance = attend, attendanceTime = attendTime)
 
-                    errorHandler { lessonRepo.updateLesson(id,newLesson) }
+                    // Update the lesson with the new attendance information
+                    errorHandler { lessonRepo.updateLesson(id, newLesson) }
                     _success.emit("Check In Successfully")
                 }
             }

@@ -12,10 +12,13 @@ import com.renbin.student_attendance_app.ui.screens.register.viewModel.TeacherRe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+// Hilt AndroidEntryPoint annotation for dependency injection
 @AndroidEntryPoint
 class TeacherRegisterFragment : BaseFragment<FragmentTeacherRegisterBinding>() {
+    // View model initialization using Hilt
     override val viewModel: TeacherRegisterViewModelImpl by viewModels()
 
+    // Called to create the fragment's view
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,18 +28,22 @@ class TeacherRegisterFragment : BaseFragment<FragmentTeacherRegisterBinding>() {
         return binding.root
     }
 
+    // Setup UI components and event listeners
     override fun setupUIComponents(view: View) {
         super.setupUIComponents(view)
         binding.run {
+            // Set up click listener for the teacher registration button
             btnTeacherRegister.setOnClickListener {
                 val name = etName.text.toString()
                 val email = etEmail.text.toString()
                 val pass = etPassword.text.toString()
                 val confirmPass = etConfirmPassword.text.toString()
 
+                // Call the teacherRegister method on the view model with the provided information
                 viewModel.teacherRegister(name, email, pass, confirmPass)
             }
 
+            // Set up click listener to navigate to the login screen
             tvLogin.setOnClickListener {
                 val action = TeacherRegisterFragmentDirections.actionGlobalLogin()
                 navController.navigate(action)
@@ -44,11 +51,13 @@ class TeacherRegisterFragment : BaseFragment<FragmentTeacherRegisterBinding>() {
         }
     }
 
+    // Observe view model data changes
     override fun setupViewModelObserver() {
         super.setupViewModelObserver()
 
-        lifecycleScope.launch{
-            viewModel.success.collect{
+        // Observe success state and navigate to the login screen on successful registration
+        lifecycleScope.launch {
+            viewModel.success.collect {
                 val action = TeacherRegisterFragmentDirections.actionGlobalLogin()
                 navController.navigate(action)
             }

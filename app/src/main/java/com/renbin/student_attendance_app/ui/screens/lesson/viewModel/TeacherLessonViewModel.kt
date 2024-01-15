@@ -5,12 +5,15 @@ import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.model.Teacher
 import kotlinx.coroutines.flow.StateFlow
 
+// ViewModel interface for managing teacher-specific lesson data and actions
 interface TeacherLessonViewModel {
+    // StateFlow to hold the list of available classes
     val classes: StateFlow<List<String>>
-    val dates: StateFlow<List<String>>
-    val filteredLessons: StateFlow<List<Lesson>>
+    // StateFlow to hold the filtered list of lessons based on selected class
+    val filterLessons: StateFlow<List<Lesson>>
 
-    fun getClassesAndDates()
+    // Function to fetch the list of available classes
+    fun getClasses()
+    // Function to delete a lesson by its ID
     fun deleteLesson(id: String)
-    fun filterLessons(classSelect: String?)
 }
