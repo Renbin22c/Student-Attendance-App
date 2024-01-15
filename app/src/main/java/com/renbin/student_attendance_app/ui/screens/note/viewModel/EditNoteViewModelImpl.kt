@@ -1,5 +1,6 @@
 package com.renbin.student_attendance_app.ui.screens.note.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.renbin.student_attendance_app.core.service.AuthService
@@ -24,9 +25,10 @@ class EditNoteViewModelImpl @Inject constructor(
 ) : BaseViewModel(), EditNoteViewModel {
 
     private val _classesName = MutableStateFlow<List<String>>(emptyList())
-    override val classesName: StateFlow<List<String>> =_classesName
+    override val classesName: StateFlow<List<String>> = _classesName
 
-    private val _currentNote : MutableStateFlow<Note> = MutableStateFlow(Note(classes = "", title = "", desc = "", student = emptyList(), createdBy = ""))
+
+    private val _currentNote: MutableStateFlow<Note?> = MutableStateFlow(null)
     val currentNote: StateFlow<Note?> = _currentNote
 
     override fun onCreate() {
@@ -35,71 +37,48 @@ class EditNoteViewModelImpl @Inject constructor(
     }
 
 
-//    override fun setCurrentNoteId(noteId: String) {
-//        viewModelScope.launch {
-//            // Fetch the note details using the repository or your data source
-//            val note = noteRepo.getNote(noteId)
-//            _currentNote.value = note
-//
-//        }
-//    }
-
     override fun getAllClassesName() {
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler {
                 classesRepo.getAllClassesName()
-            }?.collect{
+            }?.collect {
                 _classesName.value = it
             }
         }
     }
-//    private var currentNoteId: String? = null
-//
-//    override fun editNotes(noteId: String,title: String, desc: String, classes: String) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val user = authService.getCurrentUser()
-//
-//            val students = studentRepo.getAllStudentByClass(classes)
-//                .mapNotNull { student -> student.id }
-//
-//            user?.let {
-//                val note = Note(
-//                    title = title,
-//                    desc = desc,
-//                    classes = classes,
-//                    student = students,
-//                    createdBy = it.uid
-//                )
-//
-//                // Pass the appropriate note ID as the first parameter
-//                errorHandler { noteRepo.editNote(noteId, note) }
-//
-//                _success.emit("Update Note Successfully")
-//            }
-//        }
-//    }
 
-//    override fun submit(title: String, desc: String) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            errorHandler{ noteRepo.editNote(Note.value.id, Note.value.copy(title = title, desc = desc)) }
-//            _success.emit(Unit.toString())
-//        }
-//    }
-
-    fun getNote(id:String) {
+    override fun getNote(id: String){
         viewModelScope.launch(Dispatchers.IO) {
             errorHandler {
                 noteRepo.getNote(id)
             }?.let {
+                Log.d("EditNoteViewModel", "Note retrieved: $it")
                 _currentNote.value = it
             }
         }
     }
 
-    override fun submit(title: String, desc: String) {
+    override fun editNotes(noteId: String, title: String, desc: String, classes: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            errorHandler{ currentNote.value?.let { noteRepo.editNote(currentNote.value?.id.toString(), it.copy(title = title, desc = desc)) } }
-            _success.emit(Unit.toString())
+            val user = authService.getCurrentUser()
+
+            val students = studentRepo.getAllStudentByClass(classes)
+                .mapNotNull { student -> student.id }
+
+            user?.let {
+                val updatedNote = currentNote.value?.copy(
+                    title = title,
+                    desc = desc,
+                    classes = classes,
+                    student = students,
+                    createdBy = it.uid
+                )
+
+                updatedNote?.let {
+                    errorHandler { noteRepo.editNote(noteId, it) }
+                    _success.emit("Update Note Successfully")
+                }
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.appcompat.R
+import androidx.navigation.fragment.navArgs
 import com.renbin.student_attendance_app.databinding.FragmentEditNoteBinding
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
 import com.renbin.student_attendance_app.ui.screens.note.viewModel.EditNoteViewModelImpl
@@ -21,93 +22,87 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class EditNoteFragment : BaseFragment<FragmentEditNoteBinding>() {
 
-    private var noteId: String? = null
-    override val  viewModel: EditNoteViewModelImpl by viewModels()
+    private val args: EditNoteFragmentArgs by navArgs()
+    override val viewModel: EditNoteViewModelImpl by viewModels()
     private lateinit var classesAdapter: ArrayAdapter<String>
-    private var selectedClass:String  = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditNoteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-//    override fun setupUIComponents(view: View) {
-//        super.setupUIComponents(view)
-//        classesAdapter = ArrayAdapter(
-//            requireContext(),
-//            androidx.transition.R.layout.support_simple_spinner_dropdown_item,
-//            emptyList()
-//        )
-//
-//
-//        binding.run {
-//            ibBack.setOnClickListener {
-//                navController.popBackStack()
-//            }
-//
-//            btnUpdate.setOnClickListener {
-//                val title = etNoteTitle.text.toString()
-//                val desc = etNoteDesc.text.toString()
-//
-//                autoCompleteClass.addTextChangedListener {
-//                    selectedClass = it.toString()
-//                }
-//
-//                viewModel.editNotes(noteId.orEmpty(), title, desc, selectedClass)
-//            }
-//        }
-//    }
-//
-//    override fun setupViewModelObserver() {
-//        super.setupViewModelObserver()
-//
-//        lifecycleScope.launch {
-//            viewModel.currentNote.collect { note ->
-//                // Update the UI with the note details
-//                note?.let {
-//                    binding.etNoteTitle.setText(it.title)
-//                    binding.etNoteDesc.setText(it.desc)
-//                    selectedClass = it.classes
-//                    binding.autoCompleteClass.setText(it.classes)
-//                    Log.d("EditNoteFragment", "Selected Class: $selectedClass")
-//                }
-//            }
-//        }
-//
-//
-//            lifecycleScope.launch {
-//            viewModel.classesName.collect {
-//                updateClassesDropDown(it)
-//            }
-//        }
-//    }
-//
-//    private fun updateClassesDropDown(classes: List<String>) {
-//        classesAdapter = if (classes.isEmpty()) {
-//            ArrayAdapter(
-//                requireContext(),
-//                R.layout.support_simple_spinner_dropdown_item,
-//                emptyList()
-//            )
-//        } else {
-//            ArrayAdapter(
-//                requireContext(),
-//                R.layout.support_simple_spinner_dropdown_item,
-//                classes
-//            )
-//        }
-//
-//        binding.autoCompleteClass.setAdapter(classesAdapter)
-//
-//        // Assuming you have the selectedClass value, set it as the selected item in the dropdown
-//        val selectedClassPosition = classesAdapter.getPosition(selectedClass)
-//        if (selectedClassPosition != -1) {
-//            binding.autoCompleteClass.setSelection(selectedClassPosition)
-//        }
-//    }
+        // Retrieve arguments from NoteDetailsFragment
+        val noteId = args.noteId
 
+        // Setup UI components
+        setupUIComponents(noteId)
+
+        // Handle the "Update" button click
+        binding.btnUpdate.setOnClickListener {
+            val title = binding.etNoteTitle.text.toString()
+            val desc = binding.etNoteDesc.text.toString()
+            val selectedClass = binding.autoCompleteClass.text.toString()
+
+            viewModel.editNotes(noteId, title, desc, selectedClass)
+        }
+
+        // Observe the ViewModel's StateFlow properties
+        setupViewModelObserver()
+    }
+
+    private fun setupUIComponents(noteId: String) {
+        binding.ibBack.setOnClickListener {
+            navController.popBackStack()
+        }
+        binding.etNoteTitle.setText(viewModel.currentNote.value?.title ?: "")
+        binding.etNoteDesc.setText(viewModel.currentNote.value?.desc ?: "")
+        binding.autoCompleteClass.setText(viewModel.currentNote.value?.classes ?: "")
+
+        // Fetch note details based on noteId
+        viewModel.getNote(noteId)
+    }
+
+    override fun setupViewModelObserver() {
+        super.setupViewModelObserver()
+        lifecycleScope.launch {
+            viewModel.currentNote.collect { note ->
+                // Update the UI with the note details
+                note?.let {
+                    binding.etNoteTitle.setText(it.title)
+                    binding.etNoteDesc.setText(it.desc)
+                    binding.autoCompleteClass.setText(it.classes)
+                    if(viewModel.classesName.value.isNotEmpty())updateClassesDropDown(viewModel.classesName.value)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.classesName.collect {
+                updateClassesDropDown(it)
+            }
+        }
+
+        lifecycleScope.launch{
+            viewModel.success.collect{
+                navController.popBackStack()
+            }
+        }
+    }
+
+    private fun updateClassesDropDown(classes: List<String>) {
+        val classesAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            classes
+        )
+        binding.autoCompleteClass.setAdapter(classesAdapter)
+    }
 }
+
+

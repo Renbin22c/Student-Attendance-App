@@ -1,5 +1,6 @@
 package com.renbin.student_attendance_app.ui.screens.note.viewModel
 
+import com.renbin.student_attendance_app.data.model.Note
 import kotlinx.coroutines.flow.StateFlow
 
 interface EditNoteViewModel {
@@ -7,7 +8,7 @@ interface EditNoteViewModel {
 
     fun getAllClassesName()
 
-//    fun editNotes(noteId: String, title: String, desc: String, classes: String)
+    fun getNote(id: String)
 
-    fun submit(title: String, desc: String)
+    fun editNotes(noteId: String, title: String, desc: String, classes: String)
 }

@@ -9,6 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseUser
+import com.renbin.student_attendance_app.core.service.AuthService
+import com.renbin.student_attendance_app.core.service.AuthServiceImpl
 import com.renbin.student_attendance_app.data.model.Teacher
 import com.renbin.student_attendance_app.databinding.FragmentNoteDetailsBinding
 import com.renbin.student_attendance_app.ui.adapter.NoteAdapter
@@ -21,6 +24,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NoteDetailsFragment : BaseFragment<FragmentNoteDetailsBinding>() {
@@ -28,6 +33,8 @@ class NoteDetailsFragment : BaseFragment<FragmentNoteDetailsBinding>() {
     override val viewModel: NoteDetailsViewModelImpl by viewModels()
     private val args: NoteDetailsFragmentArgs by navArgs()
     private lateinit var adapter: NoteAdapter
+    private val authService: AuthService = AuthServiceImpl()
+
 
 
     override fun onCreateView(
@@ -74,6 +81,12 @@ class NoteDetailsFragment : BaseFragment<FragmentNoteDetailsBinding>() {
 
                 // Display the teacher's name if found
                 binding.tvCreatedBy.text = matchTeacher?.name
+                val currentUser = authService.getCurrentUser()
+                if (currentUser?.uid == noteCreatedBy) {
+                    binding.ivEdit.visibility = View.VISIBLE
+                } else {
+                    binding.ivEdit.visibility = View.GONE
+                }
             }
         }
     }

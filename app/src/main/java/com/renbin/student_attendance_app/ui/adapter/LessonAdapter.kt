@@ -87,7 +87,7 @@ class LessonAdapter(
             DateTimeFormatter.ofPattern("hh:mm a", Locale.getDefault()))
 
         // Calculate half an hour before the lesson time
-        val halfHourBeforeLesson = lessonLocalTime.minusMinutes(30)
+        val halfHourBeforeLesson = lessonLocalTime.minusMinutes(31)
 
         // Check if the current time is between half an hour before the lesson time and the lesson time
         return currentLocalTime.isAfter(halfHourBeforeLesson) && currentLocalTime.isBefore(lessonLocalTime)

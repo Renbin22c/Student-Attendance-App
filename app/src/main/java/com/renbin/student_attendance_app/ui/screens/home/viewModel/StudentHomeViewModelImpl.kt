@@ -106,24 +106,4 @@ class StudentHomeViewModelImpl @Inject constructor(
             }
         }
     }
-
-    override fun updateAttendanceStatus(id: String, lesson: Lesson) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if(user != null){
-                val index = lesson.student.indexOf(user.uid)
-                if(index != -1) {
-                    val attend = lesson.attendance.toMutableList()
-                    val attendTime = lesson.attendanceTime.toMutableList()
-
-                    attend[index] = true
-                    attendTime[index] = Utility.formatTimestamp(System.currentTimeMillis())
-
-                    val newLesson = lesson.copy(attendance = attend, attendanceTime = attendTime)
-
-                    errorHandler { lessonRepo.updateLesson(id,newLesson) }
-                    _success.emit("Check In Successfully")
-                }
-            }
-        }
-    }
 }
