@@ -104,9 +104,12 @@ class StudentHomeViewModelImpl @Inject constructor(
     override fun logout() {
         viewModelScope.launch(Dispatchers.IO) {
             // Perform logout using AuthService
-            errorHandler { authService.logout() }
-            // Emit logout success event
-            _logoutSuccess.emit("Logout Successfully")
+            errorHandler {
+                authService.logout()
+                // Emit logout success event
+                _logoutSuccess.emit("Logout Successfully")
+                _success.emit("Logout Successfully")
+            }
         }
     }
 

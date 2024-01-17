@@ -57,4 +57,11 @@ class SplashViewModelImpl @Inject constructor(
             }
         }
     }
+
+    // Function to check user account have been deleted or not
+    override fun checkUserAuthentication() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _error.emit("Your Account already been deleted")
+        }
+    }
 }

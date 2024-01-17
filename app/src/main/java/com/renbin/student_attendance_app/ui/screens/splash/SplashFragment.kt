@@ -52,6 +52,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
             // Check if the user is authenticated
             if(viewModel.auth != null){
                 lifecycleScope.launch{
+
                     // Collect Student data and navigate to the appropriate destination
                     viewModel.student.collect{
                         if(it.id!=null){
@@ -75,6 +76,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
                 lifecycleScope.launch {
                     delay(2000)
                     if(student&&teacher) {
+                        viewModel.checkUserAuthentication()
                         val action = SplashFragmentDirections.actionGlobalMain()
                         navController.navigate(action)
                     }
