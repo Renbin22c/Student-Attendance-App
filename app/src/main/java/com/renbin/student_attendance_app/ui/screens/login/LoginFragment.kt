@@ -9,13 +9,17 @@ import androidx.lifecycle.lifecycleScope
 import com.renbin.student_attendance_app.databinding.FragmentLoginBinding
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
 import com.renbin.student_attendance_app.ui.screens.login.viewModel.LoginViewModelImpl
+import com.renbin.student_attendance_app.ui.screens.splash.SplashFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 // Hilt AndroidEntryPoint annotation for dependency injection
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     // View model initialization using Hilt
     override val viewModel: LoginViewModelImpl by viewModels()
+    var student = true
+    var teacher = true
 
     // Called to create the fragment's view
     override fun onCreateView(
@@ -55,9 +59,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
         // Observe success state and trigger fetching of student and teacher information
         lifecycleScope.launch {
-            viewModel.success.collect {
+            viewModel.finish.collect {
                 viewModel.getStudent()
                 viewModel.getTeacher()
+
+                delay(2000)
+                if(student&&teacher) {
+                    viewModel.checkUserAuthentication()
+                }
             }
         }
 
@@ -65,6 +74,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         lifecycleScope.launch {
             viewModel.teacher.collect {
                 if (it.id != null) {
+                    teacher = false
                     val action = LoginFragmentDirections.actionLoginFragmentToTeacherTabContainerFragment()
                     navController.navigate(action)
                 }
@@ -75,9 +85,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         lifecycleScope.launch {
             viewModel.student.collect {
                 if (it.id != null) {
+                    student = false
                     val action = LoginFragmentDirections.actionLoginFragmentToStudentTabContainerFragment()
                     navController.navigate(action)
                 }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.error.collect{
+                val action = LoginFragmentDirections.actionGlobalMain()
+                navController.navigate(action)
             }
         }
     }

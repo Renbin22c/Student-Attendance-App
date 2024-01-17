@@ -15,4 +15,6 @@ interface SplashViewModel {
     fun getStudent()
     // Function to fetch and provide Teacher data
     fun getTeacher()
+    // Function to check is the user have been deleted or not
+    fun checkUserAuthentication()
 }

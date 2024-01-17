@@ -17,4 +17,6 @@ interface LoginViewModel {
     fun getTeacher()
     // Function to perform the login operation with provided email and password
     fun login(email: String, pass: String)
+    // Function to check is the user have been deleted or not
+    fun checkUserAuthentication()
 }

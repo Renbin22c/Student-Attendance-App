@@ -141,43 +141,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Class CardView -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/tvAttendanceRecordLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Attendance Record" />
-
-                <TextView
-                    android:id="@+id/tvAttendanceRecord"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <pl.droidsonroids.gif.GifImageView
-                    android:id="@+id/gvAttendanceRecord"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/fastforward" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
         <androidx.cardview.widget.CardView
             android:id="@+id/cvEditProfile"
             android:layout_width="wrap_content"

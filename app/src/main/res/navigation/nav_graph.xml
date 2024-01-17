@@ -88,9 +88,6 @@
         <action
             android:id="@+id/action_studentTabContainer_to_studentNoteDetails"
             app:destination="@id/studentNoteDetailsFragment" />
-        <action
-            android:id="@+id/action_studentTabContainerFragment_to_studentAttendanceRecord"
-            app:destination="@id/studentAttendanceRecord" />
     </fragment>
 
     <fragment
@@ -223,15 +220,6 @@
         <action
             android:id="@+id/action_forgetPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/studentAttendanceRecord"
-        android:name="com.renbin.student_attendance_app.ui.screens.studentAttendanceRecord.StudentAttendanceRecordFragment"
-        android:label="fragment_student_attendance_record"
-        tools:layout="@layout/fragment_student_attendance_record" >
-        <action
-            android:id="@+id/action_studentAttendanceRecord_to_studentTabContainerFragment"
-            app:destination="@id/studentTabContainerFragment" />
     </fragment>
     <fragment
         android:id="@+id/editNoteFragment"

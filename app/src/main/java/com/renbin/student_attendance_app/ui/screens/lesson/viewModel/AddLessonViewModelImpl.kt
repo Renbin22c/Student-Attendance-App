@@ -107,6 +107,8 @@ class AddLessonViewModelImpl @Inject constructor(
         if (name.isEmpty()) return "Invalid Name"
         if (details.isEmpty()) return "Invalid Details"
         if (classes.isEmpty()) return "Please choose class"
+        if (date.isEmpty()) return "Invalid Date"
+        if (time.isEmpty()) return "Invalid Time"
 
         // Validate date and time
         val errorDate = isValidDate(date, currentDate)

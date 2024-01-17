@@ -46,16 +46,6 @@ class StudentProfileFragment : BaseFragment<FragmentStudentProfileBinding>() {
         }
     }
 
-    override fun setupUIComponents(view: View) {
-        super.setupUIComponents(view)
-
-        binding.run {
-            gvAttendanceRecord.setOnClickListener {
-                val action = StudentTabContainerFragmentDirections.actionStudentTabContainerFragmentToStudentAttendanceRecord()
-                navController.navigate(action)
-            }
-        }
-    }
     private fun setProfilePicture(imageUri: Uri) {
         Glide.with(this)
             .load(imageUri)
