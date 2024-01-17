@@ -9,7 +9,9 @@ import com.renbin.student_attendance_app.data.repo.teacher.TeacherRepo
 import com.renbin.student_attendance_app.ui.screens.base.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,12 +27,19 @@ class SplashViewModelImpl @Inject constructor(
     private val _student = MutableStateFlow(Student(name = "", email = ""))
     override val student: StateFlow<Student> = _student
 
+
     val auth = authService.getCurrentUser()
     override fun getTeacher() {
         auth?.let {
             viewModelScope.launch(Dispatchers.IO) {
-                errorHandler { teacherRepo.getTeacher() }?.let {
-                    _teacher.value = it
+                try {
+                    errorHandler { teacherRepo.getTeacher() }?.let {
+                        _teacher.value = it
+                    }
+                } catch (e: Exception) {
+                    // Handle the exception, and emit an error message
+                    e.printStackTrace()
+                    _error.emit("Teacher not Found")
                 }
             }
         }
@@ -39,8 +48,14 @@ class SplashViewModelImpl @Inject constructor(
     override fun getStudent() {
         auth?.let {
             viewModelScope.launch(Dispatchers.IO) {
-                errorHandler { studentRepo.getStudent() }?.let {
-                    _student.value = it
+                try {
+                    errorHandler { studentRepo.getStudent() }?.let {
+                        _student.value = it
+                    }
+                } catch (e: Exception) {
+                    // Handle the exception, and emit an error message
+                    e.printStackTrace()
+                    _error.emit("Student not Found")
                 }
             }
         }
