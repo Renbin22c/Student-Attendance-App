@@ -42,7 +42,6 @@ class StudentHomeFragment : BaseFragment<FragmentStudentHomeBinding>() {
         return binding.root
     }
 
-
     // Function to setup UI components
     override fun setupUIComponents(view: View) {
         super.setupUIComponents(view)
@@ -75,11 +74,6 @@ class StudentHomeFragment : BaseFragment<FragmentStudentHomeBinding>() {
         lifecycleScope.launch {
             viewModel.lessons.collect{
                 lessonAdapter.setLessons(it)
-                if (it.isEmpty()){
-                    binding.tvEmpty.visibility = View.VISIBLE
-                } else {
-                    binding.tvEmpty.visibility = View.GONE
-                }
             }
         }
 
