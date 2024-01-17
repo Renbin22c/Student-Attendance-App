@@ -154,5 +154,4 @@ class StudentHomeFragment : BaseFragment<FragmentStudentHomeBinding>() {
         // Show the logout confirmation dialog
         alertDialog.show()
     }
-
 }
