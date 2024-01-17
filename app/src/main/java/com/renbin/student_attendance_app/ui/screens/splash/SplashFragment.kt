@@ -12,6 +12,7 @@ import com.renbin.student_attendance_app.databinding.FragmentSplashBinding
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
 import com.renbin.student_attendance_app.ui.screens.splash.viewModel.SplashViewModelImpl
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 // Hilt AndroidEntryPoint annotation for dependency injection
@@ -20,6 +21,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     // ViewModel instance injected using Hilt
     override val viewModel: SplashViewModelImpl by viewModels()
+    var student = true
+    var teacher = true
 
     // Function to create the fragment's view
     override fun onCreateView(
@@ -52,6 +55,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
                     // Collect Student data and navigate to the appropriate destination
                     viewModel.student.collect{
                         if(it.id!=null){
+                            student = false
                             val action = SplashFragmentDirections.actionSplashToStudentTabContainer()
                             navController.navigate(action)
                         }
@@ -62,9 +66,17 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
                     // Collect Teacher data and navigate to the appropriate destination
                     viewModel.teacher.collect{
                         if (it.id != null){
+                            teacher = false
                             val action = SplashFragmentDirections.actionSplashToTeacherTabContainer()
                             navController.navigate(action)
                         }
+                    }
+                }
+                lifecycleScope.launch {
+                    delay(2000)
+                    if(student&&teacher) {
+                        val action = SplashFragmentDirections.actionGlobalMain()
+                        navController.navigate(action)
                     }
                 }
 
