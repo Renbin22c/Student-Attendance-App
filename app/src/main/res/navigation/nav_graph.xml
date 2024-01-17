@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_splash_to_teacherTabContainer"
             app:destination="@id/teacherTabContainerFragment" />
+        <action
+            android:id="@+id/action_splash_to_main"
+            app:destination="@id/mainFragment" />
     </fragment>
 
     <fragment
@@ -39,6 +42,9 @@
         <action
             android:id="@+id/action_loginFragment_to_forgetPasswordFragment"
             app:destination="@id/forgetPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 
     <fragment

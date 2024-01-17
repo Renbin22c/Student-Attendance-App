@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,7 @@ class StudentNoteFragment : BaseFragment<FragmentStudentNoteBinding>() {
 
     override val viewModel: StudentNoteViewModelImpl by viewModels()
     private lateinit var adapter: StudentNoteAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
