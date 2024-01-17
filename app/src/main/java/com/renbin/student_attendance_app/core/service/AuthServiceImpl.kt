@@ -15,7 +15,6 @@ import kotlinx.coroutines.tasks.await
 // Define AuthServiceImpl class implementing the AuthService interface
 class AuthServiceImpl(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
-    private val mFireStore: FirebaseFirestore = FirebaseFirestore.getInstance()
 ): AuthService {
 
     // Implement the register function for user registration with email and password

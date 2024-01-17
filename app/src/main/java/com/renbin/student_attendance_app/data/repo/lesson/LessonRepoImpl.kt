@@ -12,6 +12,27 @@ class LessonRepoImpl(
     private val authService: AuthService,
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ): LessonRepo {
+
+    // Function to get the total attended classes for a specific student
+    suspend fun getTotalAttendedClasses(studentId: String): Int {
+        val snapshot = getDbRef().whereArrayContains("student", studentId).get().await()
+        return snapshot.documents.count { document ->
+            document["attendance"]?.let { attendanceList ->
+                (attendanceList as List<*>).any { it as Boolean }
+            } ?: false
+        }
+    }
+
+    // Function to get the total absent classes for a specific student
+    suspend fun getTotalAbsentClasses(studentId: String): Int {
+        val snapshot = getDbRef().whereArrayContains("student", studentId).get().await()
+        return snapshot.documents.count { document ->
+            document["attendance"]?.let { attendanceList ->
+                (attendanceList as List<*>).all { it !is Boolean || !(it as Boolean) }
+            } ?: false
+        }
+    }
+
     // Function to get the reference to the FireStore collection based on the authenticated user
     private fun getDbRef(): CollectionReference {
         val firebaseUser = authService.getCurrentUser()

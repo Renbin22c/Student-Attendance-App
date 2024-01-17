@@ -1,5 +1,6 @@
 package com.renbin.student_attendance_app.core.di
 
+import com.google.firebase.firestore.FirebaseFirestore
 import com.renbin.student_attendance_app.core.service.AuthService
 import com.renbin.student_attendance_app.core.service.AuthServiceImpl
 import com.renbin.student_attendance_app.core.service.StorageService
@@ -25,6 +26,12 @@ class AppModule {
     @Singleton
     fun provideStorageService(): StorageService {
         return StorageService()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirestore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
     }
 
 }

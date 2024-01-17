@@ -77,4 +77,6 @@
     <string name="delete_student">Do you sure want to delete this student ?</string>
     <string name="delete_lesson">Do you sure want to delete this lesson ?</string>
     <string name="cannot_delete_class">You cannot delete this class, because it still have student</string>
+    <string name="timeout_message">Oops.....time ran out :( :  </string>
+    <string name="score_message">You Scored: </string>
 </resources>

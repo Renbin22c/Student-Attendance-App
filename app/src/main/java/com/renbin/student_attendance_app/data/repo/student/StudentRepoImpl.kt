@@ -118,4 +118,19 @@ class StudentRepoImpl(
     override suspend fun deleteStudent(id: String) {
         getDbRef().document(id).delete().await()
     }
+
+    override suspend fun getUser(id: String): Student? {
+        val doc = getDbRef().document(getUid()).get().await()
+        return  doc.data?.let {
+            it["id"] = getUid()
+            Student.fromHashMap(it)
+        }
+    }
+
+ suspend fun getStudentAttendance(studentId: String): List<Boolean> {
+        val doc = getDbRef().document(studentId).get().await()
+        return doc.data?.let {
+            (it["attendance"] as List<*>).map { it as Boolean }
+        } ?: emptyList()
+    }
 }

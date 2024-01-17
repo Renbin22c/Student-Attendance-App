@@ -42,6 +42,10 @@ class StudentProfileFragment : BaseFragment<FragmentStudentProfileBinding>() {
             val bottomSheetFragment = EditProfileAdapter(this) { name, profilePicUri ->
                 onProfileUpdated(name, profilePicUri)
             }
+
+            val currentUserName = viewModel.getUserName()
+            // Call the initialize function with the current values
+            bottomSheetFragment.initialize(currentUserName)
             bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
         }
     }
@@ -50,8 +54,8 @@ class StudentProfileFragment : BaseFragment<FragmentStudentProfileBinding>() {
         super.setupUIComponents(view)
 
         binding.run {
-            gvAttendanceRecord.setOnClickListener {
-                val action = StudentTabContainerFragmentDirections.actionStudentTabContainerFragmentToStudentAttendanceRecord()
+            gvQuizLeaderBoard.setOnClickListener {
+                val action = StudentTabContainerFragmentDirections.actionStudentTabContainerFragmentToQuizLeaderboardFragment()
                 navController.navigate(action)
             }
         }

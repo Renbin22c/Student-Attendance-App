@@ -1,5 +1,6 @@
 package com.renbin.student_attendance_app.core.di
 
+
 import com.renbin.student_attendance_app.core.service.AuthService
 import com.renbin.student_attendance_app.data.repo.lesson.LessonRepo
 import com.renbin.student_attendance_app.data.repo.lesson.LessonRepoImpl
@@ -7,6 +8,10 @@ import com.renbin.student_attendance_app.data.repo.classes.ClassesRepo
 import com.renbin.student_attendance_app.data.repo.classes.ClassesRepoImpl
 import com.renbin.student_attendance_app.data.repo.notes.NoteRepo
 import com.renbin.student_attendance_app.data.repo.notes.NoteRepoImpl
+import com.renbin.student_attendance_app.data.repo.quiz.QuizRepo
+import com.renbin.student_attendance_app.data.repo.quiz.QuizRepoImpl
+import com.renbin.student_attendance_app.data.repo.result.ResultRepo
+import com.renbin.student_attendance_app.data.repo.result.ResultRepoImpl
 import com.renbin.student_attendance_app.data.repo.student.StudentRepo
 import com.renbin.student_attendance_app.data.repo.student.StudentRepoImpl
 import com.renbin.student_attendance_app.data.repo.teacher.TeacherRepo
@@ -54,4 +59,19 @@ class RepoModule {
     fun provideNotesRepo(authService: AuthService): NoteRepo{
         return NoteRepoImpl(authService = authService)
     }
+
+
+    @Provides
+    @Singleton
+    fun provideQuizRepo(authService: AuthService): QuizRepo {
+        return QuizRepoImpl(authService = authService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideResultRepo(authService: AuthService): ResultRepo {
+        return ResultRepoImpl(authService = authService)
+    }
+
+
 }

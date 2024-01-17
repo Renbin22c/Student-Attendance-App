@@ -14,4 +14,6 @@ interface TeacherRepo {
     suspend fun updateTeacher(teacher: Teacher)
     // Function to get all teachers as a Flow
     suspend fun getAllTeachers(): Flow<List<Teacher>>
+
+    suspend fun getUser(id: String): Teacher?
 }

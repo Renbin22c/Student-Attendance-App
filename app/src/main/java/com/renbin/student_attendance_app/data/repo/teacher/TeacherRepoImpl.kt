@@ -63,4 +63,12 @@ class TeacherRepoImpl(
             listener.remove()
         }
     }
+
+    override suspend fun getUser(id: String): Teacher? {
+        val doc = getDbRef().document(getUid()).get().await()
+        return  doc.data?.let {
+            it["id"] = getUid()
+            Teacher.fromHashMap(it)
+        }
+    }
 }

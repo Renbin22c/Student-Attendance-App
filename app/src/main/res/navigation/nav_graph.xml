@@ -79,6 +79,12 @@
         <action
             android:id="@+id/action_studentTabContainerFragment_to_studentAttendanceRecord"
             app:destination="@id/studentAttendanceRecord" />
+        <action
+            android:id="@+id/action_studentTabContainerFragment_to_quizPageFragment"
+            app:destination="@id/quizPageFragment" />
+        <action
+            android:id="@+id/action_studentTabContainerFragment_to_quizLeaderboardFragment"
+            app:destination="@id/quizLeaderboardFragment" />
     </fragment>
 
     <fragment
@@ -102,6 +108,9 @@
         <action
             android:id="@+id/action_teacherTabContainerFragment_to_NoteDetailsFragment"
             app:destination="@id/NoteDetailsFragment" />
+        <action
+            android:id="@+id/action_teacherTabContainerFragment_to_teacherAddQuizFragment3"
+            app:destination="@id/teacherAddQuizFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLessonFragment"
@@ -201,6 +210,54 @@
         tools:layout="@layout/fragment_student_attendance_record" >
         <action
             android:id="@+id/action_studentAttendanceRecord_to_studentTabContainerFragment"
+            app:destination="@id/studentTabContainerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentJoinQuizPageFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.studentJoinQuizPage.StudentJoinQuizPageFragment"
+        android:label="fragment_student_join_quiz_page"
+        tools:layout="@layout/fragment_student_join_quiz_page" />
+
+    <fragment
+        android:id="@+id/quizPageFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.quizPage.QuizPageFragment"
+        android:label="QuizPageFragment"
+        tools:layout="@layout/fragment_quiz_page">
+        <argument
+            android:name="quiz_id"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_quizPageFragment_to_studentTabContainerFragment"
+            app:destination="@id/studentTabContainerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherAddQuizFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.teacherAddQuizPage.TeacherAddQuizFragment"
+        android:label="fragment_teacher_add_quiz_page"
+        tools:layout="@layout/fragment_teacher_add_quiz_page" >
+        <action
+            android:id="@+id/action_teacherAddQuizFragment_to_teacherTabContainerFragment"
+            app:destination="@id/teacherTabContainerFragment" />
+        <action
+            android:id="@+id/action_teacherAddQuizFragment_to_teacherQuizHomeFragment"
+            app:destination="@id/teacherQuizHomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherQuizHomeFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.teacherQuizHomePage.TeacherQuizHomeFragment"
+        android:label="TeacherQuizHomeFragment"
+        tools:layout="@layout/fragment_teacher_quiz_home">
+        <action
+            android:id="@+id/action_teacherQuizHomeFragment_to_teacherAddQuizFragment"
+            app:destination="@id/teacherAddQuizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizLeaderboardFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.quizLeaderboard.QuizLeaderboardFragment"
+        android:label="fragment_quiz_leaderboard"
+        tools:layout="@layout/fragment_quiz_leaderboard" >
+        <action
+            android:id="@+id/action_quizLeaderboardFragment_to_studentTabContainerFragment"
             app:destination="@id/studentTabContainerFragment" />
     </fragment>
 </navigation>

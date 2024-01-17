@@ -42,6 +42,10 @@ class StudentProfileViewModelImpl @Inject constructor(
         }
     }
 
+    fun getUserName(): String {
+        return _user.value.name
+    }
+
 
     fun updateProfile(name: String?, imageUri: Uri?) {
         viewModelScope.launch(Dispatchers.IO) {

@@ -23,4 +23,6 @@ interface StudentRepo {
     suspend fun getAllStudentByClassUseFlow(classes: String): Flow<List<Student>>
 
     suspend fun deleteStudent(id: String)
+
+    suspend fun getUser(id: String): Student?
 }

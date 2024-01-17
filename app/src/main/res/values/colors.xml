@@ -7,4 +7,6 @@
     <color name="accent">#92E3A9</color>
     <color name="app_bg">#F5FFFF</color>
     <color name="blue">#3F51B5</color>
+    <color name="aqua">#eafefd</color>
+    <color name="success">#4BB543</color>
 </resources>

@@ -14,6 +14,7 @@ import com.renbin.student_attendance_app.ui.screens.home.StudentHomeFragment
 import com.renbin.student_attendance_app.ui.screens.lesson.StudentLessonFragment
 import com.renbin.student_attendance_app.ui.screens.note.StudentNoteFragment
 import com.renbin.student_attendance_app.ui.screens.profile.StudentProfileFragment
+import com.renbin.student_attendance_app.ui.screens.studentJoinQuizPage.StudentJoinQuizPageFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,6 +39,7 @@ class StudentTabContainerFragment : Fragment() {
                 StudentLessonFragment(),
                 StudentHomeFragment(),
                 StudentNoteFragment(),
+                StudentJoinQuizPageFragment(),
                 StudentProfileFragment()
             )
         )
@@ -61,6 +63,9 @@ class StudentTabContainerFragment : Fragment() {
                 }
                 3 -> {
                     tabGifIcon.setImageResource(R.drawable.book)
+                }
+                4 -> {
+                    tabGifIcon.setImageResource(R.drawable.quiz)
                 }
                 else -> {
                     tabGifIcon.setImageResource(R.drawable.profile)
