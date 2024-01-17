@@ -33,3 +33,25 @@ Welcome to the Student Attendance App GitHub repository! This mobile application
 - **Class Assignment**: Teachers can dynamically assign students to different classes, adapting to changes and ensuring optimal organization.
 
 - **Student Details**: Teachers have the capability to view and manage student details, including the option to delete students from classes for efficient roster management.
+
+### Teacher Notes
+
+- **Add and Edit Notes**: Teachers can add important notes for each class, such as announcements, assignment details, or any other relevant information. They should also be able to edit these notes as needed.
+
+- **Visibility Control**: Notes added by teachers should be visible to students enrolled in the respective class.
+
+### Student Note Access
+
+- **Note Viewing**: Students can view the notes associated with the classes they are enrolled in. This provides them with important information related to the class.
+
+- **Read-Only Access**: Students can read the notes but should not have the ability to edit or delete them. This ensures that the information provided by teachers remains intact.
+
+### Lesson Filtering
+
+#### Teacher View
+
+- **Filter by Class and Date**: Teachers can filter lessons based on the class they are teaching and specific dates. This allows them to review attendance and lesson details for a particular class on a specific day.
+
+#### Student View
+
+- **Filter by Date**: Students can filter their view of scheduled lessons based on specific dates. This feature helps them focus on upcoming lessons or review past attendance records.
