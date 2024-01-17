@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/app_bg"
     tools:context=".ui.screens.lesson.StudentLessonFragment">
 
@@ -13,6 +14,14 @@
         android:paddingHorizontal="8dp"
         android:layout_marginTop="5dp">
 
+        <ImageView
+            android:id="@+id/btnClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_refresh"
+            android:contentDescription="@string/refresh"
+            android:layout_alignParentStart="true"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -23,9 +32,29 @@
 
     </RelativeLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilTime"
+        android:layout_below="@id/rlTop"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintTextColor="@color/black"
+        android:paddingHorizontal="12dp"
+        app:boxStrokeColor="@color/black">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/time"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:padding="4dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLesson"
-        android:layout_below="@id/rlTop"
+        android:layout_below="@id/tilTime"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

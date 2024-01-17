@@ -20,11 +20,17 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
+    // ViewModel instance for the TeacherLessonFragment
     override val viewModel: TeacherLessonViewModelImpl by viewModels()
+
+    // Adapter for displaying lessons in the RecyclerView
     private lateinit var lessonAdapter: LessonAdapter
+
+    // Adapter for the class autocomplete dropdown
     private lateinit var classAdapter: ArrayAdapter<String>
-    private lateinit var dateAdapter: ArrayAdapter<String>
-    private var classSelect: String? = null
+
+    // Adapter for the time autocomplete dropdown
+    private lateinit var timeAdapter: ArrayAdapter<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,14 +45,22 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
         super.setupUIComponents(view)
         setupLessonAdapter()
 
+        // ArrayAdapter for the class autocomplete dropdown
         classAdapter = ArrayAdapter(
             requireContext(),
             androidx.transition.R.layout.support_simple_spinner_dropdown_item,
             emptyList()
         )
 
+        // ArrayAdapter for the time autocomplete dropdown
+        timeAdapter = ArrayAdapter(
+            requireContext(),
+            androidx.transition.R.layout.support_simple_spinner_dropdown_item,
+            emptyList()
+        )
 
         binding.run {
+            // Add Lesson button click listener to navigate to AddLessonFragment
             btnAddLesson.setOnClickListener {
                 clearOption()
 
@@ -54,17 +68,27 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
                 navController.navigate(action)
             }
 
+            // Enable user to change the text themself
+            autoCompleteClass.keyListener = null
+            autoCompleteTime.keyListener = null
+
+            // Class autocomplete text change listener to update the selected class
             autoCompleteClass.addTextChangedListener {
-                classSelect = it.toString()
+                val text = it.toString().trim()
+                viewModel.updateClassSelect(text.ifEmpty { null })
                 autoCompleteClass.clearFocus()
-                viewModel.filterLessons(classSelect)
             }
 
+            // Class autocomplete text change listener to update the selected time
+            autoCompleteTime.addTextChangedListener {
+                val text = it.toString().trim()
+                viewModel.updateTimeSelect(text.ifEmpty { null })
+                autoCompleteTime.clearFocus()
+            }
+
+            // Clear button click listener to clear the selected class
             btnClear.setOnClickListener {
-                classSelect = null
                 clearOption()
-                viewModel.getAllLesson()
-                viewModel.filterLessons(null)
             }
         }
     }
@@ -72,28 +96,30 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
     override fun setupViewModelObserver() {
         super.setupViewModelObserver()
 
+        // Observe filtered lessons and update the adapter
         lifecycleScope.launch {
-            viewModel.lessons.collect{
-                if (classSelect == null){
-                    lessonAdapter.setLessons(it)
-                }
+            viewModel.filterLessons.collect {
+                lessonAdapter.setLessons(it)
             }
         }
 
+        // Observe students and update the adapter
         lifecycleScope.launch {
-            viewModel.students.collect{
+            viewModel.students.collect {
                 lessonAdapter.setStudents(it)
             }
         }
 
+        // Observe teachers and update the adapter
         lifecycleScope.launch {
-            viewModel.teachers.collect{
+            viewModel.teachers.collect {
                 lessonAdapter.setTeachers(it)
             }
         }
 
+        // Observe distinct classes and update the class dropdown adapter
         lifecycleScope.launch {
-            viewModel.classes.collect{
+            viewModel.classes.collect {
                 classAdapter = ArrayAdapter(
                     requireContext(),
                     androidx.transition.R.layout.support_simple_spinner_dropdown_item,
@@ -103,22 +129,26 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
             }
         }
 
-
+        // Observe distinct times and update the time dropdown adapter
         lifecycleScope.launch {
-            viewModel.filteredLessons.collect {
-                if (classSelect !=null){
-                    lessonAdapter.setLessons(it)
-                }
+            viewModel.time.collect{
+                timeAdapter = ArrayAdapter(
+                    requireContext(),
+                    androidx.transition.R.layout.support_simple_spinner_dropdown_item,
+                    it
+                )
+                binding.autoCompleteTime.setAdapter(timeAdapter)
             }
         }
 
+        // Observe loading state and update UI accordingly
         lifecycleScope.launch {
-            viewModel.loading.collect{
-                if (it){
+            viewModel.loading.collect {
+                if (it) {
                     binding.progressbar.visibility = View.VISIBLE
                 } else {
                     binding.progressbar.visibility = View.GONE
-                    if(lessonAdapter.itemCount == 0){
+                    if (lessonAdapter.itemCount == 0) {
                         binding.tvEmpty.visibility = View.VISIBLE
                     } else {
                         binding.tvEmpty.visibility = View.GONE
@@ -128,30 +158,35 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
         }
     }
 
-    private fun setupLessonAdapter(){
+    private fun setupLessonAdapter() {
+        // Initialize and set up the LessonAdapter for the RecyclerView
         lessonAdapter = LessonAdapter(emptyList(), emptyList(), emptyList(), viewModel.user, "Lesson")
-        lessonAdapter.listener = object : LessonAdapter.Listener{
+        lessonAdapter.listener = object : LessonAdapter.Listener {
             override fun onClick(id: String, lesson: Lesson) {
+                // Handle item click action (not yet implemented)
                 TODO("Not yet implemented")
             }
 
             override fun onDelete(lesson: Lesson) {
+                // Handle delete action by calling the ViewModel's deleteLesson method
                 viewModel.deleteLesson(lesson.id.toString())
             }
-
         }
         binding.rvLesson.adapter = lessonAdapter
         binding.rvLesson.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun clearOption(){
+    private fun clearOption() {
+        // Clear the selected class and reset UI components
         binding.run {
-            classSelect = null
+            viewModel.updateClassSelect(null)
+            viewModel.updateTimeSelect(null)
+
+            autoCompleteTime.text.clear()
+            autoCompleteTime.clearFocus()
 
             autoCompleteClass.text.clear()
             autoCompleteClass.clearFocus()
         }
     }
-
-
 }

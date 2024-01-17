@@ -38,4 +38,10 @@ object Utility {
             else -> String.format("%02d:%02d am", hour, minute)
         }
     }
+
+    fun parseDatestampFromString(dateString: String): Long {
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+        val date = dateFormat.parse(dateString)
+        return date?.time ?: 0L
+    }
 }

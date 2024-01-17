@@ -111,6 +111,7 @@ class LessonAdapter(
                 // Find and display the teacher's name
                 val matchTeacher = teachers.find { it.id == lesson.createdBy }
                 tvLessonTeacher.text = matchTeacher?.name
+
                 // Show delete button if the user created the lesson
                 if(user?.uid == lesson.createdBy && currentFragment == "Lesson") ivDeleteLesson.visibility = View.VISIBLE
 
@@ -119,7 +120,6 @@ class LessonAdapter(
                     val filterStudent = lesson.student.contains(user?.uid)
                     if (filterStudent) {
                         ivCheckIn.visibility = View.VISIBLE
-                        Log.d("debugging", "Getting True")
                     }
                 }
 
