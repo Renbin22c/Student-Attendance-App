@@ -1,8 +1,9 @@
 package com.renbin.student_attendance_app.ui.screens.lesson.viewModel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.renbin.student_attendance_app.core.service.AuthService
+import com.renbin.student_attendance_app.core.util.Utility.formatDatestamp
+import com.renbin.student_attendance_app.core.util.Utility.parseDatestampFromString
 import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.model.Teacher
@@ -11,10 +12,7 @@ import com.renbin.student_attendance_app.data.repo.student.StudentRepo
 import com.renbin.student_attendance_app.data.repo.teacher.TeacherRepo
 import com.renbin.student_attendance_app.ui.screens.base.viewModel.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CompletableJob
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -49,9 +47,17 @@ class TeacherLessonViewModelImpl @Inject constructor(
     private val _filterLessons: MutableStateFlow<List<Lesson>> = MutableStateFlow(emptyList())
     override val filterLessons: StateFlow<List<Lesson>> = _filterLessons
 
+    // StateFlow to hold the list of time
+    private val _time: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    override val time: StateFlow<List<String>> = _time
+
+    // Variable to store the selected time for filtering lessons
+    private var _timeSelect: MutableStateFlow<String?> = MutableStateFlow(null)
+    override val timeSelect: StateFlow<String?> = _timeSelect
+
     // Variable to store the selected class for filtering lessons
-    private var _classSelect: String? = null
-    val classSelect: String? get() = _classSelect
+    private var _classSelect: MutableStateFlow<String?> = MutableStateFlow(null)
+    override val classSelect: StateFlow<String?> = _classSelect
 
     // Current user retrieved from authentication service
     val user = authService.getCurrentUser()
@@ -63,6 +69,7 @@ class TeacherLessonViewModelImpl @Inject constructor(
         getAllLesson()
         getAllStudents()
         getAllTeachers()
+        getTime()
     }
 
     // Fetch all lessons, filter by class if selected, and update related data
@@ -74,14 +81,43 @@ class TeacherLessonViewModelImpl @Inject constructor(
             errorHandler { lessonRepo.getAllLessons() }?.collect {
                 // Sort lessons by date in descending order
                 var filteredLessons = it.sortedByDescending { lesson -> lesson.date }
+                // Update the list of all lessons
+                _lessons.value = filteredLessons
                 // If a specific class is selected, filter lessons accordingly
-                if (classSelect != null) {
+                if (classSelect.value != null) {
                     filteredLessons = filteredLessons.filter { lesson ->
-                        lesson.classes == classSelect
+                        lesson.classes == classSelect.value
                     }
                 }
-                // Update the list of all lessons and filtered lessons
-                _lessons.value = filteredLessons
+
+                if (timeSelect.value != null) {
+                    val currentTimeMillis = System.currentTimeMillis()
+                    when (timeSelect.value) {
+                        "~${formatDatestamp(currentTimeMillis)} (old)" -> {
+                            // Filter lessons before today
+                            filteredLessons = filteredLessons.filter { lesson ->
+                                parseDatestampFromString(lesson.date) < currentTimeMillis
+                            }
+                        }
+
+                        "${formatDatestamp(currentTimeMillis)}~ (new)" -> {
+                            // Filter lessons after today
+                            filteredLessons = filteredLessons.filter { lesson ->
+                                parseDatestampFromString(lesson.date) > currentTimeMillis
+                            }
+                        }
+
+                        else -> {
+                            // Handle other cases or no time selection
+                            filteredLessons = filteredLessons.filter { lesson ->
+                                lesson.date == formatDatestamp(currentTimeMillis)
+                            }
+
+                        }
+                    }
+                }
+
+                // Update the list of filtered lessons
                 _filterLessons.value = filteredLessons
                 // Fetch and update the list of distinct classes
                 getClasses()
@@ -131,9 +167,28 @@ class TeacherLessonViewModelImpl @Inject constructor(
         }
     }
 
+    // Get today date and specific to old, current and new
+    override fun getTime() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val listTime = listOf(
+                "~${formatDatestamp(System.currentTimeMillis())} (old)",
+                "${formatDatestamp(System.currentTimeMillis())} (current)",
+                "${formatDatestamp(System.currentTimeMillis())}~ (new)")
+
+            _time.value = listTime
+        }
+    }
+
+    // Update the selected time and refresh lesson data accordingly
+    override fun updateTimeSelect(newTime: String?){
+        _timeSelect.value = newTime
+        getAllLesson()
+
+    }
+
     // Update the selected class and refresh lesson data accordingly
-    fun updateClassSelect(newClassSelect: String?) {
-        _classSelect = newClassSelect
+    override fun updateClassSelect(newClass: String?) {
+        _classSelect.value = newClass
         getAllLesson()
     }
 

@@ -2,7 +2,9 @@ package com.renbin.student_attendance_app.ui.screens.lesson.viewModel
 
 import androidx.lifecycle.viewModelScope
 import com.renbin.student_attendance_app.core.service.AuthService
+import com.renbin.student_attendance_app.core.util.Utility.formatDatestamp
 import com.renbin.student_attendance_app.core.util.Utility.formatTimestamp
+import com.renbin.student_attendance_app.core.util.Utility.parseDatestampFromString
 import com.renbin.student_attendance_app.data.model.Lesson
 import com.renbin.student_attendance_app.data.model.Student
 import com.renbin.student_attendance_app.data.model.Teacher
@@ -37,6 +39,14 @@ class StudentLessonViewModelImpl @Inject constructor(
     private val _teachers: MutableStateFlow<List<Teacher>> = MutableStateFlow(emptyList())
     override val teachers: StateFlow<List<Teacher>> = _teachers
 
+    // MutableStateFlow to hold the list of time
+    private val _time: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    override val time: StateFlow<List<String>> = _time
+
+    // Variable to store the selected time for filtering lessons
+    private var _timeSelect: MutableStateFlow<String?> = MutableStateFlow(null)
+    override val timeSelect: StateFlow<String?> = _timeSelect
+
     // Get the current user from the authentication service
     val user = authService.getCurrentUser()
 
@@ -46,6 +56,7 @@ class StudentLessonViewModelImpl @Inject constructor(
         getAllLesson()
         getAllStudents()
         getAllTeachers()
+        getTime()
     }
 
     // Function to fetch all lessons associated with the current student
@@ -54,10 +65,37 @@ class StudentLessonViewModelImpl @Inject constructor(
             _loading.emit(true)
             errorHandler { lessonRepo.getAllLessons() }?.collect {
                 // Filter lessons to only include those associated with the current student
-                val filterLesson = it.filter { lesson ->
+                var filteredLessons = it.filter { lesson ->
                     lesson.student.contains(user?.uid)
                 }
-                _lessons.value = filterLesson
+
+                if (timeSelect.value != null) {
+                    val currentTimeMillis = System.currentTimeMillis()
+                    when (timeSelect.value) {
+                        "~${formatDatestamp(currentTimeMillis)} (old)" -> {
+                            // Filter lessons before today
+                            filteredLessons = filteredLessons.filter { lesson ->
+                                parseDatestampFromString(lesson.date) < currentTimeMillis
+                            }
+                        }
+
+                        "${formatDatestamp(currentTimeMillis)}~ (new)" -> {
+                            // Filter lessons after today
+                            filteredLessons = filteredLessons.filter { lesson ->
+                                parseDatestampFromString(lesson.date) > currentTimeMillis
+                            }
+                        }
+
+                        else -> {
+                            // Handle other cases or no time selection
+                            filteredLessons = filteredLessons.filter { lesson ->
+                                lesson.date == formatDatestamp(currentTimeMillis)
+                            }
+
+                        }
+                    }
+                }
+                _lessons.value = filteredLessons
                 _loading.emit(false)
             }
         }
@@ -102,5 +140,24 @@ class StudentLessonViewModelImpl @Inject constructor(
                 }
             }
         }
+    }
+
+    // Get today date and specific to old, current and new
+    override fun getTime() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val listTime = listOf(
+                "~${formatDatestamp(System.currentTimeMillis())} (old)",
+                "${formatDatestamp(System.currentTimeMillis())} (current)",
+                "${formatDatestamp(System.currentTimeMillis())}~ (new)")
+
+            _time.value = listTime
+        }
+    }
+
+    // Update the selected time and refresh lesson data accordingly
+    override fun updateTimeSelect(newTime: String?){
+        _timeSelect.value = newTime
+        getAllLesson()
+
     }
 }

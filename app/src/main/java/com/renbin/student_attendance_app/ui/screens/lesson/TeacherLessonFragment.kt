@@ -1,7 +1,6 @@
 package com.renbin.student_attendance_app.ui.screens.lesson
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +29,9 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
     // Adapter for the class autocomplete dropdown
     private lateinit var classAdapter: ArrayAdapter<String>
 
+    // Adapter for the time autocomplete dropdown
+    private lateinit var timeAdapter: ArrayAdapter<String>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,6 +52,13 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
             emptyList()
         )
 
+        // ArrayAdapter for the time autocomplete dropdown
+        timeAdapter = ArrayAdapter(
+            requireContext(),
+            androidx.transition.R.layout.support_simple_spinner_dropdown_item,
+            emptyList()
+        )
+
         binding.run {
             // Add Lesson button click listener to navigate to AddLessonFragment
             btnAddLesson.setOnClickListener {
@@ -59,17 +68,26 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
                 navController.navigate(action)
             }
 
+            // Enable user to change the text themself
+            autoCompleteClass.keyListener = null
+            autoCompleteTime.keyListener = null
+
             // Class autocomplete text change listener to update the selected class
             autoCompleteClass.addTextChangedListener {
                 val text = it.toString().trim()
                 viewModel.updateClassSelect(text.ifEmpty { null })
-                Log.d("debugging", "change ${viewModel.classSelect}")
                 autoCompleteClass.clearFocus()
+            }
+
+            // Class autocomplete text change listener to update the selected time
+            autoCompleteTime.addTextChangedListener {
+                val text = it.toString().trim()
+                viewModel.updateTimeSelect(text.ifEmpty { null })
+                autoCompleteTime.clearFocus()
             }
 
             // Clear button click listener to clear the selected class
             btnClear.setOnClickListener {
-                Log.d("debugging", "clear ${viewModel.classSelect}")
                 clearOption()
             }
         }
@@ -108,6 +126,18 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
                     it.sorted()
                 )
                 binding.autoCompleteClass.setAdapter(classAdapter)
+            }
+        }
+
+        // Observe distinct times and update the time dropdown adapter
+        lifecycleScope.launch {
+            viewModel.time.collect{
+                timeAdapter = ArrayAdapter(
+                    requireContext(),
+                    androidx.transition.R.layout.support_simple_spinner_dropdown_item,
+                    it
+                )
+                binding.autoCompleteTime.setAdapter(timeAdapter)
             }
         }
 
@@ -150,6 +180,10 @@ class TeacherLessonFragment : BaseFragment<FragmentTeacherLessonBinding>() {
         // Clear the selected class and reset UI components
         binding.run {
             viewModel.updateClassSelect(null)
+            viewModel.updateTimeSelect(null)
+
+            autoCompleteTime.text.clear()
+            autoCompleteTime.clearFocus()
 
             autoCompleteClass.text.clear()
             autoCompleteClass.clearFocus()

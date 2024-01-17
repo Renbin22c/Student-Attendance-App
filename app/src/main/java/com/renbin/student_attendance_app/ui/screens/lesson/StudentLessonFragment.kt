@@ -1,9 +1,12 @@
 package com.renbin.student_attendance_app.ui.screens.lesson
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +26,9 @@ class StudentLessonFragment : BaseFragment<FragmentStudentLessonBinding>() {
     // Initialize LessonAdapter
     private lateinit var lessonAdapter: LessonAdapter
 
+    // Adapter for the time autocomplete dropdown
+    private lateinit var timeAdapter: ArrayAdapter<String>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +41,30 @@ class StudentLessonFragment : BaseFragment<FragmentStudentLessonBinding>() {
     override fun setupUIComponents(view: View) {
         super.setupUIComponents(view)
         setupLessonAdapter()
+
+        // ArrayAdapter for the time autocomplete dropdown
+        timeAdapter = ArrayAdapter(
+            requireContext(),
+            androidx.transition.R.layout.support_simple_spinner_dropdown_item,
+            emptyList()
+        )
+
+        binding.run {
+            // Enable user to change the text themself
+            autoCompleteTime.keyListener = null
+
+            // Class autocomplete text change listener to update the selected time
+            autoCompleteTime.addTextChangedListener {
+                val text = it.toString().trim()
+                viewModel.updateTimeSelect(text.ifEmpty { null })
+                autoCompleteTime.clearFocus()
+            }
+
+            // Clear button click listener to clear the selected class
+            btnClear.setOnClickListener {
+                clearOption()
+            }
+        }
     }
 
     override fun setupViewModelObserver() {
@@ -58,6 +88,19 @@ class StudentLessonFragment : BaseFragment<FragmentStudentLessonBinding>() {
         lifecycleScope.launch {
             viewModel.teachers.collect {
                 lessonAdapter.setTeachers(it)
+            }
+        }
+
+        // Observe distinct times and update the time dropdown adapter
+        lifecycleScope.launch {
+            viewModel.time.collect{
+                Log.d("debugging", it.toString())
+                timeAdapter = ArrayAdapter(
+                    requireContext(),
+                    androidx.transition.R.layout.support_simple_spinner_dropdown_item,
+                    it
+                )
+                binding.autoCompleteTime.setAdapter(timeAdapter)
             }
         }
 
@@ -97,5 +140,16 @@ class StudentLessonFragment : BaseFragment<FragmentStudentLessonBinding>() {
         // Set up the RecyclerView with the LessonAdapter
         binding.rvLesson.adapter = lessonAdapter
         binding.rvLesson.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun clearOption() {
+        // Clear the selected class and reset UI components
+        binding.run {
+            viewModel.updateTimeSelect(null)
+
+            autoCompleteTime.text.clear()
+            autoCompleteTime.clearFocus()
+
+        }
     }
 }
