@@ -87,7 +87,7 @@ class LessonAdapter(
             DateTimeFormatter.ofPattern("hh:mm a", Locale.getDefault()))
 
         // Calculate half an hour before the lesson time
-        val halfHourBeforeLesson = lessonLocalTime.minusMinutes(30)
+        val halfHourBeforeLesson = lessonLocalTime.minusMinutes(31)
 
         // Check if the current time is between half an hour before the lesson time and the lesson time
         return currentLocalTime.isAfter(halfHourBeforeLesson) && currentLocalTime.isBefore(lessonLocalTime)
@@ -111,6 +111,7 @@ class LessonAdapter(
                 // Find and display the teacher's name
                 val matchTeacher = teachers.find { it.id == lesson.createdBy }
                 tvLessonTeacher.text = matchTeacher?.name
+
                 // Show delete button if the user created the lesson
                 if(user?.uid == lesson.createdBy && currentFragment == "Lesson") ivDeleteLesson.visibility = View.VISIBLE
 
@@ -119,7 +120,6 @@ class LessonAdapter(
                     val filterStudent = lesson.student.contains(user?.uid)
                     if (filterStudent) {
                         ivCheckIn.visibility = View.VISIBLE
-                        Log.d("debugging", "Getting True")
                     }
                 }
 

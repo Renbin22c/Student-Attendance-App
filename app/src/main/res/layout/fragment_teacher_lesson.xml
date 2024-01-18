@@ -40,27 +40,55 @@
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilClass"
-        android:layout_below="@id/rlTop"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    <LinearLayout
+        android:id="@+id/llAutoComplete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hintTextColor="@color/black"
-        app:boxStrokeColor="@color/black"
-        android:paddingHorizontal="20dp">
-
-        <AutoCompleteTextView
-            android:id="@+id/autoCompleteClass"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:layout_below="@id/rlTop">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilClass"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/classes"
-            android:inputType="none"
-            android:padding="4dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:hintTextColor="@color/black"
+            android:layout_marginEnd="5dp"
+            app:boxStrokeColor="@color/black">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteClass"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/classes"
+                android:inputType="text"
+                android:padding="4dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilTime"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:hintTextColor="@color/black"
+            android:layout_marginStart="5dp"
+            app:boxStrokeColor="@color/black">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/time"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:padding="4dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
     <ScrollView
-        android:layout_below="@id/tilClass"
+        android:layout_below="@id/llAutoComplete"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp">

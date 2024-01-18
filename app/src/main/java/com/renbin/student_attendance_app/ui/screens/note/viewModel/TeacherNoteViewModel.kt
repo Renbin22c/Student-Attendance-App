@@ -12,4 +12,6 @@ interface TeacherNoteViewModel {
     fun getAllTeachers()
 
     fun getAllNotes()
+
+    fun deleteNotes(id: String)
 }

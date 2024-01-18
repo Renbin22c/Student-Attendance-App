@@ -17,7 +17,16 @@
         <action
             android:id="@+id/action_splash_to_teacherTabContainer"
             app:destination="@id/teacherTabContainerFragment" />
+        <action
+            android:id="@+id/action_splash_to_main"
+            app:destination="@id/mainFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/classesFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.classes.TeacherClassesFragment"
+        android:label="fragment_classes"
+        tools:layout="@layout/fragment_teacher_classes" />
 
     <fragment
         android:id="@+id/loginFragment"
@@ -33,6 +42,9 @@
         <action
             android:id="@+id/action_loginFragment_to_forgetPasswordFragment"
             app:destination="@id/forgetPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 
     <fragment
@@ -101,6 +113,9 @@
         <action
             android:id="@+id/action_teacherTabContainer_to_addNote"
             app:destination="@+id/addNoteFragment" />
+        <action
+            android:id="@+id/action_teacherTabContainerFragment_to_studentDetailsEditFragment2"
+            app:destination="@id/studentDetailsEditFragment2" />
 
         <action
             android:id="@+id/action_teacherTabContainer_to_studentDetails"
@@ -111,6 +126,9 @@
         <action
             android:id="@+id/action_teacherTabContainerFragment_to_teacherAddQuizFragment3"
             app:destination="@id/teacherAddQuizFragment" />
+        <action
+            android:id="@+id/action_teacherTabContainer_to_editNote"
+            app:destination="@+id/editNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/addLessonFragment"
@@ -145,6 +163,10 @@
         android:name="com.renbin.student_attendance_app.ui.screens.note.NoteDetailsFragment"
         android:label="fragment_note_details"
         tools:layout="@layout/fragment_note_details" >
+
+        <argument
+            android:name="noteId"
+            app:argType="string"/>
         <argument
             android:name="noteTitle"
             app:argType="string" />
@@ -160,6 +182,9 @@
         <argument
             android:name="noteCreatedBy"
             app:argType="string" />
+        <action
+            android:id="@+id/action_NoteDetailsFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/studentDetailsFragment"
@@ -175,6 +200,11 @@
         android:name="com.renbin.student_attendance_app.ui.screens.student.StudentDetailsEditFragment"
         android:label="fragment_student_details_edit"
         tools:layout="@layout/fragment_student_details_edit" />
+    <fragment
+        android:id="@+id/studentNoteFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.note.StudentNoteFragment"
+        android:label="fragment_student_note"
+        tools:layout="@layout/fragment_student_note" />
     <fragment
         android:id="@+id/studentNoteDetailsFragment"
         android:name="com.renbin.student_attendance_app.ui.screens.note.StudentNoteDetailsFragment"
@@ -204,6 +234,13 @@
             app:destination="@id/loginFragment" />
     </fragment>
     <fragment
+        android:id="@+id/editNoteFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.note.EditNoteFragment"
+        android:label="fragment_edit_note"
+        tools:layout="@layout/fragment_edit_note" >
+        <argument
+            android:name="noteId"
+            app:argType="string"/>
         android:id="@+id/studentAttendanceRecord"
         android:name="com.renbin.student_attendance_app.ui.screens.studentAttendanceRecord.StudentAttendanceRecordFragment"
         android:label="fragment_student_attendance_record"

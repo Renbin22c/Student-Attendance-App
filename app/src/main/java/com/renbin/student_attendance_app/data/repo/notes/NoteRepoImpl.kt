@@ -54,7 +54,7 @@ class NoteRepoImpl(
         }
     }
 
-    override suspend fun updateNote(id: String, note: Note) {
+    override suspend fun editNote(id: String, note: Note) {
         getDbRef().document(id).set(note.toHashMap()).await()
     }
 
