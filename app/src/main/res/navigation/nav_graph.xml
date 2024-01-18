@@ -241,6 +241,7 @@
         <argument
             android:name="noteId"
             app:argType="string"/>
+    <fragment
         android:id="@+id/studentAttendanceRecord"
         android:name="com.renbin.student_attendance_app.ui.screens.studentAttendanceRecord.StudentAttendanceRecordFragment"
         android:label="fragment_student_attendance_record"
@@ -248,7 +249,8 @@
         <action
             android:id="@+id/action_studentAttendanceRecord_to_studentTabContainerFragment"
             app:destination="@id/studentTabContainerFragment" />
-    </fragment>
+
+
     <fragment
         android:id="@+id/studentJoinQuizPageFragment"
         android:name="com.renbin.student_attendance_app.ui.screens.studentJoinQuizPage.StudentJoinQuizPageFragment"
@@ -296,5 +298,15 @@
         <action
             android:id="@+id/action_quizLeaderboardFragment_to_studentTabContainerFragment"
             app:destination="@id/studentTabContainerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editNoteFragment"
+        android:name="com.renbin.student_attendance_app.ui.screens.note.EditNoteFragment"
+        android:label="fragment_edit_note"
+        tools:layout="@layout/fragment_edit_note" >
+        <argument
+            android:name="noteId"
+            app:argType="string"/>
     </fragment>
 </navigation>
