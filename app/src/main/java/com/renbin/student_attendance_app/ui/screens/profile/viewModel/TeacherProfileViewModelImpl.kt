@@ -36,6 +36,10 @@ class TeacherProfileViewModelImpl @Inject constructor(
         getCurrentUser()
     }
 
+    fun getUserName(): String {
+        return _user.value.name
+    }
+
     override fun getCurrentUser() {
         val firebaseUser = authService.getCurrentUser()
         firebaseUser?.let{

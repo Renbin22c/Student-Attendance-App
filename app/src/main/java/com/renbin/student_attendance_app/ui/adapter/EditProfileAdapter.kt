@@ -20,32 +20,32 @@ import kotlinx.coroutines.launch
 
 class EditProfileAdapter(
     private val fragment: Fragment,
+    private var name: String,
     private val onProfileUpdated: (name: String?, profilePicUri: Uri?) -> Unit
 ) : BottomSheetDialogFragment() {
     private lateinit var imageView: ShapeableImageView
     private var imageUri: Uri? = null
-    private var name: String? = null
     private val PICK_IMAGE_REQUEST = 1
 
     private val storageService = StorageService()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.edit_profile_btm_sheet, container, false)
+        return inflater.inflate(R.layout.edit_profile_btm_sheet, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.findViewById<EditText>(R.id.etUserName).setText(name)
+
 
         imageView = view.findViewById(R.id.editImage)
         val editName: EditText = view.findViewById(R.id.etUserName)
         val saveButton: Button = view.findViewById(R.id.btnSave)
-
-        lifecycleScope.launch {
-            val loadedImageUri = storageService.loadSelectedImageUri(name.toString())
-            if (loadedImageUri != null) {
-                imageUri = loadedImageUri
-                imageView.setImageURI(loadedImageUri)
-            }
-        }
 
         imageView.setOnClickListener {
             openGallery()
@@ -62,9 +62,7 @@ class EditProfileAdapter(
 
             dismiss()
         }
-        return view
     }
-
     private fun openGallery() {
         val galleryIntent =
             Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

@@ -39,9 +39,10 @@ class TeacherProfileFragment : BaseFragment<FragmentTeacherProfileBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.cvEditProfile?.setOnClickListener {
-            val bottomSheetFragment = EditProfileAdapter(this) { name, profilePicUri ->
+            val bottomSheetFragment = EditProfileAdapter(this, viewModel.getUserName()) { name, profilePicUri ->
                 onProfileUpdated(name, profilePicUri)
             }
+            val currentUserName = viewModel.getUserName()
             bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
         }
     }
