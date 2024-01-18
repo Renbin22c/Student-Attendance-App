@@ -17,10 +17,13 @@ import com.renbin.student_attendance_app.ui.screens.profile.TeacherProfileFragme
 import com.renbin.student_attendance_app.ui.screens.teacherQuizHomePage.TeacherQuizHomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 
+// Dagger Hilt AndroidEntryPoint annotation
 @AndroidEntryPoint
 class TeacherTabContainerFragment : Fragment() {
+    // Initialize ViewBinding
     private lateinit var binding: FragmentTeacherTabContainerBinding
 
+    // Function to create the view for the fragment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,9 +33,11 @@ class TeacherTabContainerFragment : Fragment() {
         return binding.root
     }
 
+    // Function to set up the ViewPager, TabLayout, and custom tabs
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Set up ViewPager with FragmentAdapter
         binding.vpTeacherContainer.adapter = FragmentAdapter(
             this,
             listOf(
@@ -45,19 +50,19 @@ class TeacherTabContainerFragment : Fragment() {
             )
         )
 
+        // Set up TabLayout with custom tab icons
         TabLayoutMediator(binding.tlTeacherTabs, binding.vpTeacherContainer) { tab, position ->
             // Inflate custom tab view
             val customTabView = layoutInflater.inflate(R.layout.custom_tab_layout, null)
             val tabGifIcon = customTabView.findViewById<pl.droidsonroids.gif.GifImageView>(R.id.tabGifIcon)
 
+            // Set custom tab icon based on the position
             when (position) {
                 0 -> {
                     tabGifIcon.setImageResource(R.drawable.presentation)
-
                 }
                 1 -> {
                     tabGifIcon.setImageResource(R.drawable.alarm)
-
                 }
                 2 -> {
                     tabGifIcon.setImageResource(R.drawable.home)
@@ -77,8 +82,8 @@ class TeacherTabContainerFragment : Fragment() {
             tab.customView = customTabView
         }.attach()
 
+        // Set initial ViewPager item and disable user input
         binding.vpTeacherContainer.setCurrentItem(2, false)
         binding.vpTeacherContainer.isUserInputEnabled = false
     }
-
 }

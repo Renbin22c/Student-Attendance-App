@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
@@ -61,16 +62,21 @@ class TeacherNoteFragment : BaseFragment<FragmentTeacherNoteBinding>() {
     }
 
     private fun setupNoteAdapter() {
-        adapter = NoteAdapter(emptyList(), emptyList())
+        adapter = NoteAdapter(emptyList(), emptyList(), viewModel.user)
         adapter.listener = object :NoteAdapter.Listener{
             override fun onClick(note: Note) {
                 val action = TeacherTabContainerFragmentDirections.actionTeacherTabContainerFragmentToNoteDetailsFragment(
+                    noteId = note.id.toString(),
                     note.title,
                     note.desc,
                     note.classes,
                     note.createdBy
                 )
                 navController.navigate(action)
+            }
+
+            override fun onDelete(note: Note) {
+                viewModel.deleteNotes(note.id.toString())
             }
         }
         binding.rvNotes.adapter = adapter

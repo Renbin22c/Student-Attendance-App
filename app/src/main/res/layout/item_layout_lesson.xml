@@ -74,36 +74,44 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ivDeleteLesson"
-            android:layout_below="@id/rlDetails"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_delete"
-            android:visibility="gone"
-            android:layout_alignParentEnd="true"/>
-
-        <ImageView
-            android:id="@+id/ivCheckIn"
-            android:layout_below="@id/rlDetails"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/llDetails"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_check_circle"
-            android:visibility="gone"
-            android:layout_alignParentEnd="true"/>
-
-        <TextView
-            android:id="@+id/tvLessonDetails"
             android:layout_below="@id/rlDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lesson_details"
-            android:layout_marginVertical="5dp"
-            style="@style/TextAppearance.Material3.BodyMedium"/>
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/tvLessonDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lesson_details"
+                android:layout_marginVertical="5dp"
+                android:layout_weight="2"
+                style="@style/TextAppearance.Material3.BodyMedium"/>
+
+            <ImageView
+                android:id="@+id/ivDeleteLesson"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_delete"
+                android:visibility="gone"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/ivCheckIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_circle"
+                android:visibility="gone"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
 
         <TableLayout
             android:id="@+id/tlAttendance"
-            android:layout_below="@id/tvLessonDetails"
+            android:layout_below="@id/llDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/border">

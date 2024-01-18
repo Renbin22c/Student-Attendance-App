@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,8 @@ import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
 import com.renbin.student_attendance_app.ui.screens.note.viewModel.StudentNoteViewModelImpl
 import com.renbin.student_attendance_app.ui.screens.tabContainer.StudentTabContainerFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -24,6 +27,7 @@ class StudentNoteFragment : BaseFragment<FragmentStudentNoteBinding>() {
 
     override val viewModel: StudentNoteViewModelImpl by viewModels()
     private lateinit var adapter: StudentNoteAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
