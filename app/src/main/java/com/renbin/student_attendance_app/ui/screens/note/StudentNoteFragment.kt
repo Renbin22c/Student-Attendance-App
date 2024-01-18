@@ -62,6 +62,7 @@ class StudentNoteFragment : BaseFragment<FragmentStudentNoteBinding>() {
         }
     }
 
+
     private fun setupNoteAdapter() {
         adapter = StudentNoteAdapter(emptyList(), emptyList(), emptyList(), viewModel.user)
         adapter.listener = object : StudentNoteAdapter.Listener{
