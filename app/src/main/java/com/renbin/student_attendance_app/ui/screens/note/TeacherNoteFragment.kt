@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.data.model.Note
 import com.renbin.student_attendance_app.databinding.FragmentTeacherNoteBinding
 import com.renbin.student_attendance_app.ui.adapter.NoteAdapter
@@ -76,11 +80,47 @@ class TeacherNoteFragment : BaseFragment<FragmentTeacherNoteBinding>() {
             }
 
             override fun onDelete(note: Note) {
-                viewModel.deleteNotes(note.id.toString())
+//                viewModel.deleteNotes(note.id.toString())
+                alertDelete(note.id.toString())
             }
         }
         binding.rvNotes.adapter = adapter
         binding.rvNotes.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+    }
+
+    private fun alertDelete(id: String) {
+        val dialogView = layoutInflater.inflate(R.layout.alert_dialog, null)
+        val alertDialog = MaterialAlertDialogBuilder(requireContext(), R.style.MaterialAlertDialog_Rounded)
+            .setView(dialogView)
+            .create()
+
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
+        val btnConfirm = dialogView.findViewById<Button>(R.id.btnConfirm)
+        val tvTitle = dialogView.findViewById<TextView>(R.id.tvTitle)
+        val tvMessage = dialogView.findViewById<TextView>(R.id.tvMessage)
+
+        // Set up dialog components
+        tvTitle.text = getString(R.string.delete_confirmation)
+
+        lifecycleScope.launch {
+            viewModel.notes.collect {
+                    tvMessage.text = "Do you sure want to delete this note?"
+            }
+        }
+
+        // Set up click listeners for dialog buttons
+        btnCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        btnConfirm.setOnClickListener {
+            // Delete the class if confirmation is received
+            viewModel.deleteNotes(id)
+            alertDialog.dismiss()
+        }
+
+        // Show the delete confirmation dialog
+        alertDialog.show()
     }
 }
 
