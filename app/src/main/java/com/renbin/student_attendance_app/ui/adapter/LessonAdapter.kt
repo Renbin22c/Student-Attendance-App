@@ -1,6 +1,5 @@
 package com.renbin.student_attendance_app.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,7 +76,7 @@ class LessonAdapter(
 
         // Format the lesson time and current time using SimpleDateFormat
         val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
-        val formattedLessonTime = timeFormat.format(timeFormat.parse(lessonTime))
+        val formattedLessonTime = timeFormat.format(timeFormat.parse(lessonTime)!!)
         val formattedCurrentTime = timeFormat.format(currentTime)
 
         // Convert the formatted times to LocalTime objects

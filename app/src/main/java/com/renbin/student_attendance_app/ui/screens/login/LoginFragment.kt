@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
+import com.renbin.student_attendance_app.R
 import com.renbin.student_attendance_app.databinding.FragmentLoginBinding
 import com.renbin.student_attendance_app.ui.screens.base.BaseFragment
 import com.renbin.student_attendance_app.ui.screens.login.viewModel.LoginViewModelImpl
@@ -93,7 +97,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
 
         lifecycleScope.launch {
-            viewModel.error.collect{
+            viewModel.checkError.collect{
+                Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.error
+                        )
+                    ).show()
                 val action = LoginFragmentDirections.actionGlobalMain()
                 navController.navigate(action)
             }

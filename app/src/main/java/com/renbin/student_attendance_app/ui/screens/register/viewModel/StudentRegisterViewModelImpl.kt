@@ -48,18 +48,42 @@ class StudentRegisterViewModelImpl @Inject constructor(
     // Function to perform student registration with provided information
     override fun studentRegister(name: String, email: String, pass: String, confirmPass: String, classes: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            // Use the errorHandler extension function to handle errors during registration
-            val user = errorHandler { authService.register(email, pass) }
-            if(user != null){
-                // Use the errorHandler extension function to handle errors during student registration
-                errorHandler {
-                    studentRepo.addStudent(
-                        Student(name = name, email = email, classes = classes)
-                    )
+            val error = validation(name, email, pass, confirmPass, classes)
+
+            if(error !=null){
+                _error.emit(error)
+            }else{
+                // Use the errorHandler extension function to handle errors during registration
+                val user = errorHandler { authService.register(email, pass) }
+                if(user != null){
+                    // Use the errorHandler extension function to handle errors during student registration
+                    errorHandler {
+                        studentRepo.addStudent(
+                            Student(name = name, email = email, classes = classes)
+                        )
+                    }
+                    // Emit a success message
+                    _success.emit("Register successfully")
                 }
-                // Emit a success message
-                _success.emit("Register successfully")
             }
+        }
+    }
+
+    private fun validation(name: String, email: String, pass: String, confirmPass: String, classes: String): String?{
+        return if(name.isEmpty()){
+            "Name cannot be empty"
+        } else if (email.isEmpty()){
+            "Email cannot be empty"
+        } else if (pass.isEmpty()){
+            "Password cannot be empty"
+        } else if(confirmPass.isEmpty()){
+            "Confirm password cannot be empty"
+        } else if (pass != confirmPass){
+            "Password and Confirm Password must be same"
+        }else if (classes.isEmpty()){
+            "Class cannot be empty"
+        }else{
+            null
         }
     }
 }

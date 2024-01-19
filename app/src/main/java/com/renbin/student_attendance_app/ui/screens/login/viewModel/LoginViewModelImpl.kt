@@ -31,18 +31,24 @@ class LoginViewModelImpl @Inject constructor(
     override val student: StateFlow<Student> = _student
 
     val finish: MutableSharedFlow<Unit> = MutableSharedFlow()
+    val checkError: MutableSharedFlow<String> = MutableSharedFlow()
 
     // Function to handle the login operation with provided email and password
     override fun login(email: String, pass: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            // Use the errorHandler extension function to handle errors and return result
-            val result = errorHandler {
-                authService.login(email, pass)
-            }
+            val error = validation(email, pass)
+            if (error != null){
+                _error.emit(error)
+            } else{
+                // Use the errorHandler extension function to handle errors and return result
+                val result = errorHandler {
+                    authService.login(email, pass)
+                }
 
-            // Check if the login was successful and emit a success message
-            if(result != null){
-                finish.emit(Unit)
+                // Check if the login was successful and emit a success message
+                if(result != null){
+                    finish.emit(Unit)
+                }
             }
         }
     }
@@ -71,7 +77,17 @@ class LoginViewModelImpl @Inject constructor(
     // Function to check user account have been deleted or not
     override fun checkUserAuthentication() {
         viewModelScope.launch(Dispatchers.IO) {
-            _error.emit("Your Account already been deleted")
+            checkError.emit("Your Account already been deleted")
+        }
+    }
+
+    private fun validation(email: String, pass: String):String?{
+        return if(email.isEmpty()){
+            "Email cannot be empty"
+        } else if (pass.isEmpty()){
+            "Password cannot be empty"
+        }else{
+            null
         }
     }
 }
